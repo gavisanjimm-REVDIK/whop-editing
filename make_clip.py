@@ -25,7 +25,7 @@ import textwrap
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-LOGO = os.path.join(ROOT, "assets", "warzone-logo.png")
+LOGO = os.path.join(ROOT, "assets", "warzone-logo-white.png")  # official white logo
 FONT = "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf"
 W, H = 1080, 1920
 
@@ -69,16 +69,13 @@ def build_overlay(path, text, video_top, video_bottom, show_tagline):
         d.text(((W - tw) / 2, y), line, font=font, fill="white")
         y += line_h
 
-    # Logo: black-on-transparent source -> recolour to white so it reads on black.
+    # Official white Warzone logo, used as-is.
     logo = Image.open(LOGO).convert("RGBA")
-    alpha = logo.getchannel("A")
-    white = Image.new("RGBA", logo.size, (255, 255, 255, 255))
-    white.putalpha(alpha)
     lw = 560
     lh = round(logo.height * lw / logo.width)
-    white = white.resize((lw, lh), Image.LANCZOS)
+    logo = logo.resize((lw, lh), Image.LANCZOS)
     ly = video_bottom + 70
-    img.alpha_composite(white, ((W - lw) // 2, ly))
+    img.alpha_composite(logo, ((W - lw) // 2, ly))
 
     if show_tagline:
         tf = ImageFont.truetype(FONT, 40)
