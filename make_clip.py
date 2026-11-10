@@ -62,6 +62,11 @@ def build_overlay(path, text, video_top, video_bottom, show_tagline):
     # Hook text, centred, bottom edge sits 40px above the footage.
     font = ImageFont.truetype(FONT, 54)
     lines = textwrap.wrap(text, width=30) if text else []
+    if len(lines) > 1:  # rebalance so the last line isn't a lone word or two
+        w = -(-len(text) // len(lines))
+        while len(textwrap.wrap(text, width=w)) > len(lines):
+            w += 1
+        lines = textwrap.wrap(text, width=w)
     line_h = 68
     y = video_top - 40 - line_h * len(lines)
     for line in lines:
@@ -91,6 +96,8 @@ def main():
     ap.add_argument("--input", required=True, help="official footage file")
     ap.add_argument("--start", help="start time (HH:MM:SS or seconds)")
     ap.add_argument("--end", help="end time (HH:MM:SS or seconds)")
+    ap.add_argument("--seg", action="append", default=[],
+                    help="START-END segment (seconds or M:SS); repeat to join several segments in order")
     ap.add_argument("--text", default="", help="on-screen hook text")
     ap.add_argument("--out", required=True)
     ap.add_argument("--zoom", type=float, default=1.15,
@@ -98,45 +105,53 @@ def main():
     ap.add_argument("--no-tagline", action="store_true", help="hide the 'SEASON 1 OUT NOW' line")
     a = ap.parse_args()
 
+    segs = [tuple(to_seconds(x) for x in sg.split("-")) for sg in a.seg]
+    if not segs:
+        if a.start is None or a.end is None:
+            ap.error("give --start/--end or one or more --seg")
+        segs = [(to_seconds(a.start), to_seconds(a.end))]
+    dur = sum(e - s for s, e in segs)
+
     sw, sh = probe_size(a.input)
     # Footage box: full width, height from source aspect ratio, enlarged by zoom then side-cropped.
     box_h = round(W / (sw / sh) * a.zoom / 2) * 2
     scaled_w = round(W * a.zoom / 2) * 2
     video_top = (H - box_h) // 2 - 60  # sit a little above centre, like the reference
     video_bottom = video_top + box_h
+    audio = has_audio(a.input)
 
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         ov = os.path.join(tmp, "overlay.png")
         build_overlay(ov, a.text, video_top, video_bottom, not a.no_tagline)
 
-        ss, ee = to_seconds(a.start), to_seconds(a.end)
-        dur = (ee - (ss or 0)) if ee is not None else None
-        cmd = ["ffmpeg", "-y", "-v", "error", "-stats"]
-        if ss is not None:
-            cmd += ["-ss", str(ss)]
-        if dur is not None:
-            cmd += ["-t", str(dur)]
-        cmd += ["-i", a.input, "-loop", "1", "-i", ov]
+        parts, labels = [], ""
+        for i, (s, e) in enumerate(segs):
+            parts.append(f"[0:v]trim={s}:{e},setpts=PTS-STARTPTS,fps=30[v{i}]")
+            labels += f"[v{i}]"
+            if audio:
+                parts.append(f"[0:a]atrim={s}:{e},asetpts=PTS-STARTPTS[a{i}]")
+                labels += f"[a{i}]"
+        parts.append(f"{labels}concat=n={len(segs)}:v=1:a={1 if audio else 0}[cv]" + ("[ca]" if audio else ""))
+        fo = max(dur - 0.3, 0)
+        parts += [
+            f"[cv]scale={scaled_w}:{box_h}:flags=lanczos,crop={W}:{box_h},setsar=1,"
+            f"fade=t=in:st=0:d=0.25,fade=t=out:st={fo:.2f}:d=0.3[clip]",
+            f"color=c=black:s={W}x{H}:r=30:d={dur:.3f}[bg]",
+            f"[bg][clip]overlay=0:{video_top}:shortest=1[base]",
+            "[base][1:v]overlay=0:0:shortest=1,format=yuv420p[v]",
+        ]
+        if audio:
+            parts.append(f"[ca]afade=t=in:st=0:d=0.15,afade=t=out:st={fo:.2f}:d=0.3[a]")
 
-        fade = ""
-        if dur:
-            fade = f",fade=t=in:st=0:d=0.25,fade=t=out:st={max(dur - 0.3, 0):.2f}:d=0.3"
-        vf = (
-            f"[0:v]scale={scaled_w}:{box_h}:flags=lanczos,crop={W}:{box_h},setsar=1{fade}[clip];"
-            f"color=c=black:s={W}x{H}:r=30[bg];"
-            f"[bg][clip]overlay=0:{video_top}:shortest=1[base];"
-            f"[base][1:v]overlay=0:0:shortest=1,format=yuv420p[v]"
-        )
-        cmd += ["-filter_complex", vf, "-map", "[v]"]
-        if has_audio(a.input):
-            cmd += ["-map", "0:a:0", "-c:a", "aac", "-b:a", "192k"]
-            if dur:
-                cmd += ["-af", f"afade=t=in:st=0:d=0.15,afade=t=out:st={max(dur - 0.3, 0):.2f}:d=0.3"]
+        cmd = ["ffmpeg", "-y", "-v", "error", "-i", a.input, "-loop", "1", "-i", ov,
+               "-filter_complex", ";".join(parts), "-map", "[v]"]
+        if audio:
+            cmd += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
         cmd += ["-c:v", "libx264", "-preset", "slow", "-crf", "17", "-r", "30",
-                "-movflags", "+faststart", "-shortest", a.out]
+                "-movflags", "+faststart", "-t", f"{dur:.3f}", a.out]
         subprocess.run(cmd, check=True)
-    print(f"wrote {a.out}")
+    print(f"wrote {a.out} ({dur:.1f}s)")
 
 
 if __name__ == "__main__":

@@ -1,38 +1,32 @@
 # Warzone Season 1 – captions (TikTok / Instagram Reels)
 
-Required in every caption: `@callofduty`, `Season 1 out now`, the song credit, and `#Ad` on its own line
-as the first hashtag (max 3 more hashtags after it). Write each post in your own words. No made-up facts.
-A trailer is a trailer, not "gameplay".
+Each caption has the required parts: `@callofduty`, `Season 1 out now`, the song credit, and `#Ad` on its own
+line as the first hashtag (max 3 more after it). Facts are taken from the trailer and the campaign brief.
 
-## Caption 1 – maps (trailer)
-Warzone is heading to Korea. Two new maps, Hajin and Zodiac, and I already want to drop in. Season 1 out now.
+## out/01_korea.mp4
+Warzone is heading to Korea and Hajin looks so good. Already planning my first drop. Season 1 out now.
 @callofduty
 🎵 Agust D (Suga from BTS) - "Haegeum"
 #Ad
 #Warzone #CallofDuty #Season1
 
-## Caption 2 – new gear (developer briefing)
-The Zipline Launcher and Grabber Drone are coming to Warzone and I have so many plans for them. Season 1 out now.
+## out/02_hajin_zodiac.mp4
+Two new maps in one season: Hajin and Zodiac. Dropping off those rooftops is going to be chaos. Season 1 out now.
 @callofduty
 🎵 Agust D (Suga from BTS) - "Haegeum"
 #Ad
-#Warzone #WarzoneSeason1
+#Warzone #Hajin #Zodiac
 
-## Caption 3 – integration (developer briefing)
-Warzone is now fully integrated with Modern Warfare 4. New Elite Perks for your Operator too. Season 1 out now.
-@callofduty
-🎵 Agust D (Suga from BTS) - "Haegeum"
-#Ad
-#Warzone #MW4
-
-## Caption 4 – the look (trailer)
-This Season 1 trailer looks unreal. Hajin at night is something else. Season 1 out now.
+## out/03_combat.mp4
+The new Warzone trailer looks insane. Every shot in Hajin is packed. Season 1 out now.
 @callofduty
 🎵 Agust D (Suga from BTS) - "Haegeum"
 #Ad
 #Warzone #CallofDuty
 
-## On-screen hook lines (pick one that matches the clip)
-- Call of Duty: Warzone gets two new maps Hajin and Zodiac in Season 1
-- New Call of Duty: Warzone Season Comes to Korea in Season 1
-- The new Call of Duty: Warzone look insane
+## out/04_new_gear.mp4
+New gear like the Zipline Launcher and Grabber Drone, plus new Elite Perks for your Operator. I have so many ideas. Season 1 out now.
+@callofduty
+🎵 Agust D (Suga from BTS) - "Haegeum"
+#Ad
+#Warzone #WarzoneSeason1

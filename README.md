@@ -12,7 +12,7 @@ middle, and the official Warzone logo (always on) with "SEASON 1 OUT NOW" undern
 
 ## Usage
 1. Download the Trailer and Developer Briefing from the MediaSilo link into `footage/`.
-2. Render a clip (aim for 10–30 s):
+2. Run `./render_all.sh` to make all clips, or render one (aim for 10–30 s):
 
 ```bash
 python3 make_clip.py --input footage/trailer.mp4 --start 0:05 --end 0:18 \
