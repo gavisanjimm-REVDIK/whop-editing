@@ -24,3 +24,26 @@ Options: `--zoom 1.0` shows the full 16:9 frame (default 1.15 crops the sides a 
 `--no-tagline` hides the "SEASON 1 OUT NOW" line.
 
 Requires `ffmpeg` and Python with Pillow. The font path in `make_clip.py` uses Inter ExtraBold.
+
+---
+
+# FOMO "Guess The Fake Millionaire" clipping
+
+`fomo_clip.py` renders 9:16 clips from the focus video (`footage/fomo.mp4`, from the campaign Drive link):
+a cold open on the craziest line, then a quick rewind, then the full moment (always 8 s or more of continuous source).
+The speaker sits in a 4:5 crop over a blurred fill, with the hook on top and big word-by-word captions
+(the active word is highlighted) placed over the source's burned-in subtitles. Punch-in zooms land on the big lines.
+
+- `reframe.py` detects camera cuts and finds faces to centre the crop on the speaker for each shot.
+  Masked contestants can fool it, so `clips.json` has manual `cx` overrides.
+- `transcript/` holds word-level timestamps (faster-whisper). Caption fixes are in each clip's `edit` map
+  (by word start time), checked against the video's own burned-in subtitles.
+- Every clip has its own moment, hook, accent colour and caption (`CAPTIONS_FOMO.md`).
+
+```bash
+python3 fomo_clip.py clips.json            # all clips -> out/
+python3 fomo_clip.py clips.json 06_bowling # one clip
+```
+
+Approved creators are Insentos, Maurits and Orangie. Brez is in the video but not on the list,
+so no clip is built around him.

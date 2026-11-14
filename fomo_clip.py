@@ -30,6 +30,8 @@ import subprocess
 import sys
 import tempfile
 
+import reframe
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(ROOT, "footage", "fomo.mp4")
 WORDS = os.path.join(ROOT, "transcript", "words.json")
@@ -42,6 +44,7 @@ PW, PH = 1080, 1350     # panel size on the canvas
 PY = 300                # panel top
 REWIND = 0.45           # seconds of rewind between cold open and main
 REWIND_SPEED = 4.0
+FPS = 30
 
 
 def ass_color(hexstr):
@@ -76,20 +79,63 @@ def crop_box(cx, zoom, cy=None):
     return cw, ch, x, y
 
 
+def _q(t, s):
+    """Snap a source time to the 30 fps frame grid of a block starting at s."""
+    return s + round((t - s) * FPS) / FPS
+
+
+def _subs(clip, s, e, zoom, fixed_cx=None):
+    """Split a continuous source range into (a, b, cx, zoom) sub-shots: auto-reframed per camera cut,
+    with manual cx overrides and punch-in zooms from the clip definition."""
+    if fixed_cx is not None:
+        shots = [(s, e, fixed_cx)]
+    else:
+        shots = [list(x) for x in reframe.analyse(SRC, s, e)]
+        for t0, t1, cx in clip.get("cx", []):
+            for sh in shots:
+                if t0 <= (sh[0] + sh[1]) / 2 < t1:
+                    sh[2] = cx
+        merged = []
+        for sh in shots:  # same camera, tiny framing change -> keep one framing (no jitter)
+            if merged and abs(merged[-1][2] - sh[2]) < 90:
+                merged[-1][1] = sh[1]
+            else:
+                merged.append(sh)
+        shots = merged
+    punches = [p for p in clip.get("punch", []) if p[1] > s and p[0] < e]
+    cuts = {s, e} | {x for sh in shots for x in sh[:2]} | {x for p in punches for x in p[:2]}
+    cuts = sorted({_q(min(max(c, s), e), s) for c in cuts})
+    out = []
+    for a, b in zip(cuts[:-1], cuts[1:]):
+        if b - a < 1.5 / FPS:
+            continue
+        mid = (a + b) / 2
+        cx = next((sh[2] for sh in shots if sh[0] <= mid < sh[1]), shots[-1][2])
+        z = next((p[2] for p in punches if p[0] <= mid < p[1]), zoom)
+        cy = next((p[3] for p in punches if p[0] <= mid < p[1] and len(p) > 3), None)
+        out.append((a, b, cx, z, cy))
+    return out
+
+
 def build_pieces(clip):
     pieces = []
     if clip.get("coldopen"):
-        s, e, cx, z = clip["coldopen"][:4]
-        pieces.append(dict(s=s, e=e, cx=cx, z=z, kind="normal", cold=True))
+        co = clip["coldopen"]
+        s, e = co[0], co[1]
+        z = co[2] if len(co) > 2 else 1.25
+        subs = _subs(clip, s, e, z)
+        pieces.append(dict(s=s, e=e, kind="normal", subs=subs))
         rs = max(e - REWIND * REWIND_SPEED, s)
-        pieces.append(dict(s=rs, e=e, cx=cx, z=z, kind="rewind"))
+        pieces.append(dict(s=rs, e=e, kind="rewind", subs=[(rs, e, subs[-1][2], z, None)]))
     for sg in clip["segs"]:
-        s, e, cx, z = sg[:4]
-        cy = sg[4] if len(sg) > 4 else None
-        pieces.append(dict(s=s, e=e, cx=cx, z=z, cy=cy, kind="normal"))
+        s, e = sg[0], sg[1]
+        z = sg[2] if len(sg) > 2 else 1.0
+        pieces.append(dict(s=s, e=e, kind="normal", subs=_subs(clip, s, e, z)))
     t = 0.0
     for p in pieces:
-        p["dur"] = (p["e"] - p["s"]) / (REWIND_SPEED if p["kind"] == "rewind" else 1)
+        nf = round((p["e"] - p["s"]) * FPS)
+        p["e"] = p["s"] + nf / FPS
+        p["dur"] = nf / FPS / (REWIND_SPEED if p["kind"] == "rewind" else 1)
         p["off"] = t
         t += p["dur"]
     return pieces, t
@@ -118,13 +164,24 @@ def build_ass(clip, pieces, total, words_all, path):
     hook_ass = re.sub(r"\*(.+?)\*", lambda m: "{\\c" + accent + "}" + m.group(1) + "{\\c&HFFFFFF&}", hook)
 
     out_words = []
+    edits = {round(float(k), 1): v for k, v in clip.get("edit", {}).items()}
+    merged = []
+    for w in words_all:
+        if merged and w["w"].strip().startswith("-"):
+            merged[-1] = dict(merged[-1], w=merged[-1]["w"] + w["w"].strip(), e=w["e"])
+        else:
+            merged.append(dict(w))
+    for w in merged:
+        hit = edits.get(float(f"{w['s']:.1f}"))
+        if hit is not None:
+            w["w"], w["raw"] = hit, True
     for p in pieces:
         if p["kind"] != "normal":
             continue
-        for w in words_all:
+        for w in merged:
             mid = (w["s"] + w["e"]) / 2
             if p["s"] <= mid < p["e"]:
-                txt = clean(w["w"], fix)
+                txt = w["w"].upper() if w.get("raw") else clean(w["w"], fix)
                 if not re.sub(r"\W", "", txt):
                     continue
                 s = p["off"] + max(w["s"] - p["s"], 0)
@@ -139,9 +196,9 @@ def build_ass(clip, pieces, total, words_all, path):
         "Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, "
         "Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, "
         "Alignment, MarginL, MarginR, MarginV, Encoding",
-        "Style: Hook,Inter Black,62,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,5,0,"
+        "Style: Hook,Inter Black,68,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,0,0,0,0,100,100,0,0,1,5,0,"
         "5,70,70,0,1",
-        "Style: Cap,Inter Black,84,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,0,0,1,7,3,"
+        "Style: Cap,Inter Black,92,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,0,0,1,7,3,"
         "5,60,60,0,1",
         "",
         "[Events]",
@@ -182,29 +239,44 @@ def render(clip, words_all):
         cmd = ["ffmpeg", "-y", "-v", "error"]
         fg, labels = [], ""
         for i, p in enumerate(pieces):
-            cmd += ["-ss", f"{p['s']:.3f}", "-t", f"{p['e'] - p['s']:.3f}", "-i", SRC]
-            cw, ch, x, y = crop_box(p["cx"], p["z"], p.get("cy"))
-            pre = "reverse,setpts=PTS/%g," % REWIND_SPEED if p["kind"] == "rewind" else ""
-            look = ",eq=brightness=0.06:saturation=1.4,noise=alls=18:allf=t" if p["kind"] == "rewind" else ""
-            fg.append(f"[{i}:v]{pre}fps=30,setpts=PTS-STARTPTS,split[a{i}][b{i}]")
-            fg.append(f"[a{i}]crop={cw}:{ch}:{x}:{y},scale={PW}:{PH}:flags=lanczos,setsar=1{look}[p{i}]")
-            fg.append(f"[b{i}]crop={SW}:{CROP_H}:0:0,scale=-2:{H},crop={W}:{H},gblur=sigma=38,"
+            cmd += ["-ss", f"{p['s']:.3f}", "-t", f"{p['e'] - p['s'] + 0.1:.3f}", "-i", SRC]
+            rew = p["kind"] == "rewind"
+            pre = f"reverse,setpts=(PTS-STARTPTS)/{REWIND_SPEED:g},fps={FPS}," if rew else ""
+            n = len(p["subs"])
+            fg.append(f"[{i}:v]fps={FPS},setpts=PTS-STARTPTS,trim=end_frame={round((p['e'] - p['s']) * FPS)},"
+                      f"{pre}setpts=PTS-STARTPTS,split={n + 1}[bg{i}]" + "".join(f"[r{i}_{j}]" for j in range(n)))
+            plabels = ""
+            for j, (a, b, cx, z, cy) in enumerate(p["subs"]):
+                cw, ch, x, y = crop_box(cx, z, cy)
+                if rew:
+                    tr = ""
+                else:
+                    tr = (f"trim=start_frame={round((a - p['s']) * FPS)}:end_frame={round((b - p['s']) * FPS)},"
+                          "setpts=PTS-STARTPTS,")
+                look = ",eq=brightness=0.06:saturation=1.4,noise=alls=18:allf=t" if rew else ""
+                fg.append(f"[r{i}_{j}]{tr}crop={cw}:{ch}:{x}:{y},scale={PW}:{PH}:flags=lanczos,setsar=1{look}[p{i}_{j}]")
+                plabels += f"[p{i}_{j}]"
+            fg.append(f"{plabels}concat=n={n}:v=1:a=0[pc{i}]" if n > 1 else f"{plabels}null[pc{i}]")
+            fg.append(f"[bg{i}]crop={SW}:{CROP_H}:0:0,scale=-2:{H},crop={W}:{H},gblur=sigma=38,"
                       f"eq=brightness=-0.22:saturation=1.2,setsar=1[g{i}]")
-            fg.append(f"[g{i}][p{i}]overlay=0:{PY},trim=duration={p['dur']:.3f}[v{i}]")
-            if p["kind"] == "rewind":
-                fg.append(f"anullsrc=r=48000:cl=stereo,atrim=duration={p['dur']:.3f}[s{i}]")
+            fg.append(f"[g{i}][pc{i}]overlay=0:{PY}:shortest=1,trim=duration={p['dur']:.4f}[v{i}]")
+            if rew:
+                fg.append(f"anullsrc=r=48000:cl=stereo,atrim=duration={p['dur']:.4f}[s{i}]")
             else:
                 fg.append(f"[{i}:a]aresample=48000,aformat=channel_layouts=stereo,asetpts=PTS-STARTPTS,"
-                          f"atrim=duration={p['dur']:.3f},afade=t=in:d=0.02,"
-                          f"afade=t=out:st={max(p['dur'] - 0.02, 0):.3f}:d=0.02[s{i}]")
+                          f"atrim=duration={p['dur']:.4f},afade=t=in:d=0.02,"
+                          f"afade=t=out:st={max(p['dur'] - 0.02, 0):.4f}:d=0.02[s{i}]")
             labels += f"[v{i}][s{i}]"
         fg.append(f"{labels}concat=n={len(pieces)}:v=1:a=1[cv][ca]")
         fg.append(f"[cv]ass={ass}:fontsdir={FONTDIR},format=yuv420p[v]")
         cmd += ["-filter_complex", ";".join(fg), "-map", "[v]", "-map", "[ca]",
-                "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-r", "30",
+                "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-r", str(FPS),
                 "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", out]
         subprocess.run(cmd, check=True)
     print(f"wrote {clip['out']} ({total:.1f}s)")
+    for p in pieces:
+        print(f"  {p['kind']:6s} {p['s']:.2f}-{p['e']:.2f}: " +
+              ", ".join(f"{a:.1f}-{b:.1f}@{cx:.0f}x{z:g}" for a, b, cx, z, _ in p["subs"]))
 
 
 def main():
