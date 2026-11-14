@@ -26,6 +26,6 @@ Options: `--zoom 1.0` shows the full 16:9 frame (default 1.15 crops the sides a 
 Requires `ffmpeg` and Python with Pillow. The font path in `make_clip.py` uses Inter ExtraBold.
 
 ## LTK – Creator Earnings campaign
-`python3 ltk_edit.py` renders `out/ltk_lock_in.mp4` from the official LTK folder (download it into `footage/ltk/`).
+`python3 ltk_edit.py --edit lock_in` renders `out/ltk_lock_in.mp4` and `--edit old_posts` renders `out/ltk_old_posts.mp4`, from the official LTK folder (download it into `footage/ltk/`).
 The cut list and on-screen text are at the top of `ltk_edit.py`. Captions and posting notes are in `LTK_CAPTIONS.md`.
 The official logos are in `assets/ltk-logo-white.png` and `assets/ltk-logo-black.png`.

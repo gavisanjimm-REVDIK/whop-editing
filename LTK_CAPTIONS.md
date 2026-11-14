@@ -19,3 +19,30 @@ She heard how many creators became millionaires on LTK, wrote "lock in" in her n
 - Put the tag at the very end of the caption, after the hashtags (that's how it's written above).
 - Keep likes visible and leave the post up for 30+ days. Post this video no more than 5 times, and only on TikTok and Instagram.
 - Add a pinned comment to start replies, for example: "be honest, would you have left the bank job?"
+
+---
+
+# Video 2: `out/ltk_old_posts.mp4`
+
+Render it with `python3 ltk_edit.py --edit old_posts`. It's 29 s: a creator's "15% from old content" stat, then
+LTK's creator-example slide from LTKCon. It uses the original audio only, with the LTK logo on screen the whole time.
+
+Every number on screen is said out loud in the clip:
+- "On LTK, 15% of the average creator's earnings come from old content, posts that shoppers find months later and then buy from"
+- "she was able to grow her earnings 150% year over year, while only growing her LTK posting by 26%"
+- "approximately $250,000 in completely passive earnings for the year. That is commission that she makes in her sleep."
+
+## TikTok
+Posts that shoppers find months later still pay on LTK. This creator grew her earnings 150% while only posting 26% more. Would you rather post more or post smarter? #ad #LTK #creatoreconomy @shop.ltk
+
+## Instagram Reels
+Old posts aren't dead on LTK 👀
+
+About 15% of the average creator's earnings on LTK come from old content. One creator grew her earnings 150% year over year while only posting 26% more on LTK. Are you still deleting your old posts? #ad #LTK #creatoreconomy @ltk.hq
+
+## YouTube Shorts (see the platform note in video 1's section)
+Title: Her old LTK posts kept earning while she slept
+Description:
+About 15% of the average creator's earnings on LTK come from old content. One creator grew her earnings 150% year over year while only posting 26% more on LTK. Would you rather post more or post smarter?
+
+#ad #LTK #creatoreconomy #shorts
