@@ -4,8 +4,8 @@
 Layout (1080x1920, black canvas):
   - hook text, bold white, above the footage
   - official 16:9 footage centred (slight zoom so it fills more of the frame)
-  - official Warzone logo (white) below the footage
-  - "SEASON 1 OUT NOW" line under the logo
+  - official logo below the footage (--logo; default Warzone white logo)
+  - tagline under the logo (--tagline; default "SEASON 1 OUT NOW")
 
 Audio is the ORIGINAL audio of the source clip only (no added music, per campaign rules).
 
@@ -55,7 +55,7 @@ def has_audio(path):
     return bool(out.strip())
 
 
-def build_overlay(path, text, video_top, video_bottom, show_tagline):
+def build_overlay(path, text, video_top, video_bottom, tagline, logo_path, logo_w):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
 
@@ -74,17 +74,18 @@ def build_overlay(path, text, video_top, video_bottom, show_tagline):
         d.text(((W - tw) / 2, y), line, font=font, fill="white")
         y += line_h
 
-    # Official white Warzone logo, used as-is.
-    logo = Image.open(LOGO).convert("RGBA")
-    lw = 560
+    # Official logo, used as-is (transparent padding trimmed so it sits evenly).
+    logo = Image.open(logo_path).convert("RGBA")
+    logo = logo.crop(logo.getchannel("A").getbbox())
+    lw = logo_w
     lh = round(logo.height * lw / logo.width)
     logo = logo.resize((lw, lh), Image.LANCZOS)
     ly = video_bottom + 70
     img.alpha_composite(logo, ((W - lw) // 2, ly))
 
-    if show_tagline:
+    if tagline:
         tf = ImageFont.truetype(FONT, 40)
-        tag = "SEASON 1 OUT NOW"
+        tag = tagline
         tw = d.textlength(tag, font=tf)
         d.text(((W - tw) / 2, ly + lh + 34), tag, font=tf, fill="white")
 
@@ -102,7 +103,10 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--zoom", type=float, default=1.15,
                     help="zoom on the footage; 1.0 = full 16:9 frame, >1 crops the sides (default 1.15)")
-    ap.add_argument("--no-tagline", action="store_true", help="hide the 'SEASON 1 OUT NOW' line")
+    ap.add_argument("--logo", default=LOGO, help="logo PNG shown under the footage (default: Warzone)")
+    ap.add_argument("--logo-width", type=int, default=560, help="logo width in px (default 560)")
+    ap.add_argument("--tagline", default="SEASON 1 OUT NOW", help="line under the logo")
+    ap.add_argument("--no-tagline", action="store_true", help="hide the tagline")
     a = ap.parse_args()
 
     segs = [tuple(to_seconds(x) for x in sg.split("-")) for sg in a.seg]
@@ -123,7 +127,8 @@ def main():
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         ov = os.path.join(tmp, "overlay.png")
-        build_overlay(ov, a.text, video_top, video_bottom, not a.no_tagline)
+        build_overlay(ov, a.text, video_top, video_bottom,
+                      None if a.no_tagline else a.tagline, a.logo, a.logo_width)
 
         parts, labels = [], ""
         for i, (s, e) in enumerate(segs):
@@ -149,7 +154,7 @@ def main():
         if audio:
             cmd += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k"]
         cmd += ["-c:v", "libx264", "-preset", "slow", "-crf", "17", "-r", "30",
-                "-movflags", "+faststart", "-t", f"{dur:.3f}", a.out]
+                "-movflags", "+faststart", "-write_tmcd", "0", "-map_metadata", "-1", "-t", f"{dur:.3f}", a.out]
         subprocess.run(cmd, check=True)
     print(f"wrote {a.out} ({dur:.1f}s)")
 

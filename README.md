@@ -24,3 +24,8 @@ Options: `--zoom 1.0` shows the full 16:9 frame (default 1.15 crops the sides a 
 `--no-tagline` hides the "SEASON 1 OUT NOW" line.
 
 Requires `ffmpeg` and Python with Pillow. The font path in `make_clip.py` uses Inter ExtraBold.
+
+## STRANGER THAN HEAVEN Act 2 (SEGA)
+Footage: `STH_Kure_Story_Trailer.mp4` from the official Frame.io folder, saved as `footage/sth_trailer.mp4`.
+Logo: `assets/sth-logo.png` (official, from the brief). Render with `./render_sth.sh`; captions in `CAPTIONS_STH.md`.
+The renderer takes `--logo`, `--logo-width` and `--tagline`, so other campaigns can reuse the same layout.
