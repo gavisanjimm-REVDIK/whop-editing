@@ -15,9 +15,10 @@ Example:
       --seg 812.4-815.0 --seg 640.2-652.8@1.15:0.4 \
       --hook "N3on got *EXPOSED*|mid workout 💀" --out out/01.mp4
 
-Segment syntax: START-END[@ZOOM[:X]]  (seconds or M:SS / H:MM:SS)
+Segment syntax: START-END[@ZOOM[:X[:Y]]]  (seconds or M:SS / H:MM:SS)
   ZOOM  extra punch-in for that cut (default alternates 1.0 / 1.12)
   X     horizontal focus 0..1 when cropping 16:9 into the box (default 0.5 = centre)
+  Y     vertical focus 0..1 (default 0.5); lower it with ZOOM>1 to crop off burned-in subtitles
 """
 import argparse
 import json
@@ -41,12 +42,13 @@ RED = (255, 38, 48)
 
 SWEARS = {
     "fuck": "F***", "fucking": "F***ING", "fucked": "F***ED", "fuckin": "F***IN",
-    "motherfucker": "MOTHERF***ER", "shit": "S***", "bullshit": "BULLS***",
+    "motherfucker": "MOTHERF***ER", "shit": "S***", "bullshit": "BULLS***", "shitting": "S***TING",
+    "shitty": "S***TY", "fuckin'": "F***IN'",
     "bitch": "B****", "bitches": "B****ES", "dick": "D***", "pussy": "P****",
     "asshole": "A**HOLE", "nigga": "N****", "niggas": "N****S",
 }
 # Whisper spelling fixes for names in the show.
-FIXES = {"neon": "N3ON", "neons": "N3ON'S", "neon's": "N3ON'S", "reborn": "R3BORN"}
+FIXES = {"neon": "N3ON", "neons": "N3ON'S", "neon's": "N3ON'S", "reborn": "R3BORN", "chad": "CHAT"}
 HILITE = ["&H00FFFF&", "&HFFFF00&", "&H3CFF3C&"]  # ASS BGR: yellow, cyan, green
 
 
@@ -60,12 +62,13 @@ def secs(t):
 def parse_seg(text, i):
     rng, _, opt = text.partition("@")
     a, b = rng.split("-")
-    zoom, x = (1.0 if i % 2 == 0 else 1.12), 0.5
+    zoom, x, y = (1.0 if i % 2 == 0 else 1.12), 0.5, 0.5
     if opt:
-        z, _, xx = opt.partition(":")
+        z, xx, yy = (opt.split(":") + ["", ""])[:3]
         zoom = float(z) if z else zoom
         x = float(xx) if xx else x
-    return secs(a), secs(b), zoom, x
+        y = float(yy) if yy else y
+    return secs(a), secs(b), zoom, x, y
 
 
 def probe(path):
@@ -173,7 +176,7 @@ def ass_time(t):
     return f"{int(h)}:{int(m):02d}:{s:05.2f}"
 
 
-def build_ass(path, words, dur):
+def build_ass(path, words, dur, cap_y=CAP_Y):
     head = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {W}
@@ -204,7 +207,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             k += 1
         pop = "\\fscx72\\fscy72\\t(0,70,\\fscx112\\fscy112)\\t(70,130,\\fscx100\\fscy100)"
         ev.append(f"Dialogue: 0,{ass_time(a)},{ass_time(end)},W,,0,0,0,,"
-                  f"{{\\an5\\pos({W // 2},{CAP_Y}){pop}{col}}}{txt}")
+                  f"{{\\an5\\pos({W // 2},{cap_y}){pop}{col}}}{txt}")
     with open(path, "w") as f:
         f.write(head + "\n".join(ev) + "\n")
 
@@ -220,11 +223,15 @@ def main():
     ap.add_argument("--model", default="small.en")
     ap.add_argument("--no-flash", action="store_true")
     ap.add_argument("--keep-words", help="write the transcript JSON here (to hand-fix and reuse)")
-    ap.add_argument("--words", help="use this transcript JSON instead of running Whisper")
+    ap.add_argument("--words", help="use this transcript JSON (output timeline) instead of running Whisper")
+    ap.add_argument("--transcript", help="full-source transcript JSON ([{'w': [[start, end, word], ...]}, ...]); "
+                    "words are cut/shifted per segment instead of re-transcribing (more accurate)")
+    ap.add_argument("--cap-y", type=float, default=None,
+                    help="caption centre as a fraction of the footage box height (default 0.81)")
     a = ap.parse_args()
 
     segs = [parse_seg(s, i) for i, s in enumerate(a.seg)]
-    dur = sum(e - s for s, e, _, _ in segs)
+    dur = sum(e - s for s, e, *_ in segs)
     sw, sh, has_a = probe(a.input)
     if not has_a:
         sys.exit("input has no audio")
@@ -232,26 +239,35 @@ def main():
     os.makedirs(os.path.dirname(os.path.abspath(a.out)) or ".", exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         # 1) cut audio, transcribe in output timeline
-        apart = ";".join(f"[0:a]atrim={s}:{e},asetpts=PTS-STARTPTS[a{i}]" for i, (s, e, _, _) in enumerate(segs))
+        apart = ";".join(f"[0:a]atrim={s}:{e},asetpts=PTS-STARTPTS[a{i}]" for i, (s, e, *_) in enumerate(segs))
         acat = "".join(f"[a{i}]" for i in range(len(segs))) + f"concat=n={len(segs)}:v=0:a=1[ca]"
         wav = os.path.join(tmp, "a.wav")
         subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", a.input, "-filter_complex", apart + ";" + acat,
                         "-map", "[ca]", "-ac", "1", "-ar", "16000", wav], check=True)
         if a.words:
             words = json.load(open(a.words))
+        elif a.transcript:
+            src = [w for sg in json.load(open(a.transcript)) for w in sg["w"]]
+            words, off = [], 0.0
+            for s, e, *_ in segs:
+                for ws, we, wt in src:
+                    if s - 0.05 <= ws and ws < e - 0.08:
+                        words.append([max(ws - s, 0) + off, min(we, e) - s + off, wt])
+                off += e - s
         else:
             words = transcribe(wav, a.model)
         if a.keep_words:
             json.dump(words, open(a.keep_words, "w"), indent=0)
 
         ass = os.path.join(tmp, "caps.ass")
-        build_ass(ass, words, dur)
+        cap_y = round(VIDEO_TOP + BOX_H * a.cap_y) if a.cap_y is not None else CAP_Y
+        build_ass(ass, words, dur, cap_y)
         ov = os.path.join(tmp, "ov.png")
         build_overlay(ov, a.hook, a.cta)
 
         # 2) video graph
         parts, labels, cuts, t = [], "", [], 0.0
-        for i, (s, e, z, fx) in enumerate(segs):
+        for i, (s, e, z, fx, fy) in enumerate(segs):
             # scale to cover the box, extra zoom, then crop with horizontal focus
             sc_h = round(BOX_H * z / 2) * 2
             sc_w = round(sw * sc_h / sh / 2) * 2
@@ -259,7 +275,7 @@ def main():
                 sc_w = round(W * z / 2) * 2
                 sc_h = round(sh * sc_w / sw / 2) * 2
             cx = int(max(0, min(sc_w - W, sc_w * fx - W / 2)))
-            cy = (sc_h - BOX_H) // 2
+            cy = int(max(0, min(sc_h - BOX_H, sc_h * fy - BOX_H / 2)))
             parts.append(f"[0:v]trim={s}:{e},setpts=PTS-STARTPTS,fps=30,"
                          f"scale={sc_w}:{sc_h}:flags=lanczos,crop={W}:{BOX_H}:{cx}:{cy},setsar=1[v{i}]")
             parts.append(f"[0:a]atrim={s}:{e},asetpts=PTS-STARTPTS[a{i}]")
