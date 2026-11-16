@@ -24,3 +24,23 @@ Options: `--zoom 1.0` shows the full 16:9 frame (default 1.15 crops the sides a 
 `--no-tagline` hides the "SEASON 1 OUT NOW" line.
 
 Requires `ffmpeg` and Python with Pillow. The font path in `make_clip.py` uses Inter ExtraBold.
+
+---
+
+# HardScope R3born Ep. 2 Shorts (`make_short.py`)
+
+Theme-page style Shorts: black 9:16 canvas, two-line hook on top (one red keyword + emoji), punched-in
+saturated footage, one-word pop-up captions (emphasis words yellow/cyan/green), red flash on cuts,
+swears censored and bleeped, no fades so the end loops into the start. Captions are auto-transcribed
+with faster-whisper (`pip install faster-whisper`).
+
+Brief rules: Episode 2 footage only, tag @HardScope + `#r3born` in every caption, never mention FaZe,
+no politics, 7 s minimum, never upload the full episode, don't post the same edit to another campaign.
+
+```bash
+python3 make_short.py --input footage/ep2.mp4 \
+  --seg 812.4-815.0 --seg 640.2-652.8@1.15:0.4 \
+  --hook "N3on got *EXPOSED*|mid workout 💀" --out out/r3born_01.mp4
+```
+`--seg START-END[@ZOOM[:X]]`: ZOOM punches in, X (0..1) moves the crop left/right onto the subject.
+`--keep-words f.json` saves the transcript; fix names/typos in it and re-render with `--words f.json`.
