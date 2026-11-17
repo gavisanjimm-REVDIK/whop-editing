@@ -29,6 +29,20 @@ LOGO = os.path.join(ROOT, "assets", "warzone-logo-white.png")  # official white 
 FONT = "/usr/share/fonts/opentype/inter/Inter-ExtraBold.otf"
 W, H = 1080, 1920
 
+# Named editing styles (see STYLES.md). A style only sets defaults; any flag given on the command line wins.
+STYLES = {
+    # edit1: STRANGER THAN HEAVEN combat look (out/sth_02_combat.mp4).
+    # Black 9:16 canvas, 3-line hook with the game name alone on its line in logo yellow,
+    # footage cut on the trailer's own shot changes, audio crossfaded at jumps, STH logo + PRE-ORDER NOW.
+    "edit1": {
+        "logo": os.path.join(ROOT, "assets", "sth-logo.png"),
+        "logo_width": 300,
+        "tagline": "PRE-ORDER NOW",
+        "highlight": "#DFBE31",
+        "audio_xfade": 0.35,
+    },
+}
+
 
 def to_seconds(t):
     if t is None:
@@ -134,6 +148,10 @@ def main():
     ap.add_argument("--audio-xfade", type=float, default=0.0,
                     help="seconds of audio crossfade at each segment join (video stays a hard cut)")
     ap.add_argument("--no-tagline", action="store_true", help="hide the tagline")
+    ap.add_argument("--style", choices=sorted(STYLES), help="named editing style preset (see STYLES.md)")
+    pre, _ = ap.parse_known_args()
+    if pre.style:
+        ap.set_defaults(**STYLES[pre.style])
     a = ap.parse_args()
 
     segs = [tuple(to_seconds(x) for x in sg.split("-")) for sg in a.seg]
