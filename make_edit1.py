@@ -35,7 +35,8 @@ F_BOLD = os.path.join(FONTS, "Poppins-Bold.ttf")
 W, H = 1080, 1920
 # Footage box. BH is set from --box-h; the default keeps the box, subtitles and label above the
 # YouTube Shorts / TikTok / Reels title bar (~bottom 22%) and the subtitles clear of the right-side buttons.
-BW, BH = 900, 980
+BW, BH = 900, 1160
+SUB_BOTTOM = 1440   # subtitles end here (absolute y): above the Shorts/TikTok/Reels title bar
 BX = (W - BW) // 2
 SUB_BAND = 0.852            # keep the top 85.2% of the source frame (drops the burned-in subtitle line)
 
@@ -101,25 +102,26 @@ def avatar(path_or_none, handle, size):
 
 
 def build_card(path, a):
-    """Static layer: white canvas with header, caption and label. Returns the footage box top y."""
+    """Static layer: white canvas with header, caption and label, the whole block centred vertically.
+    Returns the footage box top y."""
     img = Image.new("RGBA", (W, H), (255, 255, 255, 255))
     d = ImageDraw.Draw(img)
-    av = 96
-    ay = 122
+    av, cf, lf = 96, ImageFont.truetype(F_REG, 46), ImageFont.truetype(F_BOLD, 34)
+    lines = [ln for part in a.text.split("|") for ln in wrap(d, part.strip(), cf, W - 120)]
+    label_h = 84 if a.label else 0
+    block = av + 28 + 60 * len(lines) + 32 + BH + label_h
+    ay = max((H - block) // 2, 40)
+
     img.alpha_composite(avatar(a.avatar, a.handle, av), (60, ay))
     d.text((180, ay + av / 2), a.handle, font=ImageFont.truetype(F_BOLD, 44), fill=(10, 10, 10), anchor="lm")
-
-    cf = ImageFont.truetype(F_REG, 46)
     y = ay + av + 28
-    for line in [ln for part in a.text.split("|") for ln in wrap(d, part.strip(), cf, W - 120)]:
+    for line in lines:
         d.text((60, y), line, font=cf, fill=(10, 10, 10))
         y += 60
     box_top = y + 32
 
     if a.label:
-        lf = ImageFont.truetype(F_BOLD, 34)
-        d.text((W / 2, box_top + BH + 42), a.label.upper(), font=lf,
-               fill=(85, 85, 85), anchor="mm")
+        d.text((W / 2, box_top + BH + 42), a.label.upper(), font=lf, fill=(85, 85, 85), anchor="mm")
     img.save(path)
     return box_top
 
@@ -166,7 +168,7 @@ def main():
     ap.add_argument("--label", default="", help="small grey label under the footage")
     ap.add_argument("--logo", default=os.path.join(ROOT, "assets", "sth-logo.png"))
     ap.add_argument("--logo-width", type=int, default=150)
-    ap.add_argument("--box-h", type=int, default=BH, help="footage box height (default 980, Shorts-safe)")
+    ap.add_argument("--box-h", type=int, default=BH, help="footage box height (default 1160)")
     ap.add_argument("--keep-subs", action="store_true", help="don't crop off the burned-in subtitle band")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
@@ -230,7 +232,7 @@ def main():
         f.append(f"[c0][1:v]overlay={BX + BW - lsz[0] + 2}:{box_top - 2}:shortest=1[c1]")
         last = "c1"
         for i, (_, s, e) in enumerate(subs):
-            f.append(f"[{last}][{2 + i}:v]overlay={BX}:{box_top + BH - 220}:shortest=1:"
+            f.append(f"[{last}][{2 + i}:v]overlay={BX}:{min(box_top + BH, SUB_BOTTOM + 40) - 220}:shortest=1:"
                      f"enable='between(t,{s},{e})'[s{i}]")
             last = f"s{i}"
         f.append(f"[{last}]format=yuv420p[v]")

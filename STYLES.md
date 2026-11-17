@@ -10,8 +10,9 @@ set `AVATAR=path/to/pfp.png` to use a profile picture instead of the initial cir
 - Hook as a plain, left-aligned black caption under the handle (`--text`, `|` forces a line break).
   Say plainly that it's a video game and name it, e.g. "This upcoming video game set in 1929 Japan looks unreal.
   It's called STRANGER THAN HEAVEN". No claims about other games, no made-up facts (campaign rules).
-- **Shorts/TikTok/Reels-safe:** footage box 900x980 so the box, subtitles and label all end above the bottom
-  title bar (~y 1500), and subtitles stay narrower than the box so the right-side buttons don't cover them.
+- The whole block (header, caption, footage, label) is **centred vertically** on the canvas.
+- Tall footage box (900x1160). **Shorts/TikTok/Reels-safe subtitles:** they always end at y 1440, above the
+  bottom title bar, and stay narrower than the box so the right-side buttons don't cover them.
 - Footage in the box. Each shot is cropped to follow its subject: `--seg START-END@XC`
   (XC = horizontal centre 0..1). Shots too wide to crop (title cards) use `@fit`: full frame over a blurred fill.
   Letterbox bars are detected and cropped off automatically.
