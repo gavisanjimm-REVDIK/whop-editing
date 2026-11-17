@@ -66,5 +66,26 @@ Pre-order or Wishlist STRANGER THAN HEAVEN now for XBOX Series/Game Pass/Cloud/P
 #StrangerThanHeaven #RGG #1929Kure
 ```
 
+## out/sth_03_kure_edit1.mp4 (edit1 style)
+
+### Instagram Reels / TikTok
+```
+Pre-order or Wishlist STRANGER THAN HEAVEN now for XBOX Series/Game Pass/Cloud/PC, PlayStation 5, or Steam and play on January 15th. @sth_game
+#Ad
+#StrangerThanHeaven #VideoGames #1929Kure
+```
+
+### YouTube Shorts
+Title:
+```
+This upcoming video game set in 1929 Japan looks unreal
+```
+Description:
+```
+Pre-order or Wishlist STRANGER THAN HEAVEN now for XBOX Series/Game Pass/Cloud/PC, PlayStation 5, or Steam and play on January 15th. @sth_game @SEGA_West
+#Ad
+#StrangerThanHeaven #VideoGames #1929Kure
+```
+
 Rules to remember: 50%+ US/Canada audience, likes visible (YouTube: leave like counts on), keep it up 30+ days,
 max 5 posts of the same video, no added music, no AI voices.

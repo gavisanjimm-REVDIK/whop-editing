@@ -33,7 +33,9 @@ F_REG = os.path.join(FONTS, "Poppins-Regular.ttf")
 F_SEMI = os.path.join(FONTS, "Poppins-SemiBold.ttf")
 F_BOLD = os.path.join(FONTS, "Poppins-Bold.ttf")
 W, H = 1080, 1920
-BW, BH = 900, 1360          # footage box
+# Footage box. BH is set from --box-h; the default keeps the box, subtitles and label above the
+# YouTube Shorts / TikTok / Reels title bar (~bottom 22%) and the subtitles clear of the right-side buttons.
+BW, BH = 900, 980
 BX = (W - BW) // 2
 SUB_BAND = 0.852            # keep the top 85.2% of the source frame (drops the burned-in subtitle line)
 
@@ -109,14 +111,14 @@ def build_card(path, a):
 
     cf = ImageFont.truetype(F_REG, 46)
     y = ay + av + 28
-    for line in wrap(d, a.text, cf, W - 120):
+    for line in [ln for part in a.text.split("|") for ln in wrap(d, part.strip(), cf, W - 120)]:
         d.text((60, y), line, font=cf, fill=(10, 10, 10))
         y += 60
     box_top = y + 32
 
     if a.label:
         lf = ImageFont.truetype(F_BOLD, 34)
-        d.text((W / 2, box_top + BH + (H - box_top - BH) / 2), a.label.upper(), font=lf,
+        d.text((W / 2, box_top + BH + 42), a.label.upper(), font=lf,
                fill=(85, 85, 85), anchor="mm")
     img.save(path)
     return box_top
@@ -140,8 +142,8 @@ def build_logo(path, a):
 def build_sub(path, text):
     img = Image.new("RGBA", (BW, 220), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    f = ImageFont.truetype(F_SEMI, 38)
-    lines = wrap(d, text, f, BW - 90)
+    f = ImageFont.truetype(F_SEMI, 40)
+    lines = wrap(d, text, f, BW - 150)  # narrower than the box: stays clear of the Shorts side buttons
     lh = 50
     y = 220 - 40 - lh * len(lines)
     for line in lines:
@@ -151,21 +153,24 @@ def build_sub(path, text):
 
 
 def main():
+    global BH
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--input", required=True)
     ap.add_argument("--seg", action="append", required=True,
                     help="START-END@XC (XC 0..1 crop centre, default 0.5) or START-END@fit; repeatable")
     ap.add_argument("--sub", action="append", default=[],
                     help="'START-END|text' in OUTPUT seconds; re-sets an official subtitle line")
-    ap.add_argument("--text", required=True, help="hook caption under the handle")
+    ap.add_argument("--text", required=True, help="hook caption under the handle ('|' forces a line break)")
     ap.add_argument("--handle", required=True, help="your page handle, e.g. @mypage")
     ap.add_argument("--avatar", help="profile picture (square-ish image); default = initial in a circle")
     ap.add_argument("--label", default="", help="small grey label under the footage")
     ap.add_argument("--logo", default=os.path.join(ROOT, "assets", "sth-logo.png"))
     ap.add_argument("--logo-width", type=int, default=150)
+    ap.add_argument("--box-h", type=int, default=BH, help="footage box height (default 980, Shorts-safe)")
     ap.add_argument("--keep-subs", action="store_true", help="don't crop off the burned-in subtitle band")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
+    BH = a.box_h
 
     segs = []
     for sg in a.seg:
