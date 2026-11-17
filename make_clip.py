@@ -55,23 +55,46 @@ def has_audio(path):
     return bool(out.strip())
 
 
-def build_overlay(path, text, video_top, video_bottom, tagline, logo_path, logo_w):
+def build_overlay(path, text, video_top, video_bottom, tagline, logo_path, logo_w, highlight="white"):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
 
     # Hook text, centred, bottom edge sits 40px above the footage.
+    # Words wrapped in *asterisks* are drawn in the highlight colour; "|" forces a line break.
     font = ImageFont.truetype(FONT, 54)
-    lines = textwrap.wrap(text, width=30) if text else []
-    if len(lines) > 1:  # rebalance so the last line isn't a lone word or two
-        w = -(-len(text) // len(lines))
-        while len(textwrap.wrap(text, width=w)) > len(lines):
+    words, hl, on = [], [], False
+    for tok in text.replace("|", " ").split():
+        start, end = tok.startswith("*"), tok.endswith("*") and len(tok.strip("*")) > 0
+        if start:
+            on = True
+        words.append(tok.strip("*"))
+        hl.append(on)
+        if end and tok.endswith("*"):
+            on = False
+    plain = " ".join(words)
+    manual = "|" in text
+    if manual:
+        lines = [" ".join(t.strip("*") for t in part.split()) for part in text.split("|")]
+    else:
+        lines = textwrap.wrap(plain, width=30) if plain else []
+    if len(lines) > 1 and not manual:  # rebalance so the last line isn't a lone word or two
+        w = -(-len(plain) // len(lines))
+        while len(textwrap.wrap(plain, width=w)) > len(lines):
             w += 1
-        lines = textwrap.wrap(text, width=w)
+        lines = textwrap.wrap(plain, width=w)
     line_h = 68
     y = video_top - 40 - line_h * len(lines)
+    space = d.textlength(" ", font=font)
+    i = 0
     for line in lines:
+        n = len(line.split())
+        seg = list(zip(words[i:i + n], hl[i:i + n]))
+        i += n
         tw = d.textlength(line, font=font)
-        d.text(((W - tw) / 2, y), line, font=font, fill="white")
+        x = (W - tw) / 2
+        for word, h in seg:
+            d.text((x, y), word, font=font, fill=highlight if h else "white")
+            x += d.textlength(word, font=font) + space
         y += line_h
 
     # Official logo, used as-is (transparent padding trimmed so it sits evenly).
@@ -106,6 +129,10 @@ def main():
     ap.add_argument("--logo", default=LOGO, help="logo PNG shown under the footage (default: Warzone)")
     ap.add_argument("--logo-width", type=int, default=560, help="logo width in px (default 560)")
     ap.add_argument("--tagline", default="SEASON 1 OUT NOW", help="line under the logo")
+    ap.add_argument("--highlight", default="#DFBE31",
+                    help="colour for *starred* words in --text (default: STH logo yellow)")
+    ap.add_argument("--audio-xfade", type=float, default=0.0,
+                    help="seconds of audio crossfade at each segment join (video stays a hard cut)")
     ap.add_argument("--no-tagline", action="store_true", help="hide the tagline")
     a = ap.parse_args()
 
@@ -128,16 +155,27 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         ov = os.path.join(tmp, "overlay.png")
         build_overlay(ov, a.text, video_top, video_bottom,
-                      None if a.no_tagline else a.tagline, a.logo, a.logo_width)
+                      None if a.no_tagline else a.tagline, a.logo, a.logo_width, a.highlight)
 
-        parts, labels = [], ""
+        parts, vl, al = [], "", []
+        xf = a.audio_xfade if len(segs) > 1 else 0.0
         for i, (s, e) in enumerate(segs):
             parts.append(f"[0:v]trim={s}:{e},setpts=PTS-STARTPTS,fps=30[v{i}]")
-            labels += f"[v{i}]"
+            vl += f"[v{i}]"
             if audio:
-                parts.append(f"[0:a]atrim={s}:{e},asetpts=PTS-STARTPTS[a{i}]")
-                labels += f"[a{i}]"
-        parts.append(f"{labels}concat=n={len(segs)}:v=1:a={1 if audio else 0}[cv]" + ("[ca]" if audio else ""))
+                ae = e + (xf if i < len(segs) - 1 else 0)  # extra tail is eaten by the crossfade
+                parts.append(f"[0:a]atrim={s}:{ae},asetpts=PTS-STARTPTS[a{i}]")
+                al.append(f"[a{i}]")
+        parts.append(f"{vl}concat=n={len(segs)}:v=1:a=0[cv]")
+        if audio:
+            if xf > 0:
+                cur = al[0]
+                for i in range(1, len(al)):
+                    out = "[ca]" if i == len(al) - 1 else f"[ax{i}]"
+                    parts.append(f"{cur}{al[i]}acrossfade=d={xf}:c1=tri:c2=tri{out}")
+                    cur = out
+            else:
+                parts.append(f"{''.join(al)}concat=n={len(al)}:v=0:a=1[ca]")
         fo = max(dur - 0.3, 0)
         parts += [
             f"[cv]scale={scaled_w}:{box_h}:flags=lanczos,crop={W}:{box_h},setsar=1,"
