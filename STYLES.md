@@ -2,14 +2,14 @@
 
 ## edit1 — white post card (`make_edit1.py`)
 Reference: the creator-style clip you sent (white card, avatar + handle, caption, tall footage, small grey label).
-Example output: `out/sth_03_kure_edit1.mp4` (render with `./render_sth.sh 3e`; handle defaults to @Clipsterssz,
-set `AVATAR=path/to/pfp.png` to use a profile picture instead of the initial circle).
+Example output: `out/sth_03_kure_edit1.mp4` (render with `./render_sth.sh 3e`; handle @Clipsterssz, avatar `assets/clipsterssz-logo.png`;
+override with `HANDLE=` / `AVATAR=`).
 
 - 1080x1920 **white** canvas, Poppins font (`assets/fonts`, SIL OFL).
 - Header: round avatar (`--avatar pic.jpg`, or a black initial circle) + bold `@handle` (`--handle`).
 - Hook as a plain, left-aligned black caption under the handle (`--text`, `|` forces a line break).
-  Say plainly that it's a video game and name it, e.g. "This upcoming video game set in 1929 Japan looks unreal.
-  It's called STRANGER THAN HEAVEN". No claims about other games, no made-up facts (campaign rules).
+  **One sentence, no game title** (the logo watermark names it), and make clear it is a video game,
+  e.g. "This upcoming video game set in 1929 Japan looks unreal." No claims about other games or made-up facts.
 - The whole block (header, caption, footage, label) is **centred vertically** on the canvas.
 - Tall footage box (900x1160). **Shorts/TikTok/Reels-safe subtitles:** they always end at y 1440, above the
   bottom title bar, and stay narrower than the box so the right-side buttons don't cover them.

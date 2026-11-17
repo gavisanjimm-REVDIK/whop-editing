@@ -27,9 +27,9 @@ want 3 && python3 make_clip.py --style yellowhook --input $T --seg 47.00-68.95 \
 # 3e - edit1 (white post-card style, see STYLES.md). Same 1929 Kure section, crop follows each shot,
 #      official subtitle lines re-set inside the frame. Set HANDLE (and AVATAR) to your page.
 HANDLE=${HANDLE:-@Clipsterssz}
-AV=(); [ -n "${AVATAR:-}" ] && AV=(--avatar "$AVATAR")
-want 3e && python3 make_edit1.py --input $T --handle "$HANDLE" "${AV[@]}" --label "Act 2 Story Trailer" \
-  --text "This upcoming video game set in|1929 Japan looks unreal. It's called|STRANGER THAN HEAVEN" \
+AVATAR=${AVATAR:-assets/clipsterssz-logo.png}
+want 3e && python3 make_edit1.py --input $T --handle "$HANDLE" --avatar "$AVATAR" \
+  --text "This upcoming video game set in|1929 Japan looks unreal." \
   --seg 47.00-50.30@fit --seg 50.30-55.70@0.53 --seg 55.70-58.05@0.51 --seg 58.05-61.20@0.53 \
   --seg 61.20-62.70@0.50 --seg 62.70-65.25@0.55 --seg 65.25-68.95@0.58 \
   --sub "2.45-5.35|...I'll say it again! Pay up!" \
