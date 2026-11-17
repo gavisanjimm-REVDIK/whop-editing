@@ -1,16 +1,21 @@
 # Editing styles
 
-Use a style with `python3 make_clip.py --style <name> ...`. A style only sets defaults; any flag you pass wins.
+## edit1 — white post card (`make_edit1.py`)
+Reference: the creator-style clip you sent (white card, avatar + handle, caption, tall footage, small grey label).
+Example output: `out/sth_03_kure_edit1.mp4` (render with `HANDLE=@yourpage ./render_sth.sh 3e`).
 
-## edit1
-Reference: `out/sth_02_combat.mp4` (STRANGER THAN HEAVEN combat clip).
+- 1080x1920 **white** canvas, Poppins font (`assets/fonts`, SIL OFL).
+- Header: round avatar (`--avatar pic.jpg`, or a black initial circle) + bold `@handle` (`--handle`).
+- Hook as a plain, left-aligned black caption under the handle (`--text`).
+- Footage in a tall 900x1360 box. Each shot is cropped to follow its subject: `--seg START-END@XC`
+  (XC = horizontal centre 0..1). Shots too wide to crop (title cards) use `@fit`: full frame over a blurred fill.
+  Letterbox bars are detected and cropped off automatically.
+- The trailer's burned-in subtitles are cropped off and the **official lines are re-set** inside the box
+  (`--sub "START-END|line"`, output seconds, copy the trailer's text exactly).
+- Official logo as a watermark, top-right of the footage (white logo, so it can't sit on the white card).
+- Small grey bold label centred under the footage (`--label`, e.g. "Act 2 Story Trailer").
+- Original audio only, cuts on the trailer's own shot changes, 0.35 s audio crossfade at real jumps.
 
-- 1080x1920 black canvas, official 16:9 footage centred slightly above middle (1.15 zoom, sides cropped).
-- Hook text above the footage, bold white Inter ExtraBold, **3 short lines** split with `|`.
-  The game name sits **alone on its own line in logo yellow** (`#DFBE31`), marked with `*stars*`.
-  Example: `--text "The fights in|*STRANGER THAN HEAVEN*|look absolutely brutal."`
-- Footage cut on the trailer's own shot changes (find them with ffmpeg `select='gt(scene,0.25)'`);
-  several `--seg` pieces can be joined to skip shots, with a 0.35 s audio crossfade at each jump (video hard cut).
-- Original trailer audio only, short fade in/out. No music, no voiceover.
-- Official STH logo (300 px wide) under the footage with **PRE-ORDER NOW** beneath it.
-- 15-30 s, ends before any subtitle with swearing.
+## yellowhook — black canvas, yellow game name (`make_clip.py --style yellowhook`)
+Reference: `out/sth_02_combat.mp4`. Black canvas, 3-line bold hook with the game name alone on its line
+in logo yellow (`|` line breaks, `*stars*` for yellow), 16:9 footage, STH logo + PRE-ORDER NOW below.

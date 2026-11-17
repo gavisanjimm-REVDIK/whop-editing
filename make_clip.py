@@ -31,10 +31,10 @@ W, H = 1080, 1920
 
 # Named editing styles (see STYLES.md). A style only sets defaults; any flag given on the command line wins.
 STYLES = {
-    # edit1: STRANGER THAN HEAVEN combat look (out/sth_02_combat.mp4).
+    # yellowhook: STRANGER THAN HEAVEN combat look (out/sth_02_combat.mp4).
     # Black 9:16 canvas, 3-line hook with the game name alone on its line in logo yellow,
     # footage cut on the trailer's own shot changes, audio crossfaded at jumps, STH logo + PRE-ORDER NOW.
-    "edit1": {
+    "yellowhook": {
         "logo": os.path.join(ROOT, "assets", "sth-logo.png"),
         "logo_width": 300,
         "tagline": "PRE-ORDER NOW",

@@ -28,4 +28,4 @@ Requires `ffmpeg` and Python with Pillow. The font path in `make_clip.py` uses I
 ## STRANGER THAN HEAVEN Act 2 (SEGA)
 Footage: `STH_Kure_Story_Trailer.mp4` from the official Frame.io folder, saved as `footage/sth_trailer.mp4`.
 Logo: `assets/sth-logo.png` (official, from the brief). Render with `./render_sth.sh`; captions in `CAPTIONS_STH.md`.
-Editing styles (e.g. `--style edit1`) are described in `STYLES.md`. The renderer takes `--logo`, `--logo-width`, `--tagline`, `--highlight` (colours `*starred*` words in `--text`; `|` forces a line break) and `--audio-xfade` (smooths the audio at segment joins), so other campaigns can reuse the same layout.
+Editing styles: `edit1` (white post card, `make_edit1.py`) and `yellowhook` (`make_clip.py --style yellowhook`), see `STYLES.md`. The renderer takes `--logo`, `--logo-width`, `--tagline`, `--highlight` (colours `*starred*` words in `--text`; `|` forces a line break) and `--audio-xfade` (smooths the audio at segment joins), so other campaigns can reuse the same layout.
