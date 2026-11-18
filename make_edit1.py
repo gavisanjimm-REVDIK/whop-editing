@@ -38,7 +38,7 @@ W, H = 1080, 1920
 BW, BH = 900, 1160
 SUB_BOTTOM = 1440   # subtitles end here (absolute y): above the Shorts/TikTok/Reels title bar
 BX = (W - BW) // 2
-SUB_BAND = 0.852            # keep the top 85.2% of the source frame (drops the burned-in subtitle line)
+SUB_BAND = 0.81             # keep the top 81% of the source frame (drops 1- and 2-line burned-in subtitles)
 
 
 def to_seconds(t):
@@ -145,7 +145,14 @@ def build_sub(path, text):
     img = Image.new("RGBA", (BW, 220), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     f = ImageFont.truetype(F_SEMI, 40)
-    lines = wrap(d, text, f, BW - 150)  # narrower than the box: stays clear of the Shorts side buttons
+    mw = BW - 150  # narrower than the box: stays clear of the Shorts side buttons
+    lines = wrap(d, text, f, mw)
+    while len(lines) > 1:  # balance: shrink the width while the line count stays the same
+        trial = wrap(d, text, f, mw - 20)
+        if len(trial) != len(lines):
+            break
+        mw -= 20
+        lines = trial
     lh = 50
     y = 220 - 40 - lh * len(lines)
     for line in lines:
@@ -169,6 +176,8 @@ def main():
     ap.add_argument("--logo", default=os.path.join(ROOT, "assets", "sth-logo.png"))
     ap.add_argument("--logo-width", type=int, default=150)
     ap.add_argument("--box-h", type=int, default=BH, help="footage box height (default 1160)")
+    ap.add_argument("--sub-cut", type=float, default=SUB_BAND,
+                    help="keep this top fraction of the source frame (default 0.81)")
     ap.add_argument("--keep-subs", action="store_true", help="don't crop off the burned-in subtitle band")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
@@ -181,7 +190,7 @@ def main():
         segs.append((s, e, mode or "0.5"))
     dur = sum(e - s for s, e, _ in segs)
     sw, sh, audio = probe(a.input)
-    band = 1.0 if a.keep_subs else SUB_BAND
+    band = 1.0 if a.keep_subs else a.sub_cut
 
     os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:

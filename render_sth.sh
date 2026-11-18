@@ -43,4 +43,16 @@ want 3e && python3 make_edit1.py --input $T --handle "$HANDLE" --avatar "$AVATAR
 #     Cornered -> "Hold it" -> boss's verdict -> bowing ceremony (0:26.28-0:47.00), official subs kept.
 want 4 && python3 make_clip.py --style edit2 --input $T --seg 26.28-47.00 \
   --text "The *yakuza* scenes in this upcoming|video game look so intense." --out out/sth_04_ceremony.mp4
+# 5 - edit1. "Special project" offer: boss -> recruiter -> "act like a spy?" -> cafe -> "This is Mako!"
+#     (1:41.78-1:58.45). Crop follows the speaker in each shot; official lines re-set in frame.
+want 5 && python3 make_edit1.py --input $T --handle "$HANDLE" --avatar "$AVATAR" \
+  --text "This upcoming video game's story|just got way more interesting." \
+  --seg 101.78-104.47@0.57 --seg 104.47-108.50@0.30 --seg 108.50-110.58@0.72 --seg 110.58-113.03@0.33 \
+  --seg 113.03-116.70@0.55 --seg 116.70-118.45@0.55 \
+  --sub "0.67-2.22|He'll do nicely." \
+  --sub "3.17-7.97|You're in luck. The boss was lookin' for someone to handle a special project of his." \
+  --sub "8.47-10.62|So, what, you want me to act like a spy?" \
+  --sub "11.27-13.62|Allow me to introduce to you our newest friend." \
+  --sub "13.62-16.67|This is Mako!" \
+  --out out/sth_05_special_project.mp4
 true
