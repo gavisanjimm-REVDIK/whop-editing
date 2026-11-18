@@ -22,6 +22,18 @@ override with `HANDLE=` / `AVATAR=`).
 - Small grey bold label centred under the footage (`--label`, e.g. "Act 2 Story Trailer").
 - Original audio only, cuts on the trailer's own shot changes, 0.35 s audio crossfade at real jumps.
 
+## edit2 — black canvas, condensed hook (`make_clip.py --style edit2`)
+Inspired by a creator Short (black canvas, tall condensed caption, zoomed footage, big logo), not copied.
+Example output: `out/sth_04_ceremony.mp4` (`./render_sth.sh 4`).
+
+- Black 1080x1920 canvas. Hook in **Oswald Bold** (`assets/fonts`, SIL OFL), white, centred, one sentence,
+  no game title, one keyword in logo yellow via `*stars*`, `|` for the line break.
+- Footage: letterbox bars detected and removed, then zoomed 1.33x so it fills the width with the sides cropped.
+  The trailer's own subtitles stay (they sit inside the crop).
+- Big official STH logo (250 px) under the footage, no tagline.
+- Layout shifted up 120 px so the logo ends above the Shorts/TikTok/Reels title bar.
+- Original audio only; 0.35 s audio crossfade if several `--seg` pieces are joined.
+
 ## yellowhook — black canvas, yellow game name (`make_clip.py --style yellowhook`)
 Reference: `out/sth_02_combat.mp4`. Black canvas, 3-line bold hook with the game name alone on its line
 in logo yellow (`|` line breaks, `*stars*` for yellow), 16:9 footage, STH logo + PRE-ORDER NOW below.

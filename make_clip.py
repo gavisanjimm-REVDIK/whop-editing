@@ -31,6 +31,21 @@ W, H = 1080, 1920
 
 # Named editing styles (see STYLES.md). A style only sets defaults; any flag given on the command line wins.
 STYLES = {
+    # edit2: black canvas, tall condensed hook (Oswald), footage zoomed in with letterbox bars removed,
+    # big STH logo under the footage, no tagline. One-sentence hook without the game title.
+    "edit2": {
+        "logo": os.path.join(ROOT, "assets", "sth-logo.png"),
+        "logo_width": 250,
+        "no_tagline": True,
+        "font": os.path.join(ROOT, "assets", "fonts", "Oswald-Bold.ttf"),
+        "font_size": 66,
+        "line_h": 80,
+        "zoom": 1.33,
+        "trim_bars": True,
+        "y_offset": -120,  # keeps the logo above the Shorts/TikTok/Reels title bar
+        "highlight": "#DFBE31",
+        "audio_xfade": 0.35,
+    },
     # yellowhook: STRANGER THAN HEAVEN combat look (out/sth_02_combat.mp4).
     # Black 9:16 canvas, 3-line hook with the game name alone on its line in logo yellow,
     # footage cut on the trailer's own shot changes, audio crossfaded at jumps, STH logo + PRE-ORDER NOW.
@@ -69,13 +84,14 @@ def has_audio(path):
     return bool(out.strip())
 
 
-def build_overlay(path, text, video_top, video_bottom, tagline, logo_path, logo_w, highlight="white"):
+def build_overlay(path, text, video_top, video_bottom, tagline, logo_path, logo_w, highlight="white",
+                  font_path=FONT, font_size=54, line_h=68):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
 
     # Hook text, centred, bottom edge sits 40px above the footage.
     # Words wrapped in *asterisks* are drawn in the highlight colour; "|" forces a line break.
-    font = ImageFont.truetype(FONT, 54)
+    font = ImageFont.truetype(font_path, font_size)
     words, hl, on = [], [], False
     for tok in text.replace("|", " ").split():
         start, end = tok.startswith("*"), tok.endswith("*") and len(tok.strip("*")) > 0
@@ -96,7 +112,6 @@ def build_overlay(path, text, video_top, video_bottom, tagline, logo_path, logo_
         while len(textwrap.wrap(plain, width=w)) > len(lines):
             w += 1
         lines = textwrap.wrap(plain, width=w)
-    line_h = 68
     y = video_top - 40 - line_h * len(lines)
     space = d.textlength(" ", font=font)
     i = 0
@@ -148,6 +163,11 @@ def main():
     ap.add_argument("--audio-xfade", type=float, default=0.0,
                     help="seconds of audio crossfade at each segment join (video stays a hard cut)")
     ap.add_argument("--no-tagline", action="store_true", help="hide the tagline")
+    ap.add_argument("--font", default=FONT, help="hook font file")
+    ap.add_argument("--font-size", type=int, default=54)
+    ap.add_argument("--line-h", type=int, default=68, help="hook line height in px")
+    ap.add_argument("--y-offset", type=int, default=-60, help="footage offset from vertical centre (px)")
+    ap.add_argument("--trim-bars", action="store_true", help="detect and crop letterbox bars before scaling")
     ap.add_argument("--style", choices=sorted(STYLES), help="named editing style preset (see STYLES.md)")
     pre, _ = ap.parse_known_args()
     if pre.style:
@@ -162,10 +182,20 @@ def main():
     dur = sum(e - s for s, e in segs)
 
     sw, sh = probe_size(a.input)
+    bar_top, ah = 0, sh
+    if a.trim_bars:
+        out = subprocess.run(["ffmpeg", "-hide_banner", "-ss", f"{segs[0][0] + 0.5:.2f}", "-t", "1", "-i", a.input,
+                              "-vf", "cropdetect=limit=24:round=2", "-an", "-f", "null", "-"],
+                             capture_output=True, text=True).stderr
+        crops = [c for c in out.split() if c.startswith("crop=")]
+        if crops:
+            _, ah, _, bar_top = (int(v) for v in crops[-1][5:].split(":"))
+    pre = f"crop={sw}:{ah}:0:{bar_top}," if (bar_top or ah != sh) else ""
+    sh_active = ah
     # Footage box: full width, height from source aspect ratio, enlarged by zoom then side-cropped.
-    box_h = round(W / (sw / sh) * a.zoom / 2) * 2
+    box_h = round(W / (sw / sh_active) * a.zoom / 2) * 2
     scaled_w = round(W * a.zoom / 2) * 2
-    video_top = (H - box_h) // 2 - 60  # sit a little above centre, like the reference
+    video_top = (H - box_h) // 2 + a.y_offset  # sit a little above centre, like the reference
     video_bottom = video_top + box_h
     audio = has_audio(a.input)
 
@@ -173,7 +203,8 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         ov = os.path.join(tmp, "overlay.png")
         build_overlay(ov, a.text, video_top, video_bottom,
-                      None if a.no_tagline else a.tagline, a.logo, a.logo_width, a.highlight)
+                      None if a.no_tagline else a.tagline, a.logo, a.logo_width, a.highlight,
+                      a.font, a.font_size, a.line_h)
 
         parts, vl, al = [], "", []
         xf = a.audio_xfade if len(segs) > 1 else 0.0
@@ -196,7 +227,7 @@ def main():
                 parts.append(f"{''.join(al)}concat=n={len(al)}:v=0:a=1[ca]")
         fo = max(dur - 0.3, 0)
         parts += [
-            f"[cv]scale={scaled_w}:{box_h}:flags=lanczos,crop={W}:{box_h},setsar=1,"
+            f"[cv]{pre}scale={scaled_w}:{box_h}:flags=lanczos,crop={W}:{box_h},setsar=1,"
             f"fade=t=in:st=0:d=0.25,fade=t=out:st={fo:.2f}:d=0.3[clip]",
             f"color=c=black:s={W}x{H}:r=30:d={dur:.3f}[bg]",
             f"[bg][clip]overlay=0:{video_top}:shortest=1[base]",

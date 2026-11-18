@@ -87,5 +87,26 @@ Pre-order or Wishlist STRANGER THAN HEAVEN now for XBOX Series/Game Pass/Cloud/P
 #StrangerThanHeaven #VideoGames #1929Kure
 ```
 
+## out/sth_04_ceremony.mp4 (edit2 style)
+
+### Instagram Reels / TikTok
+```
+Pre-order or Wishlist STRANGER THAN HEAVEN now for XBOX Series/Game Pass/Cloud/PC, PlayStation 5, or Steam and play on January 15th. @sth_game
+#Ad
+#StrangerThanHeaven #Yakuza #UpcomingGames
+```
+
+### YouTube Shorts
+Title:
+```
+The yakuza scenes in this upcoming video game look so intense
+```
+Description:
+```
+Pre-order or Wishlist STRANGER THAN HEAVEN now for XBOX Series/Game Pass/Cloud/PC, PlayStation 5, or Steam and play on January 15th. @sth_game @SEGA_West
+#Ad
+#StrangerThanHeaven #Yakuza #UpcomingGames
+```
+
 Rules to remember: 50%+ US/Canada audience, likes visible (YouTube: leave like counts on), keep it up 30+ days,
 max 5 posts of the same video, no added music, no AI voices.

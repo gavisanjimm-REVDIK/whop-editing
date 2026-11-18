@@ -39,4 +39,8 @@ want 3e && python3 make_edit1.py --input $T --handle "$HANDLE" --avatar "$AVATAR
   --sub "18.00-21.90|Pretty much everyone in Hiroshima knows about the Red Oni of Iwaki by now!" \
   --out out/sth_03_kure_edit1.mp4
 
+# 4 - edit2 (black canvas, condensed hook, zoomed footage, big logo; inspired by a creator Short, not copied).
+#     Cornered -> "Hold it" -> boss's verdict -> bowing ceremony (0:26.28-0:47.00), official subs kept.
+want 4 && python3 make_clip.py --style edit2 --input $T --seg 26.28-47.00 \
+  --text "The *yakuza* scenes in this upcoming|video game look so intense." --out out/sth_04_ceremony.mp4
 true
