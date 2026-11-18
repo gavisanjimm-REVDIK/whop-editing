@@ -66,3 +66,14 @@ His abs were on fire after 2 minutes 💀 Watch R3born Ep. 2 on @HardScope
 
 **TikTok:** "I'm not losing." Five seconds later… 💀 Watch R3born Ep. 2 on @hardscope #r3born #n3on #pilates
 **Instagram:** "I'm not losing." Five seconds later… 💀 Watch R3born Ep. 2 on @hardscope #r3born #n3on #pilates
+
+---
+
+## 06_silks.mp4  (cinematic letterbox style)
+**YouTube title:** I wouldn't last 5 seconds in this #r3born
+**YouTube description:**
+N3on vs Sarah: who can hold the tuck the longest? 😭 Watch R3born Ep. 2 on @HardScope
+#r3born #n3on #aerialsilks
+
+**TikTok:** N3on vs Sarah: who can hold the tuck the longest? 😭 Watch R3born Ep. 2 on @hardscope #r3born #n3on #aerialsilks
+**Instagram:** N3on vs Sarah: who can hold the tuck the longest? 😭 Watch R3born Ep. 2 on @hardscope #r3born #n3on #aerialsilks

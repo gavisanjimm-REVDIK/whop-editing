@@ -44,3 +44,8 @@ python3 make_short.py --input footage/ep2.mp4 \
 ```
 `--seg START-END[@ZOOM[:X]]`: ZOOM punches in, X (0..1) moves the crop left/right onto the subject.
 `--keep-words f.json` saves the transcript; fix names/typos in it and re-render with `--words f.json`.
+
+### Second look: `make_cine.py` (cinematic letterbox)
+Black canvas, wide 16:9 band, three-line Oswald hook (first-person reaction, show name in CAPS), the official
+R3BORN logo from the episode's title card underneath, big phrase subtitles in the band below the footage, slow
+push-in per shot, hard cuts. Oswald is OFL-licensed (`assets/fonts/OFL-Oswald.txt`).

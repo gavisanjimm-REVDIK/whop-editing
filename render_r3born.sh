@@ -35,3 +35,10 @@ python3 make_short.py --input $E --transcript $T --out $O/05_prison.mp4 \
   --hook "Pilates was invented|in *PRISON*?? 💀" \
   --seg 78.5-84.15@1.0:0.55 --seg 61.35-62.4@1.12:0.6 --seg 63.2-66.75 \
   --seg 89.9-94.0@1.12:0.6 --seg 106.05-107.0@1.15
+
+# 6. Aerial silks tuck-hold, "cinematic letterbox" style (make_cine.py): cold open on "Bro, how is this a sport?",
+#    the on-screen timer battle, N3on drops first, ends on "Really, dude?"
+python3 make_cine.py --input $E --transcript $T --out $O/06_silks.mp4 \
+  --hook "I wouldn't last 5 seconds in|*R3BORN'S AERIAL SILKS*|challenge" \
+  --say "548.7-549.6=Bro, how is this a sport?" \
+  --seg 548.6-549.65@1.25:0.5:0.3 --seg 549.85-554.9 --seg 554.9-561.1 --seg 564.0-570.0 --seg 573.6-574.5
