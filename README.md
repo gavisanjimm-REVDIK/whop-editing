@@ -24,3 +24,39 @@ Options: `--zoom 1.0` shows the full 16:9 frame (default 1.15 crops the sides a 
 `--no-tagline` hides the "SEASON 1 OUT NOW" line.
 
 Requires `ffmpeg` and Python with Pillow. The font path in `make_clip.py` uses Inter ExtraBold.
+
+
+---
+
+# YoungLA Black Friday clipping (Bodybuilders vs Models)
+
+Three 9:16 clips, each in a different editing style, cut from the one source video in the brief.
+Only that footage is used. Sound effects are synthesised from scratch in `sfx.py` (no copyrighted audio),
+and swears are bleeped.
+
+| Clip | Moment | Style |
+|---|---|---|
+| `out/01_rage_quit.mp4` (30 s) | co-host "goes to the bathroom"... then drives off | meme storytime: cold-open hook, B&W freeze + record scratch, 2.6x speed ramp, punch-ins with bass booms, white backflash transitions |
+| `out/02_fit_judges.mp4` (36 s) | skully debate + guessing Quav's song | game show: live W/L scoreboard, green ding + green flash for a W, red buzzer + red flash for an L, check/cross stamps |
+| `out/03_aura_battle.mp4` (39 s) | Jay Cutler vs Marlin "Mog Off"; Lex says the sound guy has the most aura | hype runway: camera-flash backflash + shutter on every cut, VS card, aura-meter pop-ups, B&W "plot twist", airhorn |
+
+Captions for posting: `YOUNGLA_CAPTIONS.md`.
+
+## Usage
+```bash
+mkdir -p footage && curl -L -o footage/bvm.mp4 "<dropbox link from the brief, with dl=1>"
+python3 youngla_bf.py              # all three -> out/
+python3 youngla_bf.py 02_fit_judges --preview   # one clip, fast encode
+python3 sfx.py                     # writes every sound effect to assets/sfx/*.wav to listen to
+```
+
+- `editor.py` – frame-by-frame vertical editor: shots (crop/zoom/pan, speed, freeze, J-cuts), flashes,
+  green/red tints, punch-ins, shake, RGB split, pop-up text, word-by-word captions, SFX mixing, bleeps.
+- `sfx.py` – green ding, red buzzer, boom, whoosh, camera flash, shutter, riser, record scratch, pop,
+  tick, ka-ching, airhorn, "bruh" drop.
+- `youngla_bf.py` – the three edits (shot lists, text, effects, sound cues).
+- `transcripts/` – whisper word timings of the source (captions are built from these; a few mishearings are
+  fixed in `fix_transcript()`).
+
+Requires `ffmpeg`, Python with numpy + Pillow. Fonts (Anton, Bangers, Luckiest Guy, Montserrat; all OFL/Apache)
+are in `assets/fonts/`.
