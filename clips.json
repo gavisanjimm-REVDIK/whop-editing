@@ -10,104 +10,73 @@
   },
   "clips": [
     {
-      "name": "01_gta6_unlock",
-      "hook": "KreekCraft's reaction the second GTA 6 finally unlocked",
+      "name": "01_cops_outfit",
+      "hook": "In GTA 6 the cops remember your outfit",
       "segments": [
         [
-          10594,
-          10612
+          18022,
+          18052
         ],
         [
-          10729,
-          10748
+          18082,
+          18101
         ],
         [
-          10773,
-          10790
-        ]
-      ],
-      "zooms": [
-        6.0,
-        24.2,
-        30.2
-      ]
-    },
-    {
-      "name": "02_crocodile",
-      "hook": "GTA 6 swamps are NOT safe",
-      "segments": [
-        [
-          41328,
-          41369
-        ],
-        [
-          41378,
-          41389
-        ]
-      ],
-      "zooms": [
-        5.0,
-        27.0,
-        46.3
-      ]
-    },
-    {
-      "name": "03_grandma_scooter",
-      "hook": "Grandma just took her mobility scooter onto the road in GTA 6",
-      "segments": [
-        [
-          20010,
-          20054
-        ]
-      ],
-      "zooms": [
-        26.6,
-        34.1
-      ],
-      "drop": [
-        [
-          40.3,
-          40.5
+          18108,
+          18119
         ]
       ]
     },
     {
-      "name": "04_lady_sorry",
-      "hook": "KreekCraft threw a fish and a random lady came running",
+      "name": "02_game_in_game",
+      "hook": "GTA 6 has a whole zombie game INSIDE the game",
       "segments": [
         [
-          20152,
-          20187
-        ],
-        [
-          20197.8,
-          20201
-        ]
-      ],
-      "zooms": [
-        19.0,
-        25.0
-      ],
-      "drop": [
-        [
-          32.4,
-          33.0
+          22846,
+          22915
         ]
       ]
     },
     {
-      "name": "05_seaplane",
-      "hook": "KreekCraft tries to land a seaplane in GTA 6",
+      "name": "03_real_life",
+      "hook": "GTA 6 lets you live a real life",
       "segments": [
         [
-          48454,
-          48485
+          13786,
+          13830
+        ],
+        [
+          25508,
+          25522
+        ],
+        [
+          13940,
+          13952
         ]
-      ],
-      "zooms": [
-        1.8,
-        9.0,
-        24.2
+      ]
+    },
+    {
+      "name": "04_snapmatic",
+      "hook": "You can doom scroll social media in GTA 6",
+      "segments": [
+        [
+          32186,
+          32240
+        ]
+      ]
+    },
+    {
+      "name": "05_hair_physics",
+      "hook": "The hair physics in GTA 6 are unreal",
+      "segments": [
+        [
+          56556,
+          56580
+        ],
+        [
+          56604,
+          56637
+        ]
       ]
     }
   ]

@@ -4,10 +4,10 @@
 Layout (1080x1920):
   - blurred, darkened stream as the background
   - hook text (white box, black text) at the top, on screen the whole clip
-  - KreekCraft's facecam (cropped from the top-left of the stream) under the hook
-  - gameplay under the facecam
-  - word-by-word subtitles on the seam between facecam and gameplay
-  - official KreekCraft logo overlay (Twitch + YouTube @KreekCraft), always visible
+  - big gameplay panel (full stream height) under the hook
+  - KreekCraft's facecam as a small framed box in the top-left corner of the gameplay
+  - word-by-word subtitles under the gameplay
+  - official KreekCraft logo overlay (Twitch + YouTube @KreekCraft) under the subtitles, always visible
 
 Audio is the original stream audio, loudness-normalised.
 
@@ -34,14 +34,18 @@ FOOTAGE = os.path.join(ROOT, "footage")
 W, H, FPS = 1080, 1920, 60
 
 # Where things sit on the 1920-high canvas.
-CAM_Y, CAM_H = 330, 660          # facecam panel
-GAME_Y = CAM_Y + CAM_H           # gameplay panel starts right under the cam
-SEAM_Y = GAME_Y                  # subtitles are centred here
-LOGO_W, LOGO_Y = 680, GAME_Y + 70   # logo overlay: top of the gameplay (sky), clear of the action and the app UI
+CAM_Y = 330                      # hook band sits above this line
+GAME_Y = 330                     # big gameplay panel: 1080 x 926, full stream height
+CAM_W, CAM_H = 300, 334          # small facecam box, overlaid top-left of the gameplay
+CAM_X, CAM_PY = 22, GAME_Y + 22
+CAM_BORDER = 5
+SEAM_Y = 1330                    # subtitles, just under the gameplay
+LOGO_W, LOGO_Y = 420, 1395       # logo overlay under the subtitles, above the Shorts/TikTok bottom UI
+GAME_ZOOM = 0.07                 # gentle punch-in on the gameplay at "zooms" times
 
 # Crops on the 1920x1080 stream.
-CAM_CROP = (746, 456, 0, 80)     # w, h, x, y: facecam box top-left (+ a little game beside it)
-GAME_CROP = (1520, 1080, 400, 0)  # gameplay with the facecam corner trimmed off
+CAM_CROP = (410, 456, 0, 80)     # w, h, x, y: just the facecam box (top-left of the stream)
+GAME_CROP = (1260, 1080, 410, 0)  # gameplay right of the facecam, full height
 
 
 def run(cmd, **kw):
@@ -155,7 +159,7 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Sub,{SUB_FONT},92,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,2,0,1,7,4,5,40,40,0
+Style: Sub,{SUB_FONT},84,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,0,0,0,0,100,100,2,0,1,7,4,5,40,40,0
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -294,17 +298,21 @@ def render(cfg, clip):
     cw, ch, cx, cy = CAM_CROP
     gw, gh, gx, gy = GAME_CROP
     game_h = round(W * gh / gw / 2) * 2
-    z = zoom_expr(clip.get("zooms", []))
+    z = zoom_expr(clip.get("zooms", []), GAME_ZOOM)
     fo = max(dur - 0.35, 0)
+    b = CAM_BORDER
     fc = ";".join([
         "[0:v]split=3[bgs][cams][games]",
         f"[bgs]scale=270:480:force_original_aspect_ratio=increase,crop=270:480,boxblur=12:2,"
         f"scale={W}:{H},eq=brightness=-0.22:saturation=1.2[bg]",
-        f"[cams]crop={cw}:{ch}:{cx}:{cy},scale=w='{W}*({z})':h='{CAM_H}*({z})':eval=frame,"
-        f"crop={W}:{CAM_H}:(iw-{W})/2:(ih-{CAM_H})/2[cam]",
-        f"[games]crop={gw}:{gh}:{gx}:{gy},scale={W}:{game_h}[game]",
-        f"[bg][cam]overlay=0:{CAM_Y}[b1]",
-        f"[b1][game]overlay=0:{GAME_Y}[b2]",
+        # small facecam with a white frame
+        f"[cams]crop={cw}:{ch}:{cx}:{cy},scale={CAM_W}:{CAM_H},"
+        f"pad={CAM_W + 2 * b}:{CAM_H + 2 * b}:{b}:{b}:white[cam]",
+        # big gameplay, with an optional gentle punch-in
+        f"[games]crop={gw}:{gh}:{gx}:{gy},scale=w='{W}*({z})':h='{game_h}*({z})':eval=frame,"
+        f"crop={W}:{game_h}:(iw-{W})/2:(ih-{game_h})/2[game]",
+        f"[bg][game]overlay=0:{GAME_Y}[b1]",
+        f"[b1][cam]overlay={CAM_X}:{CAM_PY}[b2]",
         "[b2][1:v]overlay=0:0[b3]",
         f"[b3]ass={ass}:fontsdir={SUB_FONT_DIR},fade=t=in:st=0:d=0.15,fade=t=out:st={fo:.2f}:d=0.35,"
         "format=yuv420p[v]",
