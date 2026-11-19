@@ -37,7 +37,7 @@ W, H, FPS = 1080, 1920, 60
 CAM_Y, CAM_H = 330, 660          # facecam panel
 GAME_Y = CAM_Y + CAM_H           # gameplay panel starts right under the cam
 SEAM_Y = GAME_Y                  # subtitles are centred here
-LOGO_W, LOGO_Y = 720, 1330       # logo overlay: above the Shorts/TikTok bottom UI
+LOGO_W, LOGO_Y = 680, GAME_Y + 70   # logo overlay: top of the gameplay (sky), clear of the action and the app UI
 
 # Crops on the 1920x1080 stream.
 CAM_CROP = (746, 456, 0, 80)     # w, h, x, y: facecam box top-left (+ a little game beside it)

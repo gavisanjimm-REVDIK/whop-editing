@@ -73,7 +73,7 @@
     },
     {
       "name": "04_lady_sorry",
-      "hook": "KreekCraft did NOT mean to start this fight in GTA 6",
+      "hook": "KreekCraft threw a fish and a random lady came running",
       "segments": [
         [
           20152,
@@ -100,9 +100,14 @@
       "hook": "KreekCraft tries to land a seaplane in GTA 6",
       "segments": [
         [
-          48450,
-          48493
+          48454,
+          48485
         ]
+      ],
+      "zooms": [
+        1.8,
+        9.0,
+        24.2
       ]
     }
   ]
