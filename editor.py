@@ -40,9 +40,9 @@ def is_swear(w):
 
 
 def font(name, size):
-    if name == "montserrat":
+    if name in ("montserrat", "montserrat-xb"):
         f = ImageFont.truetype(os.path.join(FONTS, "Montserrat-VF.ttf"), size)
-        f.set_variation_by_name("Black")
+        f.set_variation_by_name("Black" if name == "montserrat" else "ExtraBold")
         return f
     if name == "dejavu":
         return ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size)
@@ -481,11 +481,21 @@ def mix_audio(v, src, total, path):
         a = src.audio(s.src_in, s.src_out) * s.gain
         if s.reverse:
             a = a[::-1].copy() * 0.35
-        if v.bleep:   # replace swear words with a 1 kHz bleep
+        if v.bleep:   # replace swear words with a 1 kHz bleep, or cut them out ("mute")
             for ws, we, w in src.words:
-                if is_swear(w) and ws >= s.src_in and we <= s.src_out:
-                    i0, i1 = int((ws - s.src_in) * ASR), int((we - s.src_in) * ASR)
-                    a[i0:i1] = bleep_tone(i1 - i0)[:, None]
+                if is_swear(w) and ws >= s.src_in - 0.05 and we <= s.src_out + 0.05:
+                    i0 = max(0, int((ws - s.src_in - 0.03) * ASR))
+                    i1 = min(len(a), int((we - s.src_in + 0.03) * ASR))
+                    if v.bleep == "mute":
+                        n_ = i1 - i0
+                        r = min(int(0.012 * ASR), n_ // 2)
+                        env = np.zeros(n_, np.float32)
+                        if r > 0:
+                            env[:r] = np.linspace(1, 0, r)
+                            env[n_ - r:] = np.linspace(0, 1, r)
+                        a[i0:i1] *= env[:, None]
+                    else:
+                        a[i0:i1] = bleep_tone(i1 - i0)[:, None]
         if s.speed != 1.0:
             m = int(len(a) / s.speed)
             idx = np.linspace(0, len(a) - 1, m)

@@ -94,3 +94,9 @@ Hook + footage + captions + music + one sound on the punchline. No labels, tints
 | `out/07_three_hours_late.mp4` (30 s) | shows up three hours late, goes straight to the bathroom | Pixel Peeker Polka (faster) |
 | `out/08_already_handsome.mp4` (27 s) | mature answer, safe answer, then "I already have a G-Wagon. I'm already handsome." | Carefree |
 | `out/09_disney_villain.mp4` (18 s) | "he kind of looks like a supervillain" while he walks the runway | Scheming Weasel (faster) |
+
+## Batch 4 – reference style (`youngla_bf4.py`, `refstyle.py`)
+Modelled on the user's reference clip (not copied): square footage on black, small lowercase hook with one red
+keyword + emoji, one-word captions, light grade with exposure lift, one white backflash, one emoji pop, swears
+cut out, music under the original audio. Captions/emoji are face-aware and every drawn box is re-checked against
+faces detected in the finished video. `--no-music` writes versions for adding a trending sound in the app.

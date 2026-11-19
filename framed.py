@@ -92,6 +92,7 @@ def analyse(src, shot):
             cur += 1
         scenes.append(cur)
 
+    shot._faces = faces                 # kept for face-aware text placement (refstyle.py)
     plan = [None] * len(fr)
     for sid in range(cur + 1):
         idx = [i for i, s in enumerate(scenes) if s == sid]

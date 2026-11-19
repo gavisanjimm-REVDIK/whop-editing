@@ -299,3 +299,80 @@ Where the "du bist gut genug" hook fits best:
 | 05_negative_152k | 45.1 s – "51%" |
 | 09_disney_villain | 16.5 s – end of "really evil story" |
 | 07_three_hours_late | 29.9 s – "lock in" |
+
+---
+
+# Batch 4 – reference style
+
+## out/10_handsome_ref.mp4
+
+**Title:** Asked What He'd Buy With A Million... "I'm Already Handsome" 😭
+
+**Caption:**
+mature answer → safe answer → "i'm already handsome" 😭
+#money #funny #gymtok
+
+**Description:**
+If you won a million dollars, what's the first thing you're doing? Johnny Lee: "I don't think I would change
+much. Just pay my bills." That was the mature answer.
+
+What are you buying first, then? Moving out of the apartment he's been in for six years and getting a crib.
+Still a safe answer. So: what are you buying, bro? "I mean, I already have a G-Wagon... I'm already handsome."
+
+#money #funny #gymtok
+
+**Music credit** (only for the version with music; skip it if you add a sound in the app):
+Music: "Carefree" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+---
+
+## out/11_152k_ref.mp4
+
+**Title:** "Try Negative $152,000" 💀 He Asked For The Million Flat
+
+**Caption:**
+asked if he could just have the million flat... then dropped the -$152k story 💀
+#money #funny #gymtok
+
+**Description:**
+Lex's first question about the million dollar giveaway: "Can you just give me the money? Just a million flat?"
+
+So the host tries a hypothetical: your bank account gets emptied. "That's happened before." Okay, your
+account is at zero. "Try negative $152,000 at one point."
+
+Nobody robbed him. His taxes came out without anyone telling him, and there wasn't enough in the account.
+"That is wild."
+
+#money #funny #gymtok
+
+**Music credit** (only for the version with music):
+Music: "Fluffing a Duck" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+---
+
+## out/12_robbies_car_ref.mp4
+
+**Title:** Jay Cutler Called Dibs On Someone Else's Ferrari 😂
+
+**Caption:**
+first fashion show ever and he picked robbie's car 😭 "i take that one"
+#jaycutler #bodybuilding #gymtok
+
+**Description:**
+Jay Cutler at his first ever fashion show: "I'm not sure if it's gonna be my last, but it's my first."
+
+There's a whole row of supercars, so if he's picking one, which is he taking? "I take the Ferrari. I take
+the SF90." Okay... that's Robbie's car.
+
+Jay: "I take that one."
+
+#jaycutler #bodybuilding #gymtok
+
+**Music credit** (only for the version with music):
+Music: "Wallpaper" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
