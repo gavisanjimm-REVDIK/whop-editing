@@ -34,6 +34,13 @@
         7.7,
         19.3,
         38.4
+      ],
+      "replace": [
+        [
+          45.4,
+          45.95,
+          "use the map"
+        ]
       ]
     },
     {
@@ -91,8 +98,8 @@
       ],
       "drop": [
         [
-          5.8,
-          7.3
+          5.7,
+          7.6
         ]
       ]
     },
@@ -117,9 +124,34 @@
       ],
       "replace": [
         [
-          25.95,
-          27.45,
+          1.25,
+          2.6,
+          "Just on Kat's Snapmatic."
+        ],
+        [
+          5.3,
+          6.2,
+          "Man, their life is so crazy."
+        ],
+        [
+          12.2,
+          14.0,
+          "yachts, penthouses and fancy parties?"
+        ],
+        [
+          20.5,
+          21.0,
+          "$1,000"
+        ],
+        [
+          25.85,
+          27.5,
           "you can doom scroll in GTA 6"
+        ],
+        [
+          34.3,
+          36.1,
+          "Get me a few of those steaks, though."
         ]
       ]
     },
@@ -143,6 +175,18 @@
       "zooms": [
         21.3,
         32.1
+      ],
+      "replace": [
+        [
+          0.0,
+          6.7,
+          "Option A option A or option B"
+        ],
+        [
+          20.3,
+          21.9,
+          "Bro, the hair is crazy."
+        ]
       ]
     }
   ]
