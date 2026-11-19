@@ -34,13 +34,14 @@ FOOTAGE = os.path.join(ROOT, "footage")
 W, H, FPS = 1080, 1920, 60
 
 # Where things sit on the 1920-high canvas.
-CAM_Y = 330                      # hook band sits above this line
-GAME_Y = 330                     # big gameplay panel: 1080 x 926, full stream height
+GAME_H = 926                     # big gameplay panel: 1080 x 926, full stream height
+GAME_Y = (1920 - GAME_H) // 2    # centred vertically
+HOOK_TOP = 250                   # hook box sits between here and the gameplay, clear of the app's top bar
 CAM_W, CAM_H = 300, 334          # small facecam box, overlaid top-left of the gameplay
 CAM_X, CAM_PY = 22, GAME_Y + 22
 CAM_BORDER = 5
-SEAM_Y = 1330                    # subtitles, just under the gameplay
-LOGO_W, LOGO_Y = 420, 1395       # logo overlay under the subtitles, above the Shorts/TikTok bottom UI
+SEAM_Y = GAME_Y + GAME_H + 70    # subtitles, just under the gameplay
+LOGO_W, LOGO_Y = 420, SEAM_Y + 62  # logo overlay under the subtitles
 GAME_ZOOM = 0.07                 # gentle punch-in on the gameplay at "zooms" times
 
 # Crops on the 1920x1080 stream.
@@ -207,7 +208,7 @@ def build_overlay(path, hook):
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
 
-    # Hook: black text in a white rounded box, centred in the band above the cam.
+    # Hook: black text in a white rounded box, centred in the band above the gameplay.
     size = 62
     while True:
         font = ImageFont.truetype(HOOK_FONT, size)
@@ -218,7 +219,7 @@ def build_overlay(path, hook):
     lh = int(size * 1.18)
     box_h = lh * len(lines) + 44
     box_w = max(d.textlength(l, font=font) for l in lines) + 70
-    top = 110 + (CAM_Y - 110 - 20 - box_h) // 2
+    top = HOOK_TOP + (GAME_Y - HOOK_TOP - 20 - box_h) // 2
     d.rounded_rectangle([(W - box_w) / 2, top, (W + box_w) / 2, top + box_h], radius=26, fill="white")
     y = top + 22
     for l in lines:
