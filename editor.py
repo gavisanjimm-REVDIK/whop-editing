@@ -72,6 +72,7 @@ class Shot:
     captions: bool = True
     bw: bool = False         # black & white (for freeze frames / dramatic beats)
     v_in: float = None       # J-cut: take picture from here instead of src_in (audio stays at src_in)
+    reverse: bool = False    # play backwards (tape-rewind transitions)
     # filled by timeline
     t0: float = 0.0
 
@@ -128,6 +129,10 @@ class Video:
     caption_style: dict = field(default_factory=dict)
     bleep: bool = True
     progress_bar: tuple = None   # colour of a thin top progress bar, or None
+    # background music: dict(file=..., offset=sec, gain_db=-15 (vs. speech, while ducked),
+    #                        open_db=-8 (no speech), stops=[(t0, t1), ...] silent windows)
+    music: dict = None
+    emph: dict = None            # caption keyword -> colour (always coloured + tiny punch-in)
 
 
 # --------------------------------------------------------------------------- source IO
@@ -206,9 +211,12 @@ def _wrap(text, width):
     return lines
 
 
-def render_text(text, size, fname, fill, stroke, stroke_w, box=None, width=18, highlight=None, hl_fill=None):
-    """Return an RGBA image of the text block. `highlight` is a word index to colour hl_fill."""
-    key = (text, size, fname, fill, stroke, stroke_w, box, width, highlight, hl_fill)
+def render_text(text, size, fname, fill, stroke, stroke_w, box=None, width=18, highlight=None, hl_fill=None,
+                emph=None):
+    """Return an RGBA image of the text block. `highlight` is a word index to colour hl_fill;
+    `emph` maps lower-case keywords to a colour they always get."""
+    key = (text, size, fname, fill, stroke, stroke_w, box, width, highlight, hl_fill,
+           tuple(sorted(emph.items())) if emph else None)
     if key in _text_cache:
         return _text_cache[key]
     f = font(fname, size)
@@ -229,6 +237,9 @@ def render_text(text, size, fname, fill, stroke, stroke_w, box=None, width=18, h
         y = pad + li * lh
         for word in line.split(" "):
             col = hl_fill if (highlight is not None and wi == highlight) else fill
+            ek = word.strip(" ,.?!'\"").lower()
+            if emph and ek in emph:
+                col = emph[ek]
             if stroke_w:
                 d.text((x, y), word, font=f, fill=col, stroke_width=stroke_w, stroke_fill=stroke)
             else:
@@ -468,6 +479,8 @@ def mix_audio(v, src, total, path):
         if s.audio == "mute":
             continue
         a = src.audio(s.src_in, s.src_out) * s.gain
+        if s.reverse:
+            a = a[::-1].copy() * 0.35
         if v.bleep:   # replace swear words with a 1 kHz bleep
             for ws, we, w in src.words:
                 if is_swear(w) and ws >= s.src_in and we <= s.src_out:
@@ -483,6 +496,8 @@ def mix_audio(v, src, total, path):
         a[-fade:] *= np.linspace(1, 0, fade)[:, None]
         i = int(round(s.t0 * ASR))
         out[i:i + len(a)] += a[:max(0, n - i)]
+    if v.music:
+        out += music_bed(v, out, total, n)
     for snd in v.sounds:
         x = sfx.get(snd.name) * snd.gain * 0.55
         i = int(round(snd.t * ASR))
@@ -490,3 +505,36 @@ def mix_audio(v, src, total, path):
         out[i:j] += x[:j - i, None]
     out = np.tanh(out * 1.1) / np.tanh(1.1)
     sfx.write_wav(path, out[: int(round(total * ASR))])
+
+
+def music_bed(v, dialog, total, n):
+    """background track, ducked under speech, silent inside `stops`, faded in/out."""
+    m = v.music
+    raw = subprocess.check_output(["ffmpeg", "-v", "error", "-stream_loop", "-1", "-ss", str(m.get("offset", 0)),
+                                   "-i", m["file"], "-t", f"{total + 1:.2f}", "-ac", "2", "-ar", str(ASR),
+                                   "-f", "f32le", "-"])
+    mus = np.frombuffer(raw, np.float32).reshape(-1, 2).copy()
+    if len(mus) < n:
+        mus = np.vstack([mus, np.zeros((n - len(mus), 2), np.float32)])
+    mus = mus[:n]
+    hop = int(0.05 * ASR)
+    nb = n // hop
+    d_rms = np.sqrt(np.mean(dialog[:nb * hop].reshape(nb, hop, 2) ** 2, axis=(1, 2)) + 1e-12)
+    m_rms = np.sqrt(np.mean(mus ** 2) + 1e-12)
+    speech_level = np.percentile(d_rms[d_rms > 1e-4], 75) if np.any(d_rms > 1e-4) else 0.1
+    speaking = d_rms > speech_level * 0.25
+    # hold speech flags a little so the music doesn't pump between words
+    hold = np.convolve(speaking.astype(float), np.ones(8), "same") > 0
+    duck = 10 ** (m.get("gain_db", -15) / 20)
+    opn = 10 ** (m.get("open_db", -8) / 20)
+    g = np.where(hold, duck, opn) * speech_level / m_rms
+    for t0, t1 in m.get("stops", []):
+        g[int(t0 / 0.05):int(t1 / 0.05) + 1] = 0
+    k = 5   # ~250 ms smoothing of gain changes
+    g = np.convolve(np.pad(g, k, mode="edge"), np.ones(2 * k + 1) / (2 * k + 1), "valid")
+    gs = np.repeat(g, hop)[:n]
+    if len(gs) < n:
+        gs = np.concatenate([gs, np.full(n - len(gs), gs[-1] if len(gs) else 0)])
+    t = np.arange(n) / ASR
+    gs *= np.minimum(1, t / 0.4) * np.clip((total - t) / 1.2, 0, 1)
+    return (mus * gs[:, None]).astype(np.float32)

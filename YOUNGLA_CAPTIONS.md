@@ -3,6 +3,7 @@
 Brief rules these follow: funny, organic, on topic. **No account tags and nothing that reads like an ad**
 (tagging accounts / ad-looking posts don't get paid). The clothes do the work in the clips themselves.
 Keep each post up 30+ days with likes visible, and post each video on one page only.
+Background music is Kevin MacLeod (CC BY 4.0): free to use, but the credit below each clip **must** be posted with it.
 
 - **Title** – YouTube Shorts title (also works as the on-cover text)
 - **Caption** – TikTok / Instagram Reels caption
@@ -30,6 +31,11 @@ The host didn't even blink. Next guest sat down and the show kept going.
 
 #fashionshow #funny #gymtok
 
+**Music credit** (required, paste at the end of the description; on TikTok/IG put the first line in the caption or a comment):
+Music: "Sneaky Snitch" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
 ---
 
 ## out/02_fit_judges.mp4
@@ -56,6 +62,11 @@ Then the intel came in: Quav was listening to Childish Gambino. "I was so close.
 Final score: 3 W, 3 L.
 
 #fitcheck #fashion #gymtok
+
+**Music credit** (required, paste at the end of the description; on TikTok/IG put the first line in the caption or a comment):
+Music: "Fluffing a Duck" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
 
 ---
 
@@ -86,6 +97,12 @@ Deep. Aura winner: Griffin.
 
 # Batch 2
 
+**Music credit** (required, paste at the end of the description; on TikTok/IG put the first line in the caption or a comment):
+Music: "Investigations" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+
 ## out/04_aura_goosebumps.mp4
 
 **Title:** When A Model's Aura Hits From 100 Miles Away 😳
@@ -106,6 +123,11 @@ head to toe." Which somehow turned into "head, shoulders, knees and toes."
 Aura meter: maxed out.
 
 #aura #fashionshow #gymtok
+
+**Music credit** (required, paste at the end of the description; on TikTok/IG put the first line in the caption or a comment):
+Music: "Monkeys Spinning Monkeys" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
 
 ---
 
@@ -132,6 +154,11 @@ How much? "51%."
 
 #money #funny #gymtok
 
+**Music credit** (required, paste at the end of the description; on TikTok/IG put the first line in the caption or a comment):
+Music: "Local Forecast - Elevator" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
 ---
 
 ## out/06_jay_first_show.mp4
@@ -153,3 +180,8 @@ Then the important question. There's a whole row of supercars, so if he's pickin
 Jay: "I take that one."
 
 #jaycutler #bodybuilding #gymtok
+
+**Music credit** (required, paste at the end of the description; on TikTok/IG put the first line in the caption or a comment):
+Music: "Wallpaper" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/

@@ -18,6 +18,7 @@ from editor import Fx, Shot, Sound, Source, Text, Video, render
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(ROOT, "footage", "bvm.mp4")
 WORDS = os.path.join(ROOT, "transcripts", "youngla_bvm_words.json")
+MUSIC = os.path.join(ROOT, "assets", "music")
 
 YELLOW = (255, 230, 0)
 GREEN = (40, 230, 100)
@@ -103,6 +104,8 @@ def rage_quit():
         Sound(at(v, 7) - 0.2, "whoosh", 0.7),
         Sound(at(v, 7, 0.9), "ding_green", 0.8),
     ]
+    v.music = dict(file=os.path.join(MUSIC, "Sneaky_Snitch.mp3"), offset=0.0, gain_db=-17, open_db=-9,
+                   stops=[(0, at(v, 1) - 0.05), (at(v, 6, 0.2), at(v, 7))])  # cold open + "he really left"
     return v
 
 
@@ -178,6 +181,8 @@ def fit_judges():
     for i in range(1, len(v.shots)):         # whoosh + quick flash on every cut
         v.fx.append(Fx(at(v, i), "flash", 0.18, 0.5))
         v.sounds.append(Sound(at(v, i) - 0.15, "whoosh", 0.5))
+    v.music = dict(file=os.path.join(MUSIC, "Fluffing_a_Duck.mp3"), offset=0.0, gain_db=-17, open_db=-9,
+                   stops=[(t_wrong - 0.05, end + 1)])                      # cuts out on WRONG
     return v
 
 
@@ -267,6 +272,8 @@ def aura_battle():
         Sound(at(v, 11, 0.2), "ding_green", 0.9),
         Sound(at(v, 13, 0.4), "airhorn", 0.75),
     ]
+    v.music = dict(file=os.path.join(MUSIC, "Investigations.mp3"), offset=0.0, gain_db=-17, open_db=-9,
+                   stops=[(at(v, 9, s[9].run) - 0.05, at(v, 10) + 0.1)])   # silence on the plot twist
     return v
 
 

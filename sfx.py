@@ -250,10 +250,22 @@ def coin():
     return norm(lowpass(y, 5000), 0.6)
 
 
+def rewind(d=1.2):
+    """VHS tape rewind: fast warbling chirps over hiss, speeding up."""
+    t = t_(d)
+    rate = 8 + 30 * (t / d)
+    f = 900 + 700 * np.sin(2 * np.pi * np.cumsum(rate) / SR)
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    chirp = np.sin(ph) * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * np.cumsum(rate) / SR)))
+    hiss = highpass(rng.standard_normal(len(t)), 3000) * 0.25
+    e = np.minimum(1, t / 0.05) * np.minimum(1, (d - t) / 0.08)
+    return norm((chirp * 0.6 + hiss) * e, 0.7)
+
+
 ALL = dict(ding_green=ding_green, ding_red=ding_red, boom=boom, whoosh=whoosh, flash=flash,
            shutter=shutter, riser=riser, record_scratch=record_scratch, pop=pop, tick=tick,
            bruh_drop=bruh_drop, ka_ching=ka_ching, airhorn=airhorn, applause=applause,
-           shimmer=shimmer, heartbeat=heartbeat, coin=coin)
+           shimmer=shimmer, heartbeat=heartbeat, coin=coin, rewind=rewind)
 
 _cache = {}
 

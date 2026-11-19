@@ -22,7 +22,7 @@ import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
-from editor import (FPS, H, SRC_H, SRC_W, W, build_captions, ease_out_back, layout_timeline, mix_audio,
+from editor import (Fx, FPS, H, SRC_H, SRC_W, W, build_captions, ease_out_back, layout_timeline, mix_audio,
                     place, render_text)
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -71,6 +71,8 @@ def analyse(src, shot):
     """per-frame plan [(mode, cx, cy)] for a shot, in source pixels."""
     vin = shot.src_in if shot.v_in is None else shot.v_in
     fr = proxy_frames(src.path, vin, vin + shot.src_out - shot.src_in, shot.speed)
+    if shot.reverse:
+        fr = fr[::-1]
     det = detector()
     faces, small = [], []
     for f in fr:
@@ -216,6 +218,11 @@ def render(v, src, out_path, preview=False, accent=(255, 255, 255)):
     caps, cst = build_captions(v, src)
     rng = np.random.default_rng(3)
     plans = [analyse(src, s) for s in v.shots]
+    if v.emph:   # tiny punch-in on every keyword as it is spoken
+        for _, _, words in caps:
+            for wt, w in words:
+                if w.strip(" ,.?!'\"").lower() in v.emph:
+                    v.fx.append(Fx(wt, "punch", 0.35, 1.04))
 
     with tempfile.TemporaryDirectory() as tmp:
         wav = os.path.join(tmp, "a.wav")
@@ -230,6 +237,8 @@ def render(v, src, out_path, preview=False, accent=(255, 255, 255)):
         for s, plan in zip(v.shots, plans):
             vin = s.src_in if s.v_in is None else s.v_in
             gen = src.frames(vin, vin + s.src_out - s.src_in, s.speed)
+            if s.reverse:
+                gen = iter([f.copy() for f in gen][::-1])
             n_tot = int(round((s.t0 + s.dur) * FPS)) - int(round(s.t0 * FPS))
             last = None
             for k in range(n_tot):
@@ -243,7 +252,8 @@ def render(v, src, out_path, preview=False, accent=(255, 255, 255)):
                 bw = bw or (s.bw and k >= len(plan))
                 im = Image.fromarray(last)
                 canvas = _bg(im)
-                win = np.asarray(render_window(im, mode, cx, cy, s.zoom * punch, shake)).astype(np.float32)
+                z = (s.zoom if mode == "crop" else 1.0) * punch     # two-shots never get cropped
+                win = np.asarray(render_window(im, mode, cx, cy, z, shake)).astype(np.float32)
                 if bw:
                     g = win @ np.array([0.299, 0.587, 0.114], np.float32)
                     win = np.repeat(g[..., None], 3, 2)
@@ -272,7 +282,8 @@ def render(v, src, out_path, preview=False, accent=(255, 255, 255)):
                         active = max([i for i, (wt, _) in enumerate(words) if wt <= t + 0.02] or [0])
                         txt = " ".join(w for _, w in words)
                         im_t = render_text(txt, cst["size"], cst["font"], cst["fill"], (0, 0, 0), cst["stroke_w"],
-                                           width=cst.get("width", 18), highlight=active, hl_fill=cst["hl"])
+                                           width=cst.get("width", 18), highlight=active, hl_fill=cst["hl"],
+                                           emph=v.emph)
                         sc = min(1.0, (W - 60) / im_t.width) * (0.85 + 0.15 * ease_out_back((t - c0) / 0.12))
                         place(frame, im_t, W / 2, H * cst["y"], scale=sc)
                 for tx in v.texts:
@@ -288,7 +299,7 @@ def render(v, src, out_path, preview=False, accent=(255, 255, 255)):
                         elif tx.anim == "shake":
                             sc = fit * ease_out_back(a / 0.15)
                             rot += math.sin(a * 40) * 3 * max(0, 1 - a / 0.5)
-                        if tx.t1 - t < 0.12:
+                        if tx.t1 - t < 0.12 and tx.t1 - tx.t0 > 0.4:   # no fade on counter steps
                             al = (tx.t1 - t) / 0.12
                         place(frame, im_t, x, H * tx.y, scale=sc, rot=rot, alpha=al)
                 enc.stdin.write(frame.convert("RGB").tobytes())

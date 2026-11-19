@@ -78,3 +78,10 @@ sit under text or get clipped. Captions use a second, more accurate transcriptio
 python3 youngla_bf2.py --qa        # all three -> out/, with the face check
 ```
 Extra requirement: `opencv-python-headless` (model file is in `assets/models/`).
+
+## Music + pacing update
+- Every clip now has a meme-music bed (Kevin MacLeod, CC BY 4.0 – see `assets/music/CREDITS.md`; run
+  `./fetch_music.sh` first). It ducks automatically under speech, fills the pauses, and cuts out on punchlines.
+  **The credit lines in `YOUNGLA_CAPTIONS.md` must be posted with each clip.**
+- Batch 2 opens on the punchline, tape-rewinds to the start, then tells the story. Dead air between finished
+  sentences is trimmed (never mid-sentence); keywords in the captions are coloured with a small punch-in.
