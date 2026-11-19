@@ -289,6 +289,14 @@ def render(cfg, clip):
     drops = clip.get("drop", [])
     words = [w for w in words if w["w"].strip(".,!?-")
              and not any(a <= w["s"] <= b for a, b in drops)]
+    # "replace": [[t0, t1, "correct words"], ...] re-time the correct words evenly over that window
+    for a, b, text in clip.get("replace", []):
+        words = [w for w in words if not a <= w["s"] <= b]
+        new = text.split()
+        step = (b - a) / len(new)
+        words += [{"s": round(a + i * step, 2), "e": round(a + (i + 1) * step, 2), "w": t}
+                  for i, t in enumerate(new)]
+        words.sort(key=lambda w: w["s"])
     ass = os.path.join(work, "subs.ass")
     write_ass(words, ass, dur)
 
