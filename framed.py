@@ -323,7 +323,10 @@ def qa(path, step=0.5):
         for r in (res if res is not None else []):
             x, y, w, h = [float(q) * 2 for q in r[:4]]
             nfaces += 1
-            if y < WIN_Y0 or y + h > WIN_Y1:
+            cyf = y + h / 2
+            if not (WIN_Y0 <= cyf <= WIN_Y1):
+                continue      # the blurred background in the bands (no real footage there)
+            if y < WIN_Y0 - h * 0.15 or y + h > WIN_Y1 + h * 0.15:
                 issues.append((i * step, "face outside window / under text", (int(x), int(y), int(w), int(h))))
             elif y < WIN_Y0 + 6 or x < 2 or x + w > W - 2:
                 issues.append((i * step, "face clipped by window edge", (int(x), int(y), int(w), int(h))))

@@ -38,7 +38,7 @@ and swears are bleeped.
 |---|---|---|
 | `out/01_rage_quit.mp4` (30 s) | co-host "goes to the bathroom"... then drives off | meme storytime: cold-open hook, B&W freeze + record scratch, 2.6x speed ramp, punch-ins with bass booms, white backflash transitions |
 | `out/02_fit_judges.mp4` (36 s) | skully debate + guessing Quav's song | game show: live W/L scoreboard, green ding + green flash for a W, red buzzer + red flash for an L, check/cross stamps |
-| `out/03_aura_battle.mp4` (39 s) | Jay Cutler vs Marlin "Mog Off"; Lex says the sound guy has the most aura | hype runway: camera-flash backflash + shutter on every cut, VS card, aura-meter pop-ups, B&W "plot twist", airhorn |
+| `out/03_aura_battle.mp4` (39 s) | Jay Cutler vs Marlon "Mog Off"; Lex says the sound guy has the most aura | hype runway: camera-flash backflash + shutter on every cut, VS card, aura-meter pop-ups, B&W "plot twist", airhorn |
 
 Captions for posting: `YOUNGLA_CAPTIONS.md`.
 
@@ -85,3 +85,12 @@ Extra requirement: `opencv-python-headless` (model file is in `assets/models/`).
   **The credit lines in `YOUNGLA_CAPTIONS.md` must be posted with each clip.**
 - Batch 2 opens on the punchline, tape-rewinds to the start, then tells the story. Dead air between finished
   sentences is trimmed (never mid-sentence); keywords in the captions are coloured with a small punch-in.
+
+## Batch 3 – minimal (`youngla_bf3.py`)
+Hook + footage + captions + music + one sound on the punchline. No labels, tints, flashes or rewinds.
+
+| Clip | Moment | Music |
+|---|---|---|
+| `out/07_three_hours_late.mp4` (30 s) | shows up three hours late, goes straight to the bathroom | Pixel Peeker Polka (faster) |
+| `out/08_already_handsome.mp4` (27 s) | mature answer, safe answer, then "I already have a G-Wagon. I'm already handsome." | Carefree |
+| `out/09_disney_villain.mp4` (18 s) | "he kind of looks like a supervillain" while he walks the runway | Scheming Weasel (faster) |

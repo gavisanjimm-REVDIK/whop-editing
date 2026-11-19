@@ -128,7 +128,7 @@ def stamp(v, t, good, label):
 
 def fit_judges():
     v = Video(shots=[
-        # 0 skully debate (Marlin close-up then the commentators)
+        # 0 skully debate (Marlon close-up then the commentators)
         Shot(178.55, 192.15, layout="fit", zoom=1.3),
         # 1 Quav hits the runway
         Shot(361.10, 364.32, cx=1040, cy=520, zoom=1.0, zoom_end=1.1),
@@ -194,11 +194,11 @@ def aura_battle():
         Shot(130.15, 133.22, cx=1380, cy=430, zoom=1.0, zoom_end=1.12),
         # 1 "the aura battle between Jay Cutler..."
         Shot(133.22, 135.84, cx=1000, cy=470, zoom=1.0, zoom_end=1.1),
-        # 2 "...and Marlin"
+        # 2 "...and Marlon"
         Shot(135.84, 136.95, cx=1000, cy=470, zoom=1.05, freeze=0.25),
-        # 3 "Marlin's got the face card" (picture: Marlin close-up)
+        # 3 "Marlon's got the face card" (picture: Marlon close-up)
         Shot(142.15, 143.25, v_in=179.40, cx=950, cy=470, zoom=1.0, zoom_end=1.1),
-        # 4 Marlin walks
+        # 4 Marlon walks
         Shot(164.00, 169.09, cx=960, cy=560, zoom=1.0, zoom_end=1.08),
         Shot(169.09, 171.38, cx=1120, cy=540, zoom=1.05, zoom_end=1.15),
         # 6 "but Jay Cutler got the aura points"
@@ -236,7 +236,7 @@ def aura_battle():
         Text(src_t(v, 1, 135.35), at(v, 3), "JAY CUTLER", y=0.30, size=120, font="anton", fill=YELLOW,
              anim="shake", rot=-4),
         Text(at(v, 2), at(v, 3), "VS", y=0.40, size=150, font="anton", fill=RED, anim="pop"),
-        Text(src_t(v, 2, 136.1), at(v, 3), "MARLIN", y=0.50, size=120, font="anton", fill=PINK, anim="shake", rot=4),
+        Text(src_t(v, 2, 136.1), at(v, 3), "MARLON", y=0.50, size=120, font="anton", fill=PINK, anim="shake", rot=4),
         Text(at(v, 4, 0.3), at(v, 6), "FACE CARD", y=0.14, size=80, font="anton", fill=(255, 255, 255), anim="slide"),
         Text(at(v, 5), at(v, 6), "10 / 10", y=0.22, size=140, font="anton", fill=PINK, anim="shake"),
         Text(at(v, 7, 0.3), at(v, 9), "AURA POINTS", y=0.14, size=80, font="anton", fill=(255, 255, 255), anim="slide"),

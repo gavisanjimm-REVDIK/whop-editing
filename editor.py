@@ -29,7 +29,7 @@ SRC_W, SRC_H = 1920, 1080
 ASR = sfx.SR
 
 # whisper mishearings -> what is actually said
-FIXES = {"jake": "Jay", "ora": "aura", "skully": "skully", "alay": "LA", "alay's": "LA's"}
+FIXES = {"jake": "Jay", "ora": "aura", "marlin": "Marlon", "marlin's": "Marlon's", "skully": "skully", "alay": "LA", "alay's": "LA's"}
 
 SWEARS = {"fuck", "fucking", "fucked", "shit", "bitch", "ass", "damn", "motherfucker", "fuckin"}
 

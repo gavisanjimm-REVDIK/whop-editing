@@ -49,7 +49,7 @@ http://creativecommons.org/licenses/by/4.0/
 **Description:**
 Two commentators rating every fit on the runway, live.
 
-Round 1: Marlin walks out in a skully. One of them loves it: "As a white guy, you can wear a skully." The
+Round 1: Marlon walks out in a skully. One of them loves it: "As a white guy, you can wear a skully." The
 other one shuts it down: "You don't wear no skully, dude. When's the last time you wore one?" "Two days
 ago." "...That's what I thought." Cooked.
 
@@ -75,14 +75,14 @@ http://creativecommons.org/licenses/by/4.0/
 **Title:** Bodybuilder vs Model Aura Battle... And The Sound Guy Won?!
 
 **Caption:**
-jay cutler vs marlin for the most aura and somehow the sound guy took it 😂
+jay cutler vs marlon for the most aura and somehow the sound guy took it 😂
 #aura #bodybuilding #gymtok
 
 **Description:**
 The big question of the fashion show: who wins the Mog Off? Jay Cutler, the bodybuilding legend, against
-Marlin, a professional runway model. Marlin's got the face card, but Jay's got the aura points.
+Marlon, a professional runway model. Marlon's got the face card, but Jay's got the aura points.
 
-Marlin walked first and looked like the Burberry model he is. Then Jay came down the stairs and the commentators
+Marlon walked first and looked like the Burberry model he is. Then Jay came down the stairs and the commentators
 lost it. "This is a big moment. This is the people's favourite." The vote went to Jay.
 
 Then Lex got asked who had the most aura out of everyone that day. His pick: "This guy right here. The
@@ -183,5 +183,93 @@ Jay: "I take that one."
 
 **Music credit** (required, paste at the end of the description; on TikTok/IG put the first line in the caption or a comment):
 Music: "Wallpaper" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+---
+
+# Batch 3
+
+## out/07_three_hours_late.mp4
+
+**Title:** He Showed Up 3 Hours Late... And Went Straight To The Bathroom 💀
+
+**Caption:**
+3 hours late and the first stop is the bathroom 😭 "lock in"
+#fashionshow #funny #gymtok
+
+**Description:**
+Everyone's already at the fashion show when he finally pulls up. "Will you look who it is?" His own words:
+"I'm like, only three hours late. Literally three hours late."
+
+He admits he almost didn't come at all ("I was like, dude, I can't do it"). But before anything else
+happens: "I have to pee really bad." The crew offers him the parking lot. He declines, because he'd get in
+trouble for it.
+
+So he shows up three hours late and goes directly to the bathroom. "Go pee, bro." Then: lock in.
+
+#fashionshow #funny #gymtok
+
+**Music credit** (required, paste at the end of the description; on TikTok/IG put the first line in the caption or a comment):
+Music: "Pixel Peeker Polka - faster" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+---
+
+## out/08_already_handsome.mp4
+
+**Title:** We Asked What He'd Buy With $1,000,000... "I'm Already Handsome" 😭
+
+**Caption:**
+the mature answer, the safe answer, and then the REAL answer 😭
+#money #funny #gymtok
+
+**Description:**
+The host asks Johnny Lee the question: if you got a million dollars, what's the first thing you're doing?
+
+Answer one: "I don't think I would change much. Just pay my bills." Host: "That was the mature answer."
+
+Answer two: moving out of the apartment he's been in for six years and getting a crib. "Nothing too
+lavish." Backyard, maybe a little pool. Host: "Again, I feel like that was a safe answer."
+
+So the host pushes: what are you actually buying? "I mean, I already have a G-Wagon... I'm already handsome."
+
+Incredible.
+
+#money #funny #gymtok
+
+**Music credit** (required, paste at the end of the description; on TikTok/IG put the first line in the caption or a comment):
+Music: "Carefree" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+---
+
+## out/09_disney_villain.mp4
+
+**Title:** When Your Boy Says You Look Like A Disney Villain 😂
+
+**Caption:**
+"he looks like the antagonist in a really evil story" while he's literally walking the runway 😂
+#fashionshow #funny #gymtok
+
+**Description:**
+Lex is asked who he'd give a million dollars to. His answer: LT. So the host asks for his thoughts on him,
+right as LT comes down the runway.
+
+"That's Lex Jr. He's a pretty good dude. He kind of looks like a supervillain. The first time I met him,
+I thought he was like some Disney villain, to be honest."
+
+"That's a good description."
+
+"He looks like the antagonist in a really evil story."
+
+The fit agrees.
+
+#fashionshow #funny #gymtok
+
+**Music credit** (required, paste at the end of the description; on TikTok/IG put the first line in the caption or a comment):
+Music: "Scheming Weasel (faster version)" Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 4.0 License
 http://creativecommons.org/licenses/by/4.0/
