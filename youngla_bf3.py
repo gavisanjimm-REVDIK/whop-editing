@@ -111,6 +111,10 @@ def main():
     for n in names:
         out = os.path.join(ROOT, "out", n + ".mp4")
         v, accent = VIDEOS[n](src)
+        if "--no-music" in sys.argv:      # for adding a trending sound in the app instead
+            v.music = None
+            os.makedirs(os.path.join(ROOT, "out", "nomusic"), exist_ok=True)
+            out = os.path.join(ROOT, "out", "nomusic", n + ".mp4")
         if "--dry" in sys.argv:
             print(n, round(at(v, len(v.shots)), 1), [(round(s.src_in, 2), round(s.src_out, 2)) for s in v.shots])
             continue

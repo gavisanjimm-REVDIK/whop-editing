@@ -273,3 +273,29 @@ The fit agrees.
 Music: "Scheming Weasel (faster version)" Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 4.0 License
 http://creativecommons.org/licenses/by/4.0/
+
+---
+
+# Using a trending sound instead ("Gut Genug" etc.)
+
+Commercial songs can't be baked into the file (they get muted/claimed). Post the music-free version from
+`out/nomusic/` and add the song inside the app – it's licensed there and plays under the whole video.
+(Skip the Kevin MacLeod credit line for these versions; the app credits the song automatically.)
+
+- **TikTok:** upload → *Add sound* → search **"Gut Genug"** (KitschKrieg, Blumengarten, Shirin David) →
+  *Volume*: Original sound **100%**, Added sound **15–25%** → drag the song so the "du bist gut genug" hook
+  lands on the punchline (below).
+- **Instagram Reels:** *Audio* → search "Gut Genug" → *Control* (mixer): camera audio 100, music ~20 → pick the
+  start point.
+- **YouTube Shorts:** *Add sound* → search → *Volume* → lower the added sound. (Not every song is available in
+  Shorts; if it isn't, use the music version from `out/`.)
+
+Where the "du bist gut genug" hook fits best:
+| Clip | Put the hook at |
+|---|---|
+| 08_already_handsome | 25.8 s – right on "I'm already handsome" (perfect match) |
+| 04_aura_goosebumps | 29.3 s – "head to toe", aura meter maxed |
+| 06_jay_first_show | 27.5 s – "I take that one" |
+| 05_negative_152k | 45.1 s – "51%" |
+| 09_disney_villain | 16.5 s – end of "really evil story" |
+| 07_three_hours_late | 29.9 s – "lock in" |

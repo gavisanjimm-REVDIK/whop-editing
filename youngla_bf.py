@@ -300,8 +300,13 @@ def main():
     fix_transcript(src)
     os.makedirs(os.path.join(ROOT, "out"), exist_ok=True)
     for n in names:
+        v = VIDEOS[n]()
         out = os.path.join(ROOT, "out", n + ".mp4")
-        d = render(VIDEOS[n](), src, out, preview=preview)
+        if "--no-music" in sys.argv:      # for adding a trending sound in the app instead
+            v.music = None
+            os.makedirs(os.path.join(ROOT, "out", "nomusic"), exist_ok=True)
+            out = os.path.join(ROOT, "out", "nomusic", n + ".mp4")
+        d = render(v, src, out, preview=preview)
         print(f"wrote {out} ({d:.1f}s)")
 
 

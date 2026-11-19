@@ -265,6 +265,10 @@ def main():
         out = os.path.join(ROOT, "out", n + ".mp4")
         if "--qa-only" not in sys.argv:
             v, accent = VIDEOS[n](src)
+            if "--no-music" in sys.argv:      # for adding a trending sound in the app instead
+                v.music = None
+                os.makedirs(os.path.join(ROOT, "out", "nomusic"), exist_ok=True)
+                out = os.path.join(ROOT, "out", "nomusic", n + ".mp4")
             d = framed.render(v, src, out, preview="--preview" in sys.argv, accent=accent)
             print(f"wrote {out} ({d:.1f}s, {len(v.shots)} shots)")
         if "--qa" in sys.argv or "--qa-only" in sys.argv:
