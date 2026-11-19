@@ -9,6 +9,10 @@ Layout (1080x1920):
   - word-by-word subtitles under the gameplay
   - official KreekCraft logo overlay (Twitch + YouTube @KreekCraft) under the subtitles, always visible
 
+With "layout": "split" in clips.json the clip is a full-bleed split instead: KreekCraft's facecam on top,
+gameplay below, a real quote from the clip as the hook on the divider ("quote", "highlight" words in yellow,
+"emoji"), one-word subtitles over the gameplay and the logo near the bottom.
+
 Audio is the original stream audio, loudness-normalised.
 
 Clips are described in clips.json. Every time is in seconds on the Twitch VOD timeline.
@@ -47,6 +51,21 @@ GAME_ZOOM = 0.07                 # gentle punch-in on the gameplay at "zooms" ti
 # Crops on the 1920x1080 stream.
 CAM_CROP = (410, 456, 0, 80)     # w, h, x, y: just the facecam box (top-left of the stream)
 GAME_CROP = (1260, 1080, 410, 0)  # gameplay right of the facecam, full height
+
+# "split" layout (clips.json "layout": "split"): full-bleed facecam on top, gameplay below,
+# a quote hook on the divider, one-word subtitles over the gameplay, logo at the bottom.
+SPLIT_CAM_H = 740                       # facecam panel 1080 x 740
+SPLIT_DIV = 14                          # black divider line under the facecam
+SPLIT_GAME_Y = SPLIT_CAM_H + SPLIT_DIV  # gameplay panel 1080 x 1166
+SPLIT_GAME_H = H - SPLIT_GAME_Y
+SPLIT_CAM_CROP = (520, 356, 0, 110)     # tighter on KreekCraft so he sits near the centre of the panel
+SPLIT_GAME_CROP = (1000, 1080, 460, 0)  # centre of the action, full height
+SPLIT_QUOTE_Y = SPLIT_CAM_H - 38        # vertical centre of the quote hook (sits on the cam's bottom edge)
+SPLIT_SUB_Y = SPLIT_GAME_Y + 230        # one-word subtitles, upper part of the gameplay
+SPLIT_LOGO_W, SPLIT_LOGO_Y = 540, 1600  # logo low in the gameplay, above the in-game subtitles
+SPLIT_SUB_FONT = "Inter ExtraBold"
+EMOJI_FONT = "/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf"
+YELLOW = (255, 230, 0)
 
 
 def run(cmd, **kw):
@@ -188,7 +207,83 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         f.write(head + "\n".join(lines) + "\n")
 
 
+def write_ass_single(words, path, dur):
+    """One word at a time, sentence case, white with a heavy outline and a small pop."""
+    head = f"""[Script Info]
+ScriptType: v4.00+
+PlayResX: {W}
+PlayResY: {H}
+WrapStyle: 2
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: One,{SPLIT_SUB_FONT},96,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,7,3,5,40,40,0
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+"""
+    lines = []
+    for i, w in enumerate(words):
+        txt = re.sub(r"[.,]+$", "", w["w"]).strip()
+        if not txt:
+            continue
+        st = w["s"]
+        en = w["e"] + 0.25                      # linger a beat, but never overlap the next word
+        if i + 1 < len(words):
+            en = min(en, words[i + 1]["s"])
+        en = min(max(en, st + 0.12), dur)
+        pop = r"{\fscx72\fscy72\t(0,70,\fscx110\fscy110)\t(70,130,\fscx100\fscy100)}"
+        lines.append(f"Dialogue: 0,{ass_time(st)},{ass_time(en)},One,,0,0,0,,"
+                     f"{{\\pos({W // 2},{SPLIT_SUB_Y})}}{pop}{txt}")
+    with open(path, "w") as f:
+        f.write(head + "\n".join(lines) + "\n")
+
+
 # ---------------------------------------------------------------- overlay
+
+def emoji_image(ch, size):
+    f = ImageFont.truetype(EMOJI_FONT, 109)  # the colour emoji font only renders at 109 px
+    im = Image.new("RGBA", (160, 160), (0, 0, 0, 0))
+    ImageDraw.Draw(im).text((10, 10), ch, font=f, embedded_color=True)
+    im = im.crop(im.getbbox())
+    return im.resize((round(im.width * size / im.height), size), Image.LANCZOS)
+
+
+def build_overlay_split(path, quote, highlight="", emoji=""):
+    """Divider line, quote hook ("..." in caps, highlighted words in yellow, emoji), logo."""
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    d.rectangle([0, SPLIT_CAM_H, W, SPLIT_GAME_Y], fill="black")
+
+    text = f"“{quote.upper()}”"
+    hl = {x.upper() for x in highlight.split()}
+    size = 70
+    while True:
+        font = ImageFont.truetype(HOOK_FONT, size)
+        ew = round(size * 1.05) + 14 if emoji else 0
+        tw = d.textlength(text, font=font) + ew
+        if tw <= W - 70 or size <= 40:
+            break
+        size -= 2
+    x = (W - tw) / 2
+    y = SPLIT_QUOTE_Y - size * 0.62
+    for i, word in enumerate(text.split(" ")):
+        piece = word + (" " if i < len(text.split(" ")) - 1 else "")
+        bare = re.sub(r"[^\w']", "", word)
+        color = YELLOW if bare in hl else "white"
+        d.text((x, y), piece, font=font, fill=color, stroke_width=max(6, size // 9), stroke_fill="black")
+        x += d.textlength(piece, font=font)
+    if emoji:
+        e = emoji_image(emoji, round(size * 1.05))
+        img.alpha_composite(e, (round(x + 14), round(SPLIT_QUOTE_Y - e.height / 2)))
+
+    logo = Image.open(LOGO).convert("RGBA")
+    logo = logo.crop(logo.getbbox())
+    lh = round(logo.height * SPLIT_LOGO_W / logo.width)
+    logo = logo.resize((SPLIT_LOGO_W, lh), Image.LANCZOS)
+    img.alpha_composite(logo, ((W - SPLIT_LOGO_W) // 2, SPLIT_LOGO_Y))
+    img.save(path)
+
 
 def wrap(draw, text, font, max_w):
     words, lines, cur = text.split(), [], ""
@@ -299,16 +394,44 @@ def render(cfg, clip):
                   for i, t in enumerate(new)]
         words.sort(key=lambda w: w["s"])
     ass = os.path.join(work, "subs.ass")
-    write_ass(words, ass, dur)
+    split = cfg.get("layout") == "split"
+    (write_ass_single if split else write_ass)(words, ass, dur)
 
     # 3) compose
     ov = os.path.join(work, "overlay.png")
+    z = zoom_expr(clip.get("zooms", []), GAME_ZOOM)
+    fo = max(dur - 0.35, 0)
+    if split:
+        build_overlay_split(ov, clip["quote"], clip.get("highlight", ""), clip.get("emoji", ""))
+        cw, ch, cx, cy = SPLIT_CAM_CROP
+        gw, gh, gx, gy = SPLIT_GAME_CROP
+        fc = ";".join([
+            "[0:v]split=2[cams][games]",
+            f"[cams]crop={cw}:{ch}:{cx}:{cy},scale={W}:{SPLIT_CAM_H}[cam]",
+            f"[games]crop={gw}:{gh}:{gx}:{gy},scale=w='{W}*({z})':h='{SPLIT_GAME_H}*({z})':eval=frame,"
+            f"crop={W}:{SPLIT_GAME_H}:(iw-{W})/2:(ih-{SPLIT_GAME_H})/2[game]",
+            f"color=c=black:s={W}x{H}:r={FPS}[bg]",
+            "[bg][cam]overlay=0:0:shortest=1[b0]",
+            f"[b0][game]overlay=0:{SPLIT_GAME_Y}[b2]",
+            "[b2][1:v]overlay=0:0[b3]",
+            f"[b3]ass={ass}:fontsdir={SUB_FONT_DIR},fade=t=in:st=0:d=0.15,fade=t=out:st={fo:.2f}:d=0.35,"
+            "format=yuv420p[v]",
+            f"[0:a]loudnorm=I=-14:TP=-1.5:LRA=11,afade=t=out:st={fo:.2f}:d=0.35,aresample=48000[a]",
+        ])
+    else:
+        fc = None
+    if fc:
+        run(["ffmpeg", "-y", "-v", "error", "-i", src, "-loop", "1", "-framerate", str(FPS), "-i", ov,
+             "-filter_complex", fc, "-map", "[v]", "-map", "[a]",
+             "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-r", str(FPS), "-pix_fmt", "yuv420p",
+             "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", "-t", f"{dur:.3f}", out])
+        print(f"  wrote {out} ({dur:.1f}s)")
+        return
+
     build_overlay(ov, clip["hook"])
     cw, ch, cx, cy = CAM_CROP
     gw, gh, gx, gy = GAME_CROP
     game_h = round(W * gh / gw / 2) * 2
-    z = zoom_expr(clip.get("zooms", []), GAME_ZOOM)
-    fo = max(dur - 0.35, 0)
     b = CAM_BORDER
     fc = ";".join([
         "[0:v]split=3[bgs][cams][games]",

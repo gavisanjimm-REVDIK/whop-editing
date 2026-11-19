@@ -41,7 +41,10 @@
           45.95,
           "use the map"
         ]
-      ]
+      ],
+      "quote": "Now the cops can't recognize me",
+      "highlight": "RECOGNIZE",
+      "emoji": "😎"
     },
     {
       "name": "02_game_in_game",
@@ -67,7 +70,10 @@
       "zooms": [
         6.1,
         37.8
-      ]
+      ],
+      "quote": "Better than most Roblox games",
+      "highlight": "ROBLOX",
+      "emoji": "💀"
     },
     {
       "name": "03_real_life",
@@ -101,7 +107,10 @@
           5.7,
           7.6
         ]
-      ]
+      ],
+      "quote": "Is this an actual workout?",
+      "highlight": "WORKOUT?",
+      "emoji": "😭"
     },
     {
       "name": "04_snapmatic",
@@ -156,7 +165,10 @@
       ],
       "fixes": {
         "Lou": "Lu"
-      }
+      },
+      "quote": "You can doom scroll in GTA 6",
+      "highlight": "DOOM SCROLL",
+      "emoji": "📱"
     },
     {
       "name": "05_hair_physics",
@@ -190,7 +202,11 @@
           21.9,
           "Bro, the hair is crazy."
         ]
-      ]
+      ],
+      "quote": "The hair physics are insane",
+      "highlight": "INSANE",
+      "emoji": "🤯"
     }
-  ]
+  ],
+  "layout": "split"
 }
