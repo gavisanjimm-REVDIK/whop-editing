@@ -60,3 +60,21 @@ python3 sfx.py                     # writes every sound effect to assets/sfx/*.w
 
 Requires `ffmpeg`, Python with numpy + Pillow. Fonts (Anton, Bangers, Luckiest Guy, Montserrat; all OFL/Apache)
 are in `assets/fonts/`.
+
+## Batch 2 – clean layout (`youngla_bf2.py`, `framed.py`)
+
+| Clip | Moment | Style |
+|---|---|---|
+| `out/04_aura_goosebumps.mp4` (32 s) | Johnny on the runway: "I could feel it 100 miles away... head, shoulders, knees and toes" | aura detector: pink glow, shimmer + heartbeat, aura meter |
+| `out/05_negative_152k.mp4` (43 s) | Lex wants the million flat, was once at -$152,000 over taxes, would buy 51% | bank app: live balance counter, coin ticks, buzzer, ka-ching |
+| `out/06_jay_first_show.mp4` (34 s) | Jay Cutler's first fashion show; picks the SF90 that turns out to be Robbie's | talk show: applause (the host asks for it), ding / buzzer verdicts |
+
+Layout: hook in the top band, footage in a 1080x1200 window, captions + labels in the bottom band, so text never
+covers faces or clothes. Each source scene is auto-reframed with the YuNet face detector (crop on one person,
+full 16:9 for two-shots). Cuts land on sentence ends. `--qa` re-detects faces in the output and reports any that
+sit under text or get clipped. Captions use a second, more accurate transcription (`transcripts/*medium*`).
+
+```bash
+python3 youngla_bf2.py --qa        # all three -> out/, with the face check
+```
+Extra requirement: `opencv-python-headless` (model file is in `assets/models/`).

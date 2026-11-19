@@ -81,3 +81,75 @@ produce any himself."
 Deep. Aura winner: Griffin.
 
 #aura #bodybuilding #gymtok
+
+---
+
+# Batch 2
+
+## out/04_aura_goosebumps.mp4
+
+**Title:** When A Model's Aura Hits From 100 Miles Away 😳
+
+**Caption:**
+"i could feel it 100 miles away" 😭 the aura reached their midsection
+#aura #fashionshow #gymtok
+
+**Description:**
+Johnny walks out onto the runway and the commentary desk loses it. "Oh my God, Johnny. Is that Johnny?"
+
+They explain that if you go on the website, Johnny's face is on every single product, so seeing him in real
+life hits different: "You get goosebumps. I could feel it like 100 miles away."
+
+Then it escalates. One of them felt it "a little bit in my midsection." The other felt it "all the way down,
+head to toe." Which somehow turned into "head, shoulders, knees and toes."
+
+Aura meter: maxed out.
+
+#aura #fashionshow #gymtok
+
+---
+
+## out/05_negative_152k.mp4
+
+**Title:** He Asked For The Million Dollars... Flat 💀
+
+**Caption:**
+asked if he could skip the giveaway and just get the million flat 😭 then dropped the -$152k story
+#money #funny #gymtok
+
+**Description:**
+The host asks Lex if he knows about the million dollar giveaway. Lex's first question: "How do I enter?"
+His second: "Can you just give me the money? Just a million flat?"
+
+So the host tries a hypothetical: "Your bank account gets emptied." Lex: "That's happened before." The host
+says okay, your account is at zero. Lex: "Try negative $152,000 at one point."
+
+Nobody robbed him. His taxes came out, nobody told him they were taking it, and there wasn't enough in the
+account. "That is wild."
+
+Last question: if you had a million right now, what's your first purchase? He'd buy equity in the company.
+How much? "51%."
+
+#money #funny #gymtok
+
+---
+
+## out/06_jay_first_show.mp4
+
+**Title:** Jay Cutler's First Ever Fashion Show (He Picked The Wrong Car)
+
+**Caption:**
+4x mr olympia, first fashion show ever, and he called dibs on someone else's ferrari 😂
+#jaycutler #bodybuilding #gymtok
+
+**Description:**
+"Now we got the one and only Jay Cutler." The host even asks for the applause noise, so here it is.
+
+Turns out this is Jay's first fashion show ever: "I'm not sure if it's gonna be my last, but it's my first."
+
+Then the important question. There's a whole row of supercars, so if he's picking one, which is he taking?
+"I take the Ferrari. I take the SF90." Small problem: that's Robbie's car.
+
+Jay: "I take that one."
+
+#jaycutler #bodybuilding #gymtok

@@ -17,6 +17,10 @@ Run this file directly to write every effect to assets/sfx/*.wav for a listen.
   bruh_drop    descending tone for disappointment
   ka_ching     cash-register style double ring
   airhorn      stacked-saw horn blast
+  applause     crowd applause
+  shimmer      sparkly chime cluster
+  heartbeat    lub-dub
+  coin         two-note coin
 """
 import os
 import wave
@@ -200,9 +204,56 @@ def airhorn(d=0.9):
     return norm(lowpass(np.tanh(y * 0.6) * e, 3500), 0.7)
 
 
+def applause(d=3.0):
+    """crowd applause: thousands of tiny filtered noise claps with a swell and fade."""
+    n = int(SR * d)
+    out = np.zeros(n)
+    clap = highpass(rng.standard_normal(int(0.012 * SR)), 900) * np.exp(-np.arange(int(0.012 * SR)) / (0.003 * SR))
+    swell = np.minimum(1, np.arange(n) / (0.4 * SR)) * np.minimum(1, (n - np.arange(n)) / (1.2 * SR))
+    for _ in range(int(d * 900)):
+        i = rng.integers(0, n - len(clap))
+        if rng.random() < swell[i]:
+            out[i:i + len(clap)] += clap * rng.uniform(0.3, 1.0)
+    return norm(lowpass(out, 6000), 0.8)
+
+
+def shimmer(d=1.3):
+    """sparkly rising chime cluster (aura / glow moments)."""
+    out = np.zeros(int(SR * d))
+    notes = [1568, 1760, 2093, 2349, 2637, 3136, 3520]
+    for k, f in enumerate(notes):
+        b = bell(f, d - k * 0.08, decay=4.5) * (0.7 + 0.3 * rng.random())
+        o = int(k * 0.07 * SR)
+        out[o:o + len(b)] += b[:len(out) - o]
+    out += highpass(rng.standard_normal(len(out)), 7000) * np.exp(-t_(d) * 3) * 0.08
+    return norm(out, 0.7)
+
+
+def heartbeat():
+    """lub-dub."""
+    def thump(f, d):
+        t = t_(d)
+        return np.sin(2 * np.pi * (f + 40 * np.exp(-t * 30)) * t) * np.exp(-t * 18)
+    out = np.zeros(int(SR * 0.7))
+    a, b = thump(55, 0.25), thump(48, 0.3)
+    out[:len(a)] += a
+    o = int(0.18 * SR)
+    out[o:o + len(b)] += b * 0.8
+    return norm(np.tanh(out * 2), 0.9)
+
+
+def coin():
+    t = t_(0.5)
+    f = np.where(t < 0.07, 988, 1319)
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    y = np.sign(np.sin(ph)) * 0.5 * np.exp(-t * 6)
+    return norm(lowpass(y, 5000), 0.6)
+
+
 ALL = dict(ding_green=ding_green, ding_red=ding_red, boom=boom, whoosh=whoosh, flash=flash,
            shutter=shutter, riser=riser, record_scratch=record_scratch, pop=pop, tick=tick,
-           bruh_drop=bruh_drop, ka_ching=ka_ching, airhorn=airhorn)
+           bruh_drop=bruh_drop, ka_ching=ka_ching, airhorn=airhorn, applause=applause,
+           shimmer=shimmer, heartbeat=heartbeat, coin=coin)
 
 _cache = {}
 
