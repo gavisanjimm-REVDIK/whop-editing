@@ -281,7 +281,10 @@ def render(cfg, clip):
         for w in words:
             if w["w"].strip(".,!?").lower() == wrong.lower():
                 w["w"] = re.sub(re.escape(w["w"].strip(".,!?")), right, w["w"], flags=re.I)
-    words = [w for w in words if w["w"].strip(".,!?-")]
+    # "drop": [[t0, t1], ...] clip-time windows whose (misheard) words are removed
+    drops = clip.get("drop", [])
+    words = [w for w in words if w["w"].strip(".,!?-")
+             and not any(a <= w["s"] <= b for a, b in drops)]
     ass = os.path.join(work, "subs.ass")
     write_ass(words, ass, dur)
 

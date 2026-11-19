@@ -3,7 +3,10 @@
   "_source": "KreekCraft - GTA 6 LIVE FULL GAME GIVEAWAYS DAY 1 (Twitch VOD, same stream as youtube.com/live/dy-oCN2NxfA). Times are seconds on the VOD.",
   "fixes": {
     "Chad": "chat",
-    "Creek": "Kreek"
+    "Creek": "Kreek",
+    "shit": "sh*t",
+    "fucking": "f***ing",
+    "hell": "heck"
   },
   "clips": [
     {
@@ -22,6 +25,11 @@
           10773,
           10790
         ]
+      ],
+      "zooms": [
+        6.0,
+        24.2,
+        30.2
       ]
     },
     {
@@ -36,6 +44,11 @@
           41378,
           41389
         ]
+      ],
+      "zooms": [
+        5.0,
+        27.0,
+        46.3
       ]
     },
     {
@@ -46,6 +59,16 @@
           20010,
           20054
         ]
+      ],
+      "zooms": [
+        26.6,
+        34.1
+      ],
+      "drop": [
+        [
+          40.3,
+          40.5
+        ]
       ]
     },
     {
@@ -53,8 +76,22 @@
       "hook": "KreekCraft did NOT mean to start this fight in GTA 6",
       "segments": [
         [
-          20150,
-          20200
+          20152,
+          20187
+        ],
+        [
+          20197.8,
+          20201
+        ]
+      ],
+      "zooms": [
+        19.0,
+        25.0
+      ],
+      "drop": [
+        [
+          32.4,
+          33.0
         ]
       ]
     },
