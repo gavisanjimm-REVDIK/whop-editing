@@ -1,0 +1,82 @@
+{
+  "vod": "https://www.twitch.tv/videos/2932147800",
+  "_source": "KreekCraft - GTA 6 LIVE FULL GAME GIVEAWAYS DAY 1 (Twitch VOD, same stream as youtube.com/live/dy-oCN2NxfA). Times are seconds on the VOD.",
+  "fixes": {
+    "Chad": "chat",
+    "Creek": "Kreek",
+    "shit": "sh*t",
+    "fucking": "f***ing",
+    "hell": "heck"
+  },
+  "layout": "split",
+  "clips": [
+    {
+      "name": "06_lucia_robbery",
+      "segments": [
+        [
+          11446,
+          11476
+        ]
+      ],
+      "headline": "You can rob stores as Lucia in GTA 6",
+      "highlight": "ROB STORES",
+      "emoji": "💰"
+    },
+    {
+      "name": "07_hunger_calories",
+      "segments": [
+        [
+          18642.5,
+          18645.5
+        ],
+        [
+          18656,
+          18670
+        ],
+        [
+          18676,
+          18689
+        ]
+      ],
+      "headline": "GTA 6 tracks your hunger and calories",
+      "highlight": "HUNGER CALORIES",
+      "emoji": "🍔"
+    },
+    {
+      "name": "08_furniture",
+      "segments": [
+        [
+          37676,
+          37706
+        ]
+      ],
+      "headline": "You build your own furniture in GTA 6",
+      "highlight": "FURNITURE",
+      "emoji": "🪑"
+    },
+    {
+      "name": "09_barber",
+      "segments": [
+        [
+          48644,
+          48674
+        ]
+      ],
+      "headline": "GTA 6 has a full barber shop",
+      "highlight": "BARBER SHOP",
+      "emoji": "💈"
+    },
+    {
+      "name": "10_plunge_sink",
+      "segments": [
+        [
+          16861.5,
+          16891.5
+        ]
+      ],
+      "headline": "You can plunge a sink in GTA 6",
+      "highlight": "PLUNGE A SINK",
+      "emoji": "🪠"
+    }
+  ]
+}
