@@ -6,7 +6,9 @@
     "Creek": "Kreek",
     "shit": "sh*t",
     "fucking": "f***ing",
-    "hell": "heck"
+    "hell": "heck",
+    "fuckups": "f***ups",
+    "fuckin'": "f***in'"
   },
   "layout": "split",
   "clips": [
@@ -14,13 +16,17 @@
       "name": "06_lucia_robbery",
       "segments": [
         [
-          11446,
-          11476
+          11453.5,
+          11483.6
         ]
       ],
       "headline": "You can rob stores as Lucia in GTA 6",
       "highlight": "ROB STORES",
-      "emoji": "💰"
+      "emoji": "💰",
+      "zooms": [
+        13.6,
+        26.4
+      ]
     },
     {
       "name": "07_hunger_calories",
@@ -40,7 +46,24 @@
       ],
       "headline": "GTA 6 tracks your hunger and calories",
       "highlight": "HUNGER CALORIES",
-      "emoji": "🍔"
+      "emoji": "🍔",
+      "drop": [
+        [
+          0,
+          2.9
+        ]
+      ],
+      "replace": [
+        [
+          23.3,
+          23.55,
+          "to"
+        ]
+      ],
+      "zooms": [
+        7.4,
+        21.0
+      ]
     },
     {
       "name": "08_furniture",
@@ -52,7 +75,17 @@
       ],
       "headline": "You build your own furniture in GTA 6",
       "highlight": "FURNITURE",
-      "emoji": "🪑"
+      "emoji": "🪑",
+      "replace": [
+        [
+          28.6,
+          29.9,
+          "They just put them there to confuse you."
+        ]
+      ],
+      "zooms": [
+        23.5
+      ]
     },
     {
       "name": "09_barber",
@@ -64,7 +97,14 @@
       ],
       "headline": "GTA 6 has a full barber shop",
       "highlight": "BARBER SHOP",
-      "emoji": "💈"
+      "emoji": "💈",
+      "fixes": {
+        "-shaven": "shaven"
+      },
+      "zooms": [
+        11.4,
+        18.3
+      ]
     },
     {
       "name": "10_plunge_sink",
@@ -76,7 +116,21 @@
       ],
       "headline": "You can plunge a sink in GTA 6",
       "highlight": "PLUNGE A SINK",
-      "emoji": "🪠"
+      "emoji": "🪠",
+      "drop": [
+        [
+          0,
+          3.25
+        ],
+        [
+          21.5,
+          30
+        ]
+      ],
+      "zooms": [
+        3.6,
+        10.3
+      ]
     }
   ]
 }

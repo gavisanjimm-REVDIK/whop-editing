@@ -283,6 +283,8 @@ def build_overlay_split(path, text, highlight="", emoji="", quoted=False):
                 cur = []
             cur.append(w)
         lines.append(cur)
+        while len(lines) == 2 and len(lines[1]) < 3 and len(lines[0]) > 2:   # no orphan word on line 2
+            lines[1].insert(0, lines[0].pop())
         if len(lines) == 2 and d.textlength(" ".join(lines[-1]), font=font) + ew > W - 70:
             lines = None
         if lines and (len(lines) == 1 or (len(lines) == 2 and size <= 62)):
