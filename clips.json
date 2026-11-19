@@ -1,0 +1,72 @@
+{
+  "vod": "https://www.twitch.tv/videos/2932147800",
+  "_source": "KreekCraft - GTA 6 LIVE FULL GAME GIVEAWAYS DAY 1 (Twitch VOD, same stream as youtube.com/live/dy-oCN2NxfA). Times are seconds on the VOD.",
+  "fixes": {
+    "Chad": "chat",
+    "Creek": "Kreek"
+  },
+  "clips": [
+    {
+      "name": "01_gta6_unlock",
+      "hook": "KreekCraft's reaction the second GTA 6 finally unlocked",
+      "segments": [
+        [
+          10594,
+          10612
+        ],
+        [
+          10729,
+          10748
+        ],
+        [
+          10773,
+          10790
+        ]
+      ]
+    },
+    {
+      "name": "02_crocodile",
+      "hook": "GTA 6 swamps are NOT safe",
+      "segments": [
+        [
+          41328,
+          41369
+        ],
+        [
+          41378,
+          41389
+        ]
+      ]
+    },
+    {
+      "name": "03_grandma_scooter",
+      "hook": "Grandma just took her mobility scooter onto the road in GTA 6",
+      "segments": [
+        [
+          20010,
+          20054
+        ]
+      ]
+    },
+    {
+      "name": "04_lady_sorry",
+      "hook": "KreekCraft did NOT mean to start this fight in GTA 6",
+      "segments": [
+        [
+          20150,
+          20200
+        ]
+      ]
+    },
+    {
+      "name": "05_seaplane",
+      "hook": "KreekCraft tries to land a seaplane in GTA 6",
+      "segments": [
+        [
+          48450,
+          48493
+        ]
+      ]
+    }
+  ]
+}

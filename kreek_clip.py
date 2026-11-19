@@ -107,9 +107,13 @@ def source_for(cfg, a, b):
 # ---------------------------------------------------------------- subtitles
 
 def transcribe_words(wav, prompt=""):
+    import wave
+    import numpy as np
     from faster_whisper import WhisperModel
+    with wave.open(wav) as f:  # 16 kHz mono s16 (passing arrays avoids PyAV version issues)
+        audio = np.frombuffer(f.readframes(f.getnframes()), dtype=np.int16).astype(np.float32) / 32768
     m = WhisperModel("small.en", device="cpu", compute_type="int8")
-    segs, _ = m.transcribe(wav, beam_size=5, word_timestamps=True, vad_filter=False,
+    segs, _ = m.transcribe(audio, beam_size=5, word_timestamps=True, vad_filter=False,
                            initial_prompt=prompt or None, condition_on_previous_text=False)
     words = []
     for s in segs:
