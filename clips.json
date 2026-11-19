@@ -35,7 +35,19 @@
       ],
       "highlight": "OUTFIT",
       "emoji": "👀",
-      "headline": "GTA 6 cops remember your outfit"
+      "headline": "GTA 6 cops remember your outfit",
+      "replace": [
+        [
+          6.8,
+          7.5,
+          "sunglasses. But"
+        ],
+        [
+          19.5,
+          20.05,
+          "use the map"
+        ]
+      ]
     },
     {
       "name": "02_game_in_game",
@@ -91,7 +103,13 @@
       ],
       "highlight": "LIFE SIM",
       "emoji": "🐍",
-      "headline": "GTA 6 is a full life sim"
+      "headline": "GTA 6 is a full life sim",
+      "drop": [
+        [
+          4.7,
+          5.6
+        ]
+      ]
     },
     {
       "name": "04_snapmatic",
@@ -118,7 +136,39 @@
       },
       "highlight": "SOCIAL MEDIA",
       "emoji": "📱",
-      "headline": "GTA 6 has its own social media"
+      "headline": "GTA 6 has its own social media",
+      "replace": [
+        [
+          1.2,
+          2.7,
+          "Just on Kat's Snapmatic."
+        ],
+        [
+          4.0,
+          6.2,
+          "Man, their life is so crazy."
+        ],
+        [
+          11.7,
+          13.5,
+          "yachts, penthouses and fancy parties?"
+        ],
+        [
+          16.0,
+          17.1,
+          "Just spent a thousand dollars"
+        ],
+        [
+          21.2,
+          21.85,
+          "Some kind of fancy"
+        ],
+        [
+          21.86,
+          23.6,
+          "You can doom scroll in GTA 6"
+        ]
+      ]
     },
     {
       "name": "05_hair_physics",
@@ -142,7 +192,14 @@
       ],
       "highlight": "HAIR PHYSICS",
       "emoji": "🤯",
-      "headline": "GTA 6 hair physics are unreal"
+      "headline": "GTA 6 hair physics are unreal",
+      "replace": [
+        [
+          0.0,
+          2.8,
+          "Option A or option B"
+        ]
+      ]
     }
   ],
   "layout": "split"
