@@ -100,3 +100,7 @@ Modelled on the user's reference clip (not copied): square footage on black, sma
 keyword + emoji, one-word captions, light grade with exposure lift, one white backflash, one emoji pop, swears
 cut out, music under the original audio. Captions/emoji are face-aware and every drawn box is re-checked against
 faces detected in the finished video. `--no-music` writes versions for adding a trending sound in the app.
+
+## Batch 5 – reference style (`youngla_bf5.py`)
+`13_run_me_my_money` (Togi's photoshoot), `14_not_tryna_brag` (Marlon's runway résumé),
+`15_jay_rates_dance` (Jay Cutler judges Lex's dance). Same renderer as batch 4; `--no-music` versions too.

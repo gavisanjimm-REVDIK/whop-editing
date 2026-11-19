@@ -376,3 +376,81 @@ Jay: "I take that one."
 Music: "Wallpaper" Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 4.0 License
 http://creativecommons.org/licenses/by/4.0/
+
+---
+
+# Batch 5 – reference style, more fun
+
+## out/13_run_me_my_money.mp4
+
+**Title:** One Photoshoot Later... "Gary, Run Me My Money" 😭
+
+**Caption:**
+worried about his bald spot, did one photoshoot, asked for his money 😭
+#photoshoot #funny #gymtok
+
+**Description:**
+Togi's photoshoot before the show. First concern: "I think this flash is going to make my bald spot..." Don't
+worry: "That's why we got a retoucher."
+
+"You're about to go make some money." "Alright, I'm ready. I'm locked in, bro." Then the review: "Bro, none of
+them shots get used. There's no job."
+
+He's still confident: "I think I crushed that one." "You're good to go home." "I bet. I'm out. Gary, run me my
+money."
+
+#photoshoot #funny #gymtok
+
+**Music credit** (only for the version with music):
+Music: "Sneaky Snitch" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+---
+
+## out/14_not_tryna_brag.mp4
+
+**Title:** Calvin Klein, Burberry, H&M... "I'm Not Even Trying To Brag" 😭
+
+**Caption:**
+"i'm not even trying to brag" right after listing every runway he's walked 😭
+#model #fashionshow #gymtok
+
+**Description:**
+Big Marlon pulls up to the commentary desk after his walk: "I was going top of my lungs, bro. I was losing it."
+
+How does it compare to the Burberry runway? "There's like no comparison. This belongs to me right here."
+
+And what other runways has he done? "Calvin Klein, Burberry, H&M." Wow. "I'm not even trying to brag, like,
+you know what I'm saying?"
+
+#model #fashionshow #gymtok
+
+**Music credit** (only for the version with music):
+Music: "Monkeys Spinning Monkeys" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+---
+
+## out/15_jay_rates_dance.mp4
+
+**Title:** We Asked Jay Cutler To Rate The Runway Dance 😂
+
+**Caption:**
+jay cutler's honest review of the runway dance 😭 "urs could do it better"
+#jaycutler #bodybuilding #gymtok
+
+**Description:**
+"Lex, hit a little dance move." He does. "Yo. Whoa."
+
+So what did Jay Cutler think? "I think Urs could do it better, to be honest. Urs can move." Then the
+crew remembers the video from underground in Germany that went viral: Mike, Chris and Urs, "three
+biggest dudes in the world," shirtless.
+
+#jaycutler #bodybuilding #gymtok
+
+**Music credit** (only for the version with music):
+Music: "Pixel Peeker Polka - faster" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
