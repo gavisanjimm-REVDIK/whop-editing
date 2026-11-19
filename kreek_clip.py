@@ -10,8 +10,8 @@ Layout (1080x1920):
   - official KreekCraft logo overlay (Twitch + YouTube @KreekCraft) under the subtitles, always visible
 
 With "layout": "split" in clips.json the clip is a full-bleed split instead: KreekCraft's facecam on top,
-gameplay below, a real quote from the clip as the hook on the divider ("quote", "highlight" words in yellow,
-"emoji"), one-word subtitles over the gameplay and the logo near the bottom.
+gameplay below, a GTA 6 headline as the hook on the divider ("headline", or a real "quote" in quote marks;
+"highlight" words in yellow; "emoji"), one-word subtitles over the gameplay and the logo near the bottom.
 
 Audio is the original stream audio, loudness-normalised.
 
@@ -207,7 +207,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         f.write(head + "\n".join(lines) + "\n")
 
 
-def write_ass_single(words, path, dur):
+def write_ass_single(words, path, dur, y=SPLIT_SUB_Y):
     """One word at a time, sentence case, white with a heavy outline and a small pop."""
     head = f"""[Script Info]
 ScriptType: v4.00+
@@ -234,7 +234,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         en = min(max(en, st + 0.12), dur)
         pop = r"{\fscx72\fscy72\t(0,70,\fscx110\fscy110)\t(70,130,\fscx100\fscy100)}"
         lines.append(f"Dialogue: 0,{ass_time(st)},{ass_time(en)},One,,0,0,0,,"
-                     f"{{\\pos({W // 2},{SPLIT_SUB_Y})}}{pop}{txt}")
+                     f"{{\\pos({W // 2},{y})}}{pop}{txt}")
     with open(path, "w") as f:
         f.write(head + "\n".join(lines) + "\n")
 
@@ -249,30 +249,47 @@ def emoji_image(ch, size):
     return im.resize((round(im.width * size / im.height), size), Image.LANCZOS)
 
 
-def build_overlay_split(path, quote, highlight="", emoji=""):
-    """Divider line, quote hook ("..." in caps, highlighted words in yellow, emoji), logo."""
+def build_overlay_split(path, text, highlight="", emoji="", quoted=False):
+    """Divider line, hook on the cam's bottom edge (caps, highlighted words in yellow, emoji; wraps to
+    two lines stacked upwards if it doesn't fit), logo. quoted=True wraps the text in quote marks."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     d.rectangle([0, SPLIT_CAM_H, W, SPLIT_GAME_Y], fill="black")
 
-    text = f"“{quote.upper()}”"
+    text = text.upper()
+    if quoted:
+        text = f"“{text}”"
+    words = text.split()
     hl = {x.upper() for x in highlight.split()}
-    size = 70
+    size, nlines = 70, 1
     while True:
         font = ImageFont.truetype(HOOK_FONT, size)
         ew = round(size * 1.05) + 14 if emoji else 0
-        tw = d.textlength(text, font=font) + ew
-        if tw <= W - 70 or size <= 40:
+        lines, cur = [], []
+        for w in words:                        # greedy wrap; the emoji counts on the last line
+            if cur and d.textlength(" ".join(cur + [w]), font=font) > W - 70:
+                lines.append(cur)
+                cur = []
+            cur.append(w)
+        lines.append(cur)
+        if len(lines) == 2 and d.textlength(" ".join(lines[-1]), font=font) + ew > W - 70:
+            lines = None
+        if lines and (len(lines) == 1 or (len(lines) == 2 and size <= 62)):
+            break
+        if size <= 44:
             break
         size -= 2
-    x = (W - tw) / 2
-    y = SPLIT_QUOTE_Y - size * 0.62
-    for i, word in enumerate(text.split(" ")):
-        piece = word + (" " if i < len(text.split(" ")) - 1 else "")
-        bare = re.sub(r"[^\w']", "", word)
-        color = YELLOW if bare in hl else "white"
-        d.text((x, y), piece, font=font, fill=color, stroke_width=max(6, size // 9), stroke_fill="black")
-        x += d.textlength(piece, font=font)
+    lh = round(size * 1.15)
+    stroke = max(6, size // 9)
+    for li, line in enumerate(lines):
+        y = SPLIT_QUOTE_Y - (len(lines) - 1 - li) * lh - size * 0.62
+        lw = d.textlength(" ".join(line), font=font) + (ew if li == len(lines) - 1 else 0)
+        x = (W - lw) / 2
+        for i, word in enumerate(line):
+            piece = word + (" " if i < len(line) - 1 else "")
+            color = YELLOW if re.sub(r"[^\w']", "", word) in hl else "white"
+            d.text((x, y), piece, font=font, fill=color, stroke_width=stroke, stroke_fill="black")
+            x += d.textlength(piece, font=font)
     if emoji:
         e = emoji_image(emoji, round(size * 1.05))
         img.alpha_composite(e, (round(x + 14), round(SPLIT_QUOTE_Y - e.height / 2)))
@@ -402,7 +419,8 @@ def render(cfg, clip):
     z = zoom_expr(clip.get("zooms", []), GAME_ZOOM)
     fo = max(dur - 0.35, 0)
     if split:
-        build_overlay_split(ov, clip["quote"], clip.get("highlight", ""), clip.get("emoji", ""))
+        build_overlay_split(ov, clip.get("headline") or clip["quote"], clip.get("highlight", ""),
+                            clip.get("emoji", ""), quoted="headline" not in clip)
         cw, ch, cx, cy = SPLIT_CAM_CROP
         gw, gh, gx, gy = SPLIT_GAME_CROP
         fc = ";".join([

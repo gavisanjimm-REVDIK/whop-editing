@@ -1,9 +1,10 @@
 # KreekCraft GTA 6: titles and captions
 
-Style: the title opens with a real KreekCraft quote from the clip (the same quote as the on-screen hook),
-followed by the required line and hashtags. Every caption says "Watch KreekCraft on YouTube and Twitch",
-includes `#GTA6 #KreekCraft #GrandTheftAutoVI`, and has **no links or URLs**. Source: KreekCraft's GTA 6
-Day 1 livestream (Twitch VOD 2932147800, the same stream as his YouTube live).
+Every clip is 30 seconds or less and is about a GTA 6 feature. The on-screen hook, title and caption all
+describe the game, and KreekCraft's reaction is the supporting detail. Every caption says
+"Watch KreekCraft on YouTube and Twitch", includes `#GTA6 #KreekCraft #GrandTheftAutoVI`, and has
+**no links or URLs**. Source: KreekCraft's GTA 6 Day 1 livestream (Twitch VOD 2932147800, the same stream
+as his YouTube live).
 
 Before posting:
 - Keep likes visible.
@@ -16,10 +17,10 @@ The official KreekCraft overlay is on screen for the whole of every clip.
 
 ## 01_cops_outfit.mp4
 **YouTube Shorts title:**
-"Now The Cops Can't Recognize Me" 😎 Watch KreekCraft on YouTube and Twitch #GTA6 #KreekCraft #GrandTheftAutoVI
+GTA 6 Cops Remember Your Outfit 👀 Watch KreekCraft on YouTube and Twitch #GTA6 #KreekCraft #GrandTheftAutoVI
 
 **Caption (TikTok / Reels / Shorts description):**
-In GTA 6 the cops remember your outfit 👀 Hat, sunglasses, new clothes and they can't recognize you anymore.
+GTA 6 has a recognition system 🤯 Cops remember what you look like, so a hat, sunglasses or a new outfit lowers your recognition, and the map shows where you still have heat. KreekCraft tested it live 😎
 Watch KreekCraft on YouTube and Twitch! 🔴
 #GTA6 #KreekCraft #GrandTheftAutoVI
 
@@ -27,10 +28,10 @@ Watch KreekCraft on YouTube and Twitch! 🔴
 
 ## 02_game_in_game.mp4
 **YouTube Shorts title:**
-"Better Than Most Roblox Games" 💀 Watch KreekCraft on YouTube and Twitch #GTA6 #KreekCraft #GrandTheftAutoVI
+GTA 6 Has A Zombie Game Inside It 🧟 Watch KreekCraft on YouTube and Twitch #GTA6 #KreekCraft #GrandTheftAutoVI
 
 **Caption:**
-GTA 6 has a whole zombie game you can play INSIDE the game 🧟 KreekCraft was not ready.
+There's a full top-down zombie survival game you can play inside GTA 6, with perk cards and everything 🧟 KreekCraft said it's better than most Roblox games 💀
 Watch KreekCraft on YouTube and Twitch! 🎮
 #GTA6 #KreekCraft #GrandTheftAutoVI
 
@@ -38,10 +39,10 @@ Watch KreekCraft on YouTube and Twitch! 🎮
 
 ## 03_real_life.mp4
 **YouTube Shorts title:**
-"Is This An Actual Workout?" 😭 Watch KreekCraft on YouTube and Twitch #GTA6 #KreekCraft #GrandTheftAutoVI
+GTA 6 Is A Full Life Sim 🐍 Watch KreekCraft on YouTube and Twitch #GTA6 #KreekCraft #GrandTheftAutoVI
 
 **Caption:**
-Pet snake, real books, real workouts, and fixing the wall makes Lucia love you more 😭 GTA 6 is a whole life sim.
+In GTA 6 you can keep a pet snake, read books, do real workouts at home, and fixing up the house makes Lucia like you more 😳 KreekCraft couldn't believe the workout was real.
 Watch KreekCraft on YouTube and Twitch! 🔴
 #GTA6 #KreekCraft #GrandTheftAutoVI
 
@@ -49,10 +50,10 @@ Watch KreekCraft on YouTube and Twitch! 🔴
 
 ## 04_snapmatic.mp4
 **YouTube Shorts title:**
-"You Can Doom Scroll In GTA 6" 📱 Watch KreekCraft on YouTube and Twitch #GTA6 #KreekCraft #GrandTheftAutoVI
+GTA 6 Has Its Own Social Media 📱 Watch KreekCraft on YouTube and Twitch #GTA6 #KreekCraft #GrandTheftAutoVI
 
 **Caption:**
-GTA 6 has its own social media feed and you can scroll it like a real phone 😂 $1,000 on steak??
+GTA 6 has its own social media app, Snapmatic, and you can scroll the feed like a real phone 📱 Someone in Vice City spent $1,000 on steak 😭 KreekCraft got hooked.
 Watch KreekCraft on YouTube and Twitch! 🎮
 #GTA6 #KreekCraft #GrandTheftAutoVI
 
@@ -60,9 +61,9 @@ Watch KreekCraft on YouTube and Twitch! 🎮
 
 ## 05_hair_physics.mp4
 **YouTube Shorts title:**
-"The Hair Physics Are Insane" 🤯 Watch KreekCraft on YouTube and Twitch #GTA6 #KreekCraft #GrandTheftAutoVI
+GTA 6 Hair Physics Are Unreal 🤯 Watch KreekCraft on YouTube and Twitch #GTA6 #KreekCraft #GrandTheftAutoVI
 
 **Caption:**
-KreekCraft gives Lucia a new hairstyle and then the hair physics kick in 😳 "Bro, the hair is crazy!"
+You can take Lucia to the salon in GTA 6 and pick her hairstyle, and then you see the hair move 🤯 KreekCraft was shocked by the hair physics.
 Watch KreekCraft on YouTube and Twitch! 🔴
 #GTA6 #KreekCraft #GrandTheftAutoVI

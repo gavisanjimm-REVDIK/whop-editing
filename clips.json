@@ -11,176 +11,125 @@
   "clips": [
     {
       "name": "01_cops_outfit",
-      "hook": "In GTA 6 the cops remember your outfit",
       "segments": [
         [
-          18024.5,
-          18052
+          18027.5,
+          18034.7
         ],
         [
-          18082,
-          18089.4
+          18043.1,
+          18050.8
         ],
         [
-          18094.9,
-          18101
+          18097.4,
+          18100.0
         ],
         [
-          18108,
-          18119
+          18110.4,
+          18114.9
         ]
       ],
       "zooms": [
-        7.7,
-        19.3,
-        38.4
+        6.4,
+        16.1
       ],
-      "replace": [
-        [
-          45.4,
-          45.95,
-          "use the map"
-        ]
-      ],
-      "quote": "Now the cops can't recognize me",
-      "highlight": "RECOGNIZE",
-      "emoji": "😎"
+      "highlight": "OUTFIT",
+      "emoji": "👀",
+      "headline": "GTA 6 cops remember your outfit"
     },
     {
       "name": "02_game_in_game",
-      "hook": "GTA 6 has a whole zombie game INSIDE the game",
       "segments": [
         [
           22850.5,
           22858.5
         ],
         [
-          22862,
-          22870
+          22863,
+          22867
         ],
         [
-          22881.8,
-          22890
+          22885.5,
+          22889.8
         ],
         [
-          22894.9,
-          22910.4
+          22898.8,
+          22910.2
         ]
       ],
       "zooms": [
-        6.1,
-        37.8
+        6.3,
+        25.8
       ],
-      "quote": "Better than most Roblox games",
-      "highlight": "ROBLOX",
-      "emoji": "💀"
+      "highlight": "ZOMBIE GAME",
+      "emoji": "🧟",
+      "headline": "GTA 6 has a zombie game inside it"
     },
     {
       "name": "03_real_life",
-      "hook": "GTA 6 lets you live a real life",
       "segments": [
         [
-          13786,
-          13802
+          13787.5,
+          13793
         ],
         [
-          13806,
-          13830
+          13807,
+          13812.5
         ],
         [
-          25508,
-          25522
+          25512.8,
+          25521.5
         ],
         [
-          13944.1,
-          13955
+          13944.4,
+          13954
         ]
       ],
       "zooms": [
-        3.5,
-        21.3,
-        50.0,
-        56.7
+        16.2,
+        27.9
       ],
-      "drop": [
-        [
-          5.7,
-          7.6
-        ]
-      ],
-      "quote": "Is this an actual workout?",
-      "highlight": "WORKOUT?",
-      "emoji": "😭"
+      "highlight": "LIFE SIM",
+      "emoji": "🐍",
+      "headline": "GTA 6 is a full life sim"
     },
     {
       "name": "04_snapmatic",
-      "hook": "You can doom scroll social media in GTA 6",
       "segments": [
         [
           32189,
-          32227
+          32195.5
+        ],
+        [
+          32196,
+          32203.5
+        ],
+        [
+          32207,
+          32216.8
         ]
       ],
       "zooms": [
-        20.7,
-        26.0
-      ],
-      "drop": [
-        [
-          27.7,
-          28.7
-        ]
-      ],
-      "replace": [
-        [
-          1.25,
-          2.6,
-          "Just on Kat's Snapmatic."
-        ],
-        [
-          5.3,
-          6.2,
-          "Man, their life is so crazy."
-        ],
-        [
-          12.2,
-          14.0,
-          "yachts, penthouses and fancy parties?"
-        ],
-        [
-          20.5,
-          21.0,
-          "$1,000"
-        ],
-        [
-          25.85,
-          27.5,
-          "you can doom scroll in GTA 6"
-        ],
-        [
-          34.3,
-          36.1,
-          "Get me a few of those steaks, though."
-        ]
+        16.5,
+        22.3
       ],
       "fixes": {
         "Lou": "Lu"
       },
-      "quote": "You can doom scroll in GTA 6",
-      "highlight": "DOOM SCROLL",
-      "emoji": "📱"
+      "highlight": "SOCIAL MEDIA",
+      "emoji": "📱",
+      "headline": "GTA 6 has its own social media"
     },
     {
       "name": "05_hair_physics",
-      "hook": "The hair physics in GTA 6 are unreal",
       "segments": [
         [
-          56556,
-          56568.3
+          56560,
+          56567.5
         ],
         [
           56603.8,
-          56612
+          56607.5
         ],
         [
           56619.3,
@@ -188,24 +137,12 @@
         ]
       ],
       "zooms": [
-        21.3,
-        32.1
+        13.2,
+        23.8
       ],
-      "replace": [
-        [
-          0.0,
-          6.7,
-          "Option A option A or option B"
-        ],
-        [
-          20.3,
-          21.9,
-          "Bro, the hair is crazy."
-        ]
-      ],
-      "quote": "The hair physics are insane",
-      "highlight": "INSANE",
-      "emoji": "🤯"
+      "highlight": "HAIR PHYSICS",
+      "emoji": "🤯",
+      "headline": "GTA 6 hair physics are unreal"
     }
   ],
   "layout": "split"
