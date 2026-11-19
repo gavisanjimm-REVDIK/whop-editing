@@ -137,12 +137,23 @@ def transcribe_words(wav, prompt=""):
     with wave.open(wav) as f:  # 16 kHz mono s16 (passing arrays avoids PyAV version issues)
         audio = np.frombuffer(f.readframes(f.getnframes()), dtype=np.int16).astype(np.float32) / 32768
     m = WhisperModel("small.en", device="cpu", compute_type="int8")
-    segs, _ = m.transcribe(audio, beam_size=5, word_timestamps=True, vad_filter=False,
-                           initial_prompt=prompt or None, condition_on_previous_text=False)
+    opts = dict(beam_size=5, initial_prompt=prompt or None, condition_on_previous_text=False)
+    # faster-whisper's word alignment can crash (IndexError) on some audio: retry with VAD,
+    # then fall back to segment timings with the words spread evenly across each segment.
+    for vad in (False, True):
+        try:
+            segs, _ = m.transcribe(audio, word_timestamps=True, vad_filter=vad, **opts)
+            return [{"s": round(w.start, 2), "e": round(w.end, 2), "w": w.word.strip()}
+                    for s in segs for w in s.words]
+        except IndexError:
+            continue
+    segs, _ = m.transcribe(audio, word_timestamps=False, vad_filter=True, **opts)
     words = []
     for s in segs:
-        for w in s.words:
-            words.append({"s": round(w.start, 2), "e": round(w.end, 2), "w": w.word.strip()})
+        toks = s.text.split()
+        step = (s.end - s.start) / max(len(toks), 1)
+        words += [{"s": round(s.start + i * step, 2), "e": round(s.start + (i + 1) * step, 2), "w": t}
+                  for i, t in enumerate(toks)]
     return words
 
 
