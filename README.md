@@ -110,3 +110,10 @@ AI narrator intro (ElevenLabs "Ethan – Energetic YouTube Narrator", files in `
 red arrow on the subject, then the real conversation. Big colour-cycling one-word captions, an original ElevenLabs
 trap beat (G minor, 123 BPM – the same feel as the reference's bed, `assets/music/elevenlabs_trap_beat.mp3`),
 riser + 808 hit into each punchline. `16_skully_debate`, `17_can_i_have_some`, `18_hype_man`.
+
+## Batch 7 – "Say Goodbye" + high-pitched narrator (`youngla_bf7.py`)
+Same style as batch 6. The narrator lines are pitched up ~4 semitones (timing kept); the user's "Say Goodbye"
+track is sped up 1.2x (`asetrate`) and mixed ~16–20 dB under the dialogue. The track is the user's upload and is
+not committed: put it at `assets/music/say_goodbye_highpitch.mp3` (made with
+`ffmpeg -i "Say Goodbye.mp3" -af "asetrate=44100*1.2,aresample=44100" assets/music/say_goodbye_highpitch.mp3`).
+Emoji pops sit above the video; captions use live face detection on every frame.

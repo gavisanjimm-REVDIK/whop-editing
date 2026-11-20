@@ -509,3 +509,59 @@ man." "I think I heard you over here." "That was me. I'm the hype man." Then the
 Lambo, the all-black one. The verdict: "Disgusting."
 
 #fashionshow #funny #gymtok
+
+---
+
+# Batch 7 – "Say Goodbye" (sped up) + high-pitched narrator
+
+Narrator: ElevenLabs "Ethan", pitched up ~4 semitones. Music: the user's "Say Goodbye" track sped up 1.2x.
+If that track is a copyrighted release, platforms may mute or claim it – keep the no-music fallback in mind.
+
+## out/19_late_bathroom.mp4
+
+**Title:** 3 Hours Late And The First Stop Is The Bathroom 😭
+
+**Caption:**
+"i'm like only three hours late" then went straight to the bathroom 😭
+#fashionshow #funny #gymtok
+
+**Description:**
+He finally pulls up to the fashion show: "Will you look who it is? I'm like, only three hours late. Literally
+three hours late." First order of business: "I have to pee really bad." The crew offers him the parking lot;
+he declines, because Aaron would get mad. Shows up and directly goes to the bathroom. "Go pee, bro."
+
+#fashionshow #funny #gymtok
+
+---
+
+## out/20_villain_walk.mp4
+
+**Title:** His Boy Really Called Him A Disney Villain 💀
+
+**Caption:**
+"he looks like the antagonist in a really evil story" while he's walking the runway 💀
+#fashionshow #funny #gymtok
+
+**Description:**
+Lex would give his million to LT. So what does he think of him, right as LT walks the runway? "He's a pretty
+good dude. He kind of looks like a supervillain. The first time I met him I thought he was like some Disney
+villain." "That's a good description." "He looks like the antagonist in a really evil story."
+
+#fashionshow #funny #gymtok
+
+---
+
+## out/21_aura_midsection.mp4
+
+**Title:** The Aura Reached His Midsection 😭
+
+**Caption:**
+"i could feel it 100 miles away" "i felt it in my midsection" 😭
+#aura #fashionshow #gymtok
+
+**Description:**
+Johnny hits the runway and the hosts lose it. "Is that Johnny? Oh my God." Meeting him in real life? "You get
+goosebumps. I could feel it like 100 miles away." "I did feel a little bit of it in my midsection." "I felt it
+all the way down, head to toe." "Head, shoulders, knees and toes."
+
+#aura #fashionshow #gymtok

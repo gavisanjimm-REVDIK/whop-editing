@@ -13,6 +13,7 @@ import os
 import subprocess
 import tempfile
 
+import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
@@ -26,7 +27,27 @@ SQ, SQ_Y0, SQ_Y1 = refstyle.SQ, refstyle.SQ_Y0, refstyle.SQ_Y1
 CAP_Y = SQ_Y0 + int(SQ * 0.66)
 CAP_Y_BELOW = SQ_Y1 + 110
 HOOK_Y = SQ_Y0 - 70
+EMOJI_ON_TOP = False                    # batch 7 sets this: emoji pops go above the square
 CYCLE = [(90, 255, 110), (255, 232, 30), (40, 220, 255), (255, 255, 255)]
+
+
+_live_det = None
+
+
+def live_faces(win_rgb):
+    """faces detected directly on the rendered square (catches motion-blurred close-ups the planning
+    pass missed), returned in canvas coordinates with the same padding as refstyle.face_boxes_out."""
+    global _live_det
+    if _live_det is None:
+        _live_det = cv2.FaceDetectorYN.create(framed.MODEL, "", (360, 360), 0.6)
+    small = cv2.resize(cv2.cvtColor(win_rgb, cv2.COLOR_RGB2BGR), (360, 360))
+    _, res = _live_det.detect(small)
+    out = []
+    for r in (res if res is not None else []):
+        x, y, w, h = [float(q) * SQ / 360 for q in r[:4]]
+        cx, cy = x + w / 2, SQ_Y0 + y + h / 2
+        out.append((cx - w * 0.7, cy - h * 0.7, w * 1.4, h * 1.55))
+    return out
 
 
 _cap_cache = {}
@@ -121,9 +142,10 @@ def render(v, src, out_path, hook, emojis=(), arrow_until=1.0, preview=False):
                     if alpha > 0 and col == (255, 255, 255):
                         win = win + (255 - win) * min(alpha, 1)
                 canvas = Image.new("RGB", (W, H), (0, 0, 0))
-                canvas.paste(Image.fromarray(np.clip(win, 0, 255).astype(np.uint8)), (0, SQ_Y0))
+                win8 = np.clip(win, 0, 255).astype(np.uint8)
+                canvas.paste(Image.fromarray(win8), (0, SQ_Y0))
                 frame = canvas.convert("RGBA")
-                faces = refstyle.face_boxes_out(s, kk, mode, cx, cy, z)
+                faces = refstyle.face_boxes_out(s, kk, mode, cx, cy, z) + live_faces(win8)
 
                 place(frame, hook_img, W / 2, HOOK_Y, scale=min(1.0, (W - 60) / hook_img.width))
                 boxes = []
@@ -153,10 +175,13 @@ def render(v, src, out_path, hook, emojis=(), arrow_until=1.0, preview=False):
                         a = t - et
                         sc = ease_out_back(a / 0.2) * (1 + 0.04 * math.sin(a * 9))
                         al = min(1.0, (et + dur - t) / 0.15)
-                        for ex, ey in [(W / 2, CAP_Y - 170), (W * 0.8, SQ_Y0 + 220), (W * 0.2, SQ_Y0 + 220),
-                                       (W / 2, SQ_Y1 + 250)]:
-                            if ey > SQ_Y1 or not refstyle.overlaps((ex - 110, ey - 110, 220, 220), faces):
-                                break
+                        if EMOJI_ON_TOP:                            # empty black band above the hook: never on the video
+                            ex, ey = W / 2, HOOK_Y - 175
+                        else:
+                            for ex, ey in [(W / 2, CAP_Y - 170), (W * 0.8, SQ_Y0 + 220), (W * 0.2, SQ_Y0 + 220),
+                                           (W / 2, SQ_Y1 + 250)]:
+                                if ey > SQ_Y1 or not refstyle.overlaps((ex - 110, ey - 110, 220, 220), faces):
+                                    break
                         place(frame, e, ex, ey, scale=sc, alpha=al)
                         boxes.append((ex - 95, ey - 95, 190, 190))
                 if boxes:
