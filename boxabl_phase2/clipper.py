@@ -142,7 +142,7 @@ def compose(src, t_in_shot, cx, zoom, fit=False):
 
 
 # ---------------- audio ----------------
-def build_audio(vo_path, dur, cuts, flashes, out):
+def build_audio(vo_path, dur, cuts, flashes, out, music_bed=True):
     sr = fx.SR
     vo = np.frombuffer(subprocess.run(["ffmpeg", "-v", "error", "-i", vo_path, "-ac", "1", "-ar", str(sr),
                                        "-f", "f32le", "-"], capture_output=True, check=True).stdout, np.float32)
@@ -154,7 +154,7 @@ def build_audio(vo_path, dur, cuts, flashes, out):
               [46.25, 92.5, 116.54, 138.59]]
     bar = beat * 4
     t, k = 0.0, 0
-    while t < dur:
+    while music_bed and t < dur:
         seg = fx.pad_chord(min(bar * 2 + 0.6, dur - t + 0.6), chords[k % 4], amp=0.22, trem=0.25, seed=k)
         seg *= np.minimum(1, np.arange(len(seg)) / (0.08 * sr)).astype(np.float32)
         m.add(seg, t, 1.0)
@@ -164,7 +164,7 @@ def build_audio(vo_path, dur, cuts, flashes, out):
     kick = fx.sfx_kick(0.6)
     hat = fx.sfx_hat(0.05)
     t, b = 0.0, 0
-    while t < dur:
+    while music_bed and t < dur:
         if b % 8 in (0, 3, 6):
             m.add(np.tanh(kick * 2.2) * 0.8, t, 0.55)
         m.add(hat, t, 0.10)
@@ -221,7 +221,7 @@ def render(name):
     os.makedirs(os.path.join(ROOT, "out"), exist_ok=True)
     out = os.path.join(ROOT, "out", cfg["out"])
     wav = out + ".wav"
-    build_audio(vo_path, dur, cuts, flashes, wav)
+    build_audio(vo_path, dur, cuts, flashes, wav, cfg.get("music_bed", True))
     enc = fx.Encoder(out, wav)
     f_global = 0
     for si, shot in enumerate(shots):

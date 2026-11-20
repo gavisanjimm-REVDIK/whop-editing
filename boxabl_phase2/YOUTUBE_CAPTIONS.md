@@ -63,3 +63,54 @@ Watch a BOXABL Casita get delivered 🏗️ It shows up folded on a truck, gets 
 #BOXABL #casita #backyardhouse #shorts
 ```
 **Pinned comment:** `Would you put one in YOUR backyard? 👇`
+
+---
+
+# Batch 2: people hooks (04–06)
+
+These have **no music bed**: voiceover and SFX only. Add **"Gut Genug" (Blumengarten & Shirin)** in YouTube's **Add sound** at about **15–25% volume** so the voiceover stays clear. The upload rules above still apply.
+
+## 04_real_buyers.mp4 (22 s)
+**Title options:**
+1. These are REAL BOXABL buyers 😳🏠
+2. Watch their new house arrive by crane 🏗️
+3. She watched her house UNFOLD in the backyard 🤯
+
+**Caption:**
+```
+Real BOXABL buyers watching their new Casita arrive 🏠 It shows up as a box, gets set on the foundation and unfolds right in front of them. Kitchen, bathroom and bedroom inside. Real people, real backyards.
+
+@boxabl
+#BOXABL #casita #backyardhouse #shorts
+```
+**Pinned comment:** `Would you get one for your backyard? 👇`
+
+## 05_factory_insider.mp4 (22 s)
+**Title options:**
+1. Inside the BOXABL factory 🏭🤯
+2. They build houses like CARS here 😳
+3. BOXABL's manufacturing boss shows the factory 🏭
+
+**Caption:**
+```
+Inside the BOXABL factory 🏭 Houses get built like cars on an assembly line. Every station builds a different part of the home, and the finished homes get folded up and stacked outside, ready to ship.
+
+@boxabl
+#BOXABL #factory #howitsmade #shorts
+```
+**Pinned comment:** `Which station would you want to work at? 👀`
+
+## 06_elon_casita.mp4 (20 s)
+**Title options:**
+1. Elon Musk got one of these 🤯🏠
+2. The tiny house Elon Musk got 😳
+3. BOXABL Casita tour (yes, Elon has one) 🏠
+
+**Caption:**
+```
+Elon Musk famously got a BOXABL Casita 🤯 Here's what's inside: full kitchen, bathroom, bedroom and living room. Built in a factory, folded up, shipped on a truck, and unfolded where you want it.
+
+@boxabl
+#BOXABL #ElonMusk #casita #shorts
+```
+**Pinned comment:** `Would you live in the same house as Elon? 👇`
