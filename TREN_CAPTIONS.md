@@ -65,3 +65,64 @@ kidding, dude." Then: "We should, like, take a nap right now. Kind of comfy." So
 with that million this Black Friday.
 
 #trentwins #blackfriday #gymtok
+
+---
+
+# Set 2
+
+## out/25_tren_supercut.mp4
+
+**On-screen hook:** no way YoungLA is giving away a MILLION BUCKS 🔥
+
+**Title:** Two Bodybuilders, One Million Dollars 😭
+
+**Caption:**
+it went exactly how you'd expect 😭 "i gotta do it bro" → "it's comfy" → "we could just go to mexico"
+#trentwins #blackfriday #gymtok
+
+**Description:**
+The whole thing in 20 seconds. "Million bucks." "I gotta do it, bro." "Bro, this ain't your money, man." He's
+already lying in it: "Just try, bro. It's comfy." "I guess this is what a million dollars feels like." "Or we
+could just take it and go to Mexico." "Come on, man, that's somebody else's money." "Okay. I was just kidding,
+dude." A million dollar Black Friday giveaway is actually insane.
+
+#trentwins #blackfriday #gymtok
+
+---
+
+## out/26_tren_caved.mp4
+
+**On-screen hook:** this has to be the biggest giveaway ever 🤯
+
+**Title:** "We Have A Job To Do"... 10 Seconds Later 😭
+
+**Caption:**
+he was the responsible one for about 10 seconds 😭 "alright." "suck your stomach in"
+#trentwins #blackfriday #gymtok
+
+**Description:**
+One twin dives into the money. The other one is having none of it: "Bro, this ain't your money, man. Come on,
+bro. We have a job to do." "Get up here. Just try, bro. It's comfy. Come on, feels good." ... "Alright." "Suck
+your stomach in." Now they're both lying in a million dollars. "I know what you're talking about now. It feels
+good."
+
+#trentwins #blackfriday #gymtok
+
+---
+
+## out/27_tren_nap.mp4
+
+**On-screen hook:** YoungLA is giving away $1,000,000 and they're napping on it 😭
+
+**Title:** They Had ONE Job... And Took A Nap On A Million Dollars 😴
+
+**Caption:**
+"i gotta do it bro" → "we should like take a nap right now" 😴 the most comfortable million ever
+#trentwins #blackfriday #gymtok
+
+**Description:**
+"That's a lot of money." "Million bucks." "I gotta do it." "Do what?" "I gotta do it, bro." "Bro, this ain't
+your money, man." Fast forward to the end: "We should, like, take a nap right now. Kind of comfy." Somebody is
+actually walking away with that million this Black Friday.
+
+#trentwins #blackfriday #gymtok

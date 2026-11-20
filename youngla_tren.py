@@ -54,12 +54,12 @@ def vo_words(name):
     return [tuple(x) for x in out]
 
 
-def finish(v, vo_name, n_intro):
+def finish(v, vo_name, n_intro, music_offset=1.0):
     v.extra_audio = [(VO_START, os.path.join(VO_DIR, vo_name + ".mp3"), 1.0)]
     v.vo_words = vo_words(vo_name)
     v.bleep = "mute"
     # louder than batch 7 (-21/-14), still well under the voices
-    v.music = dict(file=SONG, offset=1.0, gain_db=-15, open_db=-9, stops=[])
+    v.music = dict(file=SONG, offset=music_offset, gain_db=-15, open_db=-9, stops=[])
     t_conv = at(v, n_intro)
     v.fx.append(Fx(t_conv, "flash", 0.3, 0.6))
     v.sounds += [Sound(0.0, "boom", 0.6), Sound(t_conv - 0.2, "whoosh", 0.45)]
@@ -120,7 +120,70 @@ def mexico(src):
     return v, hook, emojis
 
 
-VIDEOS = {"22_tren_lie_in_it": lie_in_it, "23_tren_feels_like": feels_like, "24_tren_mexico": mexico}
+# --------------------------------------------------------------------------- set 2
+
+def line_shot(src, a, b, pre=0.15, post=0.30, keep_to=None):
+    """one subtitle line as a shot, trimmed to its speech (optionally held to `keep_to` for the action after it)."""
+    ws = [w for w in src.words if a - 0.2 <= w[0] < b]
+    s0 = max(a - 0.25, ws[0][0] - pre) if ws else a
+    s1 = min(b, ws[-1][1] + post) if ws else b
+    return Shot(s0, keep_to or s1, layout="auto")
+
+
+def supercut(src):
+    """25: the whole trailer as a 20-second story."""
+    broll = [(29.00, 29.80), (38.00, 38.80), (42.40, 43.20), (31.50, 32.30), (23.00, 23.80), (26.00, 26.80),
+             (16.80, 17.60), (52.90, 53.60)]
+    lines = [(4.05, 6.97, None), (9.38, 10.72, None), (10.72, 13.72, 15.40), (19.44, 21.86, None),
+             (34.28, 37.41, None), (44.54, 47.26, None), (48.34, 50.26, None), (51.26, 52.80, None)]
+    v = Video(shots=intro(broll, "vo_tren_story") + [line_shot(src, a, b, keep_to=k) for a, b, k in lines])
+    n = len(broll)
+    T = mapper(v, n)
+    finish(v, "vo_tren_story", n, music_offset=20.0)
+    for i in range(n + 1, len(v.shots)):                    # our cuts between lines: quick whoosh, no flash
+        v.sounds.append(Sound(at(v, i) - 0.1, "whoosh", 0.25))
+    emojis = []
+    punchline(v, T(word_t(src, "comfy", 19.4)), "😂", emojis)
+    punchline(v, T(word_t(src, "mexico", 44.5)), "😭", emojis)
+    hook = [("no way YoungLA is giving away a", WHITE), ("MILLION BUCKS", RED), ("🔥", WHITE)]
+    return v, hook, emojis
+
+
+def caved(src):
+    """26: "we have a job to do"... then he gets in the pile too."""
+    broll = [(2.60, 3.40), (5.00, 5.80), (36.00, 36.80), (45.00, 45.80), (48.60, 49.40), (52.00, 52.80),
+             (38.50, 39.30)]
+    v = Video(shots=intro(broll, "vo_tren_caved") + [Shot(10.72, 14.80, layout="auto"),
+                                                    Shot(16.40, 34.28, layout="auto")])
+    n = len(broll)
+    T = mapper(v, n)
+    finish(v, "vo_tren_caved", n, music_offset=40.0)
+    emojis = []
+    punchline(v, T(word_t(src, "alright", 23.8)), "😭", emojis)    # "Alright." – he caves
+    emojis.append((T(29.95), "💀", 1.2))                               # "Heavy as —"
+    hook = [("this has to be the", WHITE), ("biggest giveaway", RED), ("ever", WHITE), ("🤯", WHITE)]
+    return v, hook, emojis
+
+
+def nap(src):
+    """27: "I gotta do it, bro" ... jump to the end: "we should like take a nap right now." """
+    broll = [(19.60, 20.40), (29.00, 29.80), (34.50, 35.30), (38.00, 38.80), (42.40, 43.20), (46.00, 46.80),
+             (49.50, 50.10)]
+    v = Video(shots=intro(broll, "vo_tren_nap") + [Shot(2.40, 13.72, layout="auto"), Shot(53.85, 57.18, layout="auto")])
+    n = len(broll)
+    T = mapper(v, n)
+    finish(v, "vo_tren_nap", n, music_offset=60.0)
+    v.fx.append(Fx(at(v, n + 1), "flash", 0.35, 0.8))           # jump to the ending
+    v.sounds.append(Sound(at(v, n + 1) - 0.2, "whoosh", 0.5))
+    emojis = []
+    punchline(v, T(word_t(src, "nap", 53.8)), "😴", emojis)
+    hook = [("YoungLA is giving away", WHITE), ("$1,000,000", RED), ("and they're napping on it", WHITE),
+            ("😭", WHITE)]
+    return v, hook, emojis
+
+
+VIDEOS = {"22_tren_lie_in_it": lie_in_it, "23_tren_feels_like": feels_like, "24_tren_mexico": mexico,
+          "25_tren_supercut": supercut, "26_tren_caved": caved, "27_tren_nap": nap}
 
 
 def main():

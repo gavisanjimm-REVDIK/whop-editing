@@ -88,16 +88,17 @@ def phrases(words, max_words=3, max_chars=20):
         sents.append(cur)
     out = []
     for snt in sents:
-        chunks, cur = [], []
-        for x in snt:
-            if cur and (len(cur) >= max_words or sum(len(y[2]) + 1 for y in cur) + len(x[2]) > max_chars):
-                chunks.append(cur)
-                cur = []
-            cur.append(x)
-        if cur:
-            chunks.append(cur)
-        if len(chunks) > 1 and len(chunks[-1]) == 1 and len(chunks[-2]) >= 2:   # no dangling last word
-            chunks[-1].insert(0, chunks[-2].pop())
+        n = len(snt)
+        k = -(-n // max_words)
+        while True:                                    # even split: 9 -> 3+3+3, 5 -> 3+2, 4 -> 2+2
+            sizes = [n // k + (1 if i < n % k else 0) for i in range(k)]
+            chunks, j = [], 0
+            for sz in sizes:
+                chunks.append(snt[j:j + sz])
+                j += sz
+            if k >= n or all(sum(len(y[2]) + 1 for y in c) - 1 <= max_chars for c in chunks):
+                break
+            k += 1
         out += chunks
     return out
 
