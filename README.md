@@ -124,3 +124,8 @@ its burned-in subtitles (`crop=3104:1746:0:60,scale=1920:1080`). Captions use th
 timings read off the subtitle on/off points (`transcripts/tren_words.json`). Same style as batches 6/7, with
 captions in one fixed spot under the video (balanced 2-3 word phrases), lively `[excited] [high voice]` narrator,
 and "Say Goodbye" ~6 dB louder than batch 7. Clips: `22_tren_lie_in_it`, `23_tren_feels_like`, `24_tren_mexico`; set 2: `25_tren_supercut`, `26_tren_caved`, `27_tren_nap`.
+
+## Mixed set across both briefs (`youngla_mix.py`)
+Five clips in the Tren Twins style, each using ONLY its own campaign's footage: `28_tren_gotta_do_it`,
+`29_tren_cant_believe` (Tren Twins brief, giveaway hook on screen) and `30_fs_30_seconds`, `31_fs_sound_guy`,
+`32_fs_not_tryna_brag` (fashion show brief). Captions/IG captions: `TREN_CAPTIONS.md` and `YOUNGLA_CAPTIONS.md`.

@@ -565,3 +565,86 @@ goosebumps. I could feel it like 100 miles away." "I did feel a little bit of it
 all the way down, head to toe." "Head, shoulders, knees and toes."
 
 #aura #fashionshow #gymtok
+
+---
+
+# Mixed set (both briefs) – fashion show clips (same style as the Tren Twins sets)
+
+## out/30_fs_30_seconds.mp4
+
+**On-screen hook:** he said "give me 30 seconds"... he never came back 😭
+
+**Title:** "Give Me 30 Seconds"... He Never Came Back 😭
+
+**Caption (TikTok / Shorts):**
+"give me 30 seconds" 😭 bro walked straight past the bathroom and drove home
+#fashionshow #funny #gymtok
+
+**IG caption:**
+```
+"give me 30 seconds" 😭
+
+said he was going to the bathroom… walked straight to his car and drove off 💀 "i'm sorry" "no bro wait!"
+
+we've all wanted to do this at least once 👇
+
+#fashionshow #funny #gymhumor #gymtok
+```
+
+**Description:** Togi says he's just running to the bathroom: "Give me 30 seconds." He walks straight past it, out
+the door and into his car. "I'm not getting paid to be here. I'm not sitting there watching Lukey and all of them
+go down the runway." "I love you, Lukey, too." "I'm sorry." "No, bro, wait!" "You're a good guy." And he's gone.
+
+---
+
+## out/31_fs_sound_guy.mp4
+
+**On-screen hook:** the most aura at the fashion show went to... the sound guy 😭
+
+**Title:** The Most Aura At The Fashion Show Went To... The Sound Guy 😭
+
+**Caption (TikTok / Shorts):**
+"a man who can handle all the noise but doesn't produce any himself" 🤯 the sound guy wins
+#aura #fashionshow #gymtok
+
+**IG caption:**
+```
+the most aura in the building? the sound guy 😭
+
+"he manages all the sounds but he won't speak himself… it speaks volumes about who he is" 🤯
+
+who's the quiet aura king in your gym? 👇
+
+#aura #fashionshow #gymhumor #gymtok
+```
+
+**Description:** Lex gets asked who had the most aura out of everyone at the show. His answer: "This guy right
+here. The sound guy." Griffin, who never says a word on camera. "He manages all the sounds, but he won't speak
+himself. A man who can handle all the noise, but doesn't produce any himself." Wow. Deep.
+
+---
+
+## out/32_fs_not_tryna_brag.mp4
+
+**On-screen hook:** calvin klein, burberry, H&M... "not even trying to brag" 😭
+
+**Title:** "I'm Not Even Trying To Brag" (Lists Every Runway He's Walked) 😭
+
+**Caption (TikTok / Shorts):**
+"calvin klein, burberry, H&M... i'm not even trying to brag" 😭 the humblest brag ever
+#model #fashionshow #gymtok
+
+**IG caption:**
+```
+"i'm not even trying to brag" 😭
+
+calvin klein. burberry. H&M. "there's like no comparison… this belongs to me right here" 💀
+
+most humble model ever? 👇
+
+#model #fashionshow #gymhumor #gymtok
+```
+
+**Description:** Big Marlon comes off the runway: "I was going top of my lungs, bro. I was losing it." How does it
+compare to the Burberry runway? "There's like no comparison. This belongs to me right here." Other runways?
+"Calvin Klein, Burberry, H&M." Wow. "I'm not even trying to brag, like, you know what I'm saying?"

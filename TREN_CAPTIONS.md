@@ -126,3 +126,51 @@ your money, man." Fast forward to the end: "We should, like, take a nap right no
 actually walking away with that million this Black Friday.
 
 #trentwins #blackfriday #gymtok
+
+---
+
+# Mixed set (both briefs) – Tren Twins clips
+
+## out/28_tren_gotta_do_it.mp4
+
+**On-screen hook:** YoungLA is giving away $1,000,000 and he HAD to do it 😭
+
+**Title:** He Saw A Million Dollars And Said "I Gotta Do It" 😭
+
+**Caption (TikTok / Shorts):**
+"i gotta do it" "do what?" "i gotta do it, bro" 😭 and then he dove in
+#trentwins #blackfriday #gymtok
+
+**IG caption:**
+```
+"i gotta do it" 😭
+
+a million dollars on the table and he lasted about 5 seconds before diving in 💀
+
+would you have done the same? 👇
+
+#trentwins #blackfriday #giveaway #gymhumor
+```
+
+---
+
+## out/29_tren_cant_believe.mp4
+
+**On-screen hook:** YoungLA is giving away $1,000,000 and even they can't believe it 🤯
+
+**Title:** Even The Tren Twins Can't Believe This Giveaway 🤯
+
+**Caption (TikTok / Shorts):**
+"i guess this is what a million dollars feels like" 🤯 "i can't believe they're giving it away to someone"
+#trentwins #blackfriday #gymtok
+
+**IG caption:**
+```
+"i can't believe they're giving it away to someone" 🤯
+
+lying in a million dollars and still in shock. someone is actually walking away with this 💀
+
+what would you do first with a million? 👇
+
+#trentwins #blackfriday #giveaway #gymtok
+```
