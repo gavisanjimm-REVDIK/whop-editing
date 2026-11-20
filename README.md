@@ -117,3 +117,10 @@ track is sped up 1.2x (`asetrate`) and mixed ~16–20 dB under the dialogue. The
 not committed: put it at `assets/music/say_goodbye_highpitch.mp3` (made with
 `ffmpeg -i "Say Goodbye.mp3" -af "asetrate=44100*1.2,aresample=44100" assets/music/say_goodbye_highpitch.mp3`).
 Emoji pops sit above the video; captions use live face detection on every frame.
+
+## Tren Twins giveaway trailer (`youngla_tren.py`) – second brief, `TREN_CAPTIONS.md`
+Footage: `footage/tren.mp4` from the brief's Dropbox link, converted to `footage/tren_1080.mp4` cropped just above
+its burned-in subtitles (`crop=3104:1746:0:60,scale=1920:1080`). Captions use the subtitles' own text with
+timings read off the subtitle on/off points (`transcripts/tren_words.json`). Same style as batches 6/7, with
+captions in one fixed spot under the video (balanced 2-3 word phrases), lively `[excited] [high voice]` narrator,
+and "Say Goodbye" ~6 dB louder than batch 7. Clips: `22_tren_lie_in_it`, `23_tren_feels_like`, `24_tren_mexico`.

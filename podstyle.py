@@ -26,7 +26,9 @@ refstyle.SQ_Y1 = refstyle.SQ_Y0 + refstyle.SQ
 SQ, SQ_Y0, SQ_Y1 = refstyle.SQ, refstyle.SQ_Y0, refstyle.SQ_Y1
 CAP_Y = SQ_Y0 + int(SQ * 0.66)
 CAP_Y_BELOW = SQ_Y1 + 110
+CAP_Y_FIXED = SQ_Y1 + 120                   # phrase mode: always here, on the black under the video
 HOOK_Y = SQ_Y0 - 70
+CAPTION_MODE = "word"                   # "word": one word, face-aware | "phrase": fixed spot under the video
 EMOJI_ON_TOP = False                    # batch 7 sets this: emoji pops go above the square
 CYCLE = [(90, 255, 110), (255, 232, 30), (40, 220, 255), (255, 255, 255)]
 
@@ -47,6 +49,56 @@ def live_faces(win_rgb):
         x, y, w, h = [float(q) * SQ / 360 for q in r[:4]]
         cx, cy = x + w / 2, SQ_Y0 + y + h / 2
         out.append((cx - w * 0.7, cy - h * 0.7, w * 1.4, h * 1.55))
+    return out
+
+
+_phrase_cache = {}
+
+
+def phrase_img(words, active, col, size=84):
+    """2-3 word phrase, white with the spoken word in colour; fixed width-safe layout."""
+    key = (tuple(words), active, col, size)
+    if key not in _phrase_cache:
+        f = font("montserrat", size)
+        tmp = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
+        sp = tmp.textlength(" ", font=f)
+        widths = [tmp.textlength(w, font=f) for w in words]
+        tw = int(sum(widths) + sp * (len(words) - 1)) + 60
+        img = Image.new("RGBA", (tw, size + 60), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        x = 30
+        for i, (w, wd) in enumerate(zip(words, widths)):
+            d.text((x, 18), w, font=f, fill=col if i == active else (255, 255, 255), stroke_width=9,
+                   stroke_fill=(0, 0, 0))
+            x += wd + sp
+        _phrase_cache[key] = img
+    return _phrase_cache[key]
+
+
+def phrases(words, max_words=3, max_chars=20):
+    """split the word track into sentences (or at pauses), then cut each sentence into evenly sized
+    chunks of at most 3 words, so there are no dangling single words ("I GOTTA DO | IT")."""
+    sents, cur = [], []
+    for w in words:
+        if cur and (w[0] - cur[-1][1] > 0.45 or cur[-1][4]):
+            sents.append(cur)
+            cur = []
+        cur.append(w)
+    if cur:
+        sents.append(cur)
+    out = []
+    for snt in sents:
+        chunks, cur = [], []
+        for x in snt:
+            if cur and (len(cur) >= max_words or sum(len(y[2]) + 1 for y in cur) + len(x[2]) > max_chars):
+                chunks.append(cur)
+                cur = []
+            cur.append(x)
+        if cur:
+            chunks.append(cur)
+        if len(chunks) > 1 and len(chunks[-1]) == 1 and len(chunks[-2]) >= 2:   # no dangling last word
+            chunks[-1].insert(0, chunks[-2].pop())
+        out += chunks
     return out
 
 
@@ -89,6 +141,8 @@ def track_words(v, src):
         ws = [w for w in src.words if s.src_in - 0.05 <= w[0] < s.src_out and w[2]]
         for i, (a, b, w) in enumerate(ws):
             if is_swear(w):
+                if w.rstrip()[-1:] in ".?!" and items and not items[-1][2].rstrip()[-1:] in ".?!":
+                    items[-1] = (items[-1][0], items[-1][1], items[-1][2] + ".")
                 continue
             t0 = s.t0 + (max(a, s.src_in) - s.src_in) / s.speed
             nxt = ws[i + 1][0] if i + 1 < len(ws) else s.src_out
@@ -99,7 +153,7 @@ def track_words(v, src):
     for k, (a, b, w) in enumerate(items):
         clean = w.strip(" ,.?!\"").upper()
         if clean:
-            out.append((a, b, clean, CYCLE[k % len(CYCLE)]))
+            out.append((a, b, clean, CYCLE[k % len(CYCLE)], w.rstrip()[-1:] in ".?!"))
     return out
 
 
@@ -107,6 +161,13 @@ def render(v, src, out_path, hook, emojis=(), arrow_until=1.0, preview=False):
     total = layout_timeline(v)
     nframes = int(round(total * FPS))
     words = track_words(v, src)
+    groups = phrases(words)
+    if CAPTION_MODE == "phrase":                        # hold each phrase until the next one starts
+        for i in range(len(groups) - 1):
+            nxt = groups[i + 1][0][0]
+            last = groups[i][-1]
+            if nxt - last[1] < 0.6:
+                groups[i][-1] = (last[0], nxt, *last[2:])
     rng = np.random.default_rng(9)
     plans = [framed.analyse(src, s) for s in v.shots]
     hook_img = refstyle.rich_text(hook, size=46)
@@ -157,7 +218,18 @@ def render(v, src, out_path, hook, emojis=(), arrow_until=1.0, preview=False):
                     bob = 12 * math.sin(t * 14)
                     place(frame, ARROW, ax + bob, ay + bob, scale=ease_out_back(t / 0.2))
                     boxes.append((ax - 85, ay - 85, 170, 170))
-                for w0, w1, w, col in words:
+                if CAPTION_MODE == "phrase":
+                    for ph in groups:
+                        p0, p1 = ph[0][0], max(ph[-1][1], ph[0][0] + 0.35)
+                        if p0 <= t < p1:
+                            act = max([i for i, x in enumerate(ph) if x[0] <= t + 0.02] or [0])
+                            im = phrase_img([x[2] for x in ph], act, ph[act][3])
+                            sc = min(1.0, (W - 60) / im.width) * (0.92 + 0.08 * ease_out_back((t - p0) / 0.1))
+                            place(frame, im, W / 2, CAP_Y_FIXED, scale=sc)
+                            boxes.append((W / 2 - im.width * sc / 2, CAP_Y_FIXED - im.height * sc / 2 + 15,
+                                          im.width * sc, im.height * sc - 30))
+                            break
+                for w0, w1, w, col, _end in (words if CAPTION_MODE == "word" else []):
                     if w0 <= t < w1:
                         im = cap_img(w, col)
                         y = CAP_Y
