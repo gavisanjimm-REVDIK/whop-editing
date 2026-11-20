@@ -506,6 +506,13 @@ def mix_audio(v, src, total, path):
         a[-fade:] *= np.linspace(1, 0, fade)[:, None]
         i = int(round(s.t0 * ASR))
         out[i:i + len(a)] += a[:max(0, n - i)]
+    for t_x, path_x, gain_x in getattr(v, "extra_audio", []):     # e.g. an AI narrator voiceover
+        raw = subprocess.check_output(["ffmpeg", "-v", "error", "-i", path_x, "-ac", "2", "-ar", str(ASR),
+                                       "-f", "f32le", "-"])
+        x = np.frombuffer(raw, np.float32).reshape(-1, 2) * gain_x
+        i = int(round(t_x * ASR))
+        j = min(n, i + len(x))
+        out[i:j] += x[:j - i]
     if v.music:
         out += music_bed(v, out, total, n)
     for snd in v.sounds:

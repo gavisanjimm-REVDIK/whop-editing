@@ -110,6 +110,10 @@ def plan_scene(shot, idx, faces, plan):
         xs = sorted(b[0] for b in faces[i])
         if len(xs) >= 2 and xs[-1] - xs[0] > cw * 0.62:
             two += 1
+    if getattr(shot, "lock", False):                    # framing chosen by hand (e.g. keep a specific person)
+        for i in idx:
+            plan[i] = ("crop", shot.cx, shot.cy)
+        return
     if shot.layout == "fit" or (shot.layout != "crop" and two >= 0.35 * n):
         for i in idx:
             plan[i] = ("fit", SRC_W / 2, SRC_H / 2)

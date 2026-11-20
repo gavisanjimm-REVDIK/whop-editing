@@ -104,3 +104,9 @@ faces detected in the finished video. `--no-music` writes versions for adding a 
 ## Batch 5 – reference style (`youngla_bf5.py`)
 `13_run_me_my_money` (Togi's photoshoot), `14_not_tryna_brag` (Marlon's runway résumé),
 `15_jay_rates_dance` (Jay Cutler judges Lex's dance). Same renderer as batch 4; `--no-music` versions too.
+
+## Batch 6 – "Clip The Pod" style (`youngla_bf6.py`, `podstyle.py`)
+AI narrator intro (ElevenLabs "Ethan – Energetic YouTube Narrator", files in `assets/vo/`) over quick b-roll with a
+red arrow on the subject, then the real conversation. Big colour-cycling one-word captions, an original ElevenLabs
+trap beat (G minor, 123 BPM – the same feel as the reference's bed, `assets/music/elevenlabs_trap_beat.mp3`),
+riser + 808 hit into each punchline. `16_skully_debate`, `17_can_i_have_some`, `18_hype_man`.

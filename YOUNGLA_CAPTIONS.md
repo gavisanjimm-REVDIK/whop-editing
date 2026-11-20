@@ -454,3 +454,58 @@ biggest dudes in the world," shirtless.
 Music: "Pixel Peeker Polka - faster" Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 4.0 License
 http://creativecommons.org/licenses/by/4.0/
+
+---
+
+# Batch 6 – "Clip The Pod" style (AI narrator intro)
+
+Narrator: ElevenLabs voice "Ethan – Energetic YouTube Narrator". Background: original ElevenLabs trap beat
+(no third-party credit needed; your ElevenLabs plan's commercial-use terms apply).
+
+## out/16_skully_debate.mp4
+
+**Title:** The Skully Debate Got Personal 💀
+
+**Caption:**
+"you don't wear no skully dude" 💀 he got exposed in 4 seconds
+#fashionshow #funny #gymtok
+
+**Description:**
+Marlon walks out in a skully and the commentary desk has opinions. One host loves it: "As a white guy, you can
+wear a skully." The other isn't having it: "You don't wear no skully, dude. When's the last time you wore one?"
+"Two days ago." "...That's what I thought."
+
+#fashionshow #funny #gymtok
+
+---
+
+## out/17_can_i_have_some.mp4
+
+**Title:** He Really Asked For Some Of The Million 😭
+
+**Caption:**
+picked the skyline over every supercar, then asked for a cut of the million 😭 "no."
+#cars #funny #gymtok
+
+**Description:**
+A building full of supercars and Lukey's pick is the Nissan Skyline GT-R R34. "It's my favorite. Godzilla."
+Good answer. Then he hears about the million dollar giveaway: "Are you for real? Can I have some?" "No."
+
+#cars #funny #gymtok
+
+---
+
+## out/18_hype_man.mp4
+
+**Title:** The Host Became His Personal Hype Man 😂
+
+**Caption:**
+"i think i heard you over here" "that was me. i'm the hype man" 😂
+#fashionshow #funny #gymtok
+
+**Description:**
+Johnny Lee sits down after his walk. "How's your walk, bro?" "I think you heard us." "It feels natural to me,
+man." "I think I heard you over here." "That was me. I'm the hype man." Then the car question: he's taking the
+Lambo, the all-black one. The verdict: "Disgusting."
+
+#fashionshow #funny #gymtok
