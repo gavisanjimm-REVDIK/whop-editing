@@ -24,3 +24,6 @@ Options: `--zoom 1.0` shows the full 16:9 frame (default 1.15 crops the sides a 
 `--no-tagline` hides the "SEASON 1 OUT NOW" line.
 
 Requires `ffmpeg` and Python with Pillow. The font path in `make_clip.py` uses Inter ExtraBold.
+
+---
+Other campaigns: **STRANGER THAN HEAVEN Act 2** lives in [`sth/`](sth/README.md).
